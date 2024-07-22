@@ -2,10 +2,12 @@
 const express = require('express');
 const app = express();
 // const session = require('express-session');
+const path = require('path');
 
 const port = 3000;
 
 app.set('view engine', 'ejs'); // set the app to use ejs for rendering
+
 // Set location of static files (CSS, JavaScript)
 app.use(express.static(path.join(__dirname, 'public')));
 
