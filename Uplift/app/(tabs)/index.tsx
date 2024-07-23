@@ -74,6 +74,8 @@ export default function LoginForm() {
         
     </SafeAreaView>
   )
+
+  
 }
 
 //change style
