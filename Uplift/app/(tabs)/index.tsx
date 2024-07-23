@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Alert, Button, Image, Pressable, SafeAreaView, StyleSheet, Switch, Text, TextInput, View } from 'react-native'
+// temp logo
 const logo = require("../../assets/images/temp-up-100.png")
 const facebook = require("../../assets/images/facebook-50.png")
 const linkedin = require("../../assets/images/linkedin-50.png")
@@ -39,6 +40,7 @@ export default function LoginForm() {
         </View> */}
 
         <View style={styles.buttonView}>
+          {/* this needs to change to runa check in table for accounts */}
             <Pressable style={styles.button} onPress={() => Alert.alert("Login Successfuly!","see you in my instagram if you have questions : must_ait6")}>
                 <Text style={styles.buttonText}>LOGIN</Text>
             </Pressable>
@@ -50,13 +52,24 @@ export default function LoginForm() {
         
 
         {/* subject to changes */}
-        {/* <View style={styles.mediaIcons}>
-                <Image href="https://facebook.com" source={facebook} style={styles.icons}   />
-                <Image href="https://instagram.com" source={instagram} style={styles.icons}  />
-                <Image href="https://linkedin.com" source={linkedin} style={styles.icons}  />
-        </View> */}
 
-        <Text href="register" style={styles.footerText}>Don't Have Account?<Text  style={styles.signup}>  Sign Up</Text></Text>
+        <View style={styles.mediaIcons}>
+          <a href="https://facebook.com">
+            <Image  source={facebook} style={styles.icons}  />
+          </a>
+          <a href="https://instagram.com">
+            <Image  source={instagram} style={styles.icons}  />
+          </a>
+          <a href="https://linkedin.com">
+            <Image  source={linkedin} style={styles.icons}  />
+          </a>
+        </View>
+
+        <Text style={styles.footerText}>
+          {/* send to registration page */}
+        
+          Don't Have Account? <a href="register" style={styles.signup}>Sign Up</a>
+        </Text>
 
         
     </SafeAreaView>
