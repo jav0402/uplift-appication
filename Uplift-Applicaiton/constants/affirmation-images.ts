@@ -1,4 +1,3 @@
-// needs change
 import californiaBackyardOne from "@/assets/affirmation-images/California-backyard-1.webp";
 import californiaBackyardTwo from "@/assets/affirmation-images/California-backyard-2.webp";
 import californiaBackyardThree from "@/assets/affirmation-images/California-backyard-3.webp";

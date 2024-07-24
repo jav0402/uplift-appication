@@ -27,7 +27,8 @@ const CustomButton = ({
                 minHeight: 62,
                 justifyContent: 'center',
                 alignItems: 'center',
-                ...containerStyles // Spread operator for any additional styles
+                // bottom: ""
+                // ...containerStyles // Spread operator for any additional styles
             }}
             onPress={onPress}
         >
@@ -36,7 +37,7 @@ const CustomButton = ({
                     color: 'blue', // Assuming primary is blue
                     fontWeight: '600',
                     fontSize: 18,
-                    ...textStyles // Spread operator for any additional styles
+                    // ...textStyles // Spread operator for any additional styles
                 }}
             >
                 {title}

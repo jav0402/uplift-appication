@@ -21,9 +21,7 @@ const index = () => {
 				resizeMode='cover'
 				className='flex-1'
 			>
-			<LinearGradient
-					className="flex-1"
-					colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.8)"]}
+			<AppGradient colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.8)"]}
 				>
 					<SafeAreaView className='flex-1 mx-5 my-12 justify-between'>
 					 
@@ -48,7 +46,7 @@ const index = () => {
 						<StatusBar style="light"/>
 					
 					</SafeAreaView>
-				</LinearGradient>
+				</AppGradient>
 				{/* <AppGradient colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.8)"]}>
 
 						<SafeAreaView className='flex-1 px-1 justify-between'>

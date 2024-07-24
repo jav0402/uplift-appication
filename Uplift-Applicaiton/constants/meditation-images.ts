@@ -1,4 +1,3 @@
-//needs change
 import treeImage from "@/assets/meditation-images/trees.webp";
 import meditatingUnderTree from "@/assets/meditation-images/meditate-under-tree.webp";
 import riverImage from "@/assets/meditation-images/river.webp";

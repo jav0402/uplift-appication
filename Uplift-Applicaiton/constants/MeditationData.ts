@@ -1,4 +1,3 @@
-//needs change
 export interface MeditationType {
     id: number;
     title: string;

@@ -17,4 +17,4 @@ const AppGradient = ({
   )
 }
 
-export default AppGradient
+export default AppGradient;
