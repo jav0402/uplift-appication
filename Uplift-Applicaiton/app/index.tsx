@@ -1,16 +1,12 @@
-import React from 'react';
-import { View, Text, ImageBackground } from 'react-native';
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StatusBar } from 'expo-status-bar';
-import { LinearGradient } from "expo-linear-gradient";
+import { View, Text, ImageBackground, SafeAreaView } from 'react-native'
+import React from 'react'
+import {LinearGradient} from "expo-linear-gradient"
+import { StatusBar } from 'expo-status-bar'
 
 
 
 import beachimg from "@/assets/meditation-images/beach.webp"
 import CustomButton from '@/componets/CustomButton'
-import { useRouter } from 'expo-router';
-import AppGradient from '@/componets/AppGradient';
-
 
 const index = () => {
 	const router = useRouter();
@@ -34,14 +30,11 @@ const index = () => {
 							</Text>
 						</View>
 
-						<View>
-							<CustomButton  
-								// onPress={() => console.log("button pressed")} 
-								onPress={() => router.push('/nature')} 
-
-								title="Test"
-							/>
-						</View>
+              <View>
+                <CustomButton onPress={() => console.log("button pressed")} 
+                title="get started"
+                />
+              </View>
 
 						<StatusBar style="light"/>
 					
@@ -73,9 +66,9 @@ const index = () => {
 				</AppGradient> */}
 				{/* <Text>app</Text> */}
 
-			</ImageBackground>
-		</View>
-	)
+      </ImageBackground>
+    </View>
+  )
 }
 
 export default index
