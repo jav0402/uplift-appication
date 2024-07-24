@@ -1,5 +1,7 @@
 import { View, Text, TouchableOpacity} from 'react-native'
 import React from 'react'
+import { styled } from "nativewind";
+
 
 interface CustomButtonProps {
     onPress: () => void;
@@ -8,27 +10,43 @@ interface CustomButtonProps {
     containerStyles?: string;
 }
 
+
 const CustomButton = ({
-    onPress, 
-    title, 
-    textStyles = "", 
+    onPress,
+    title,
+    textStyles = "",
     containerStyles = "",
 }: CustomButtonProps) => {
-  return (
-    <TouchableOpacity 
-        activeOpacity={0.7}
-        className={`bg-white rounded-xl min-h-[62px] justify-center items-center  ${containerStyles}`}
-        onPress={onPress}
-    >
-        <Text className={`font-semibold text-lg ${textStyles}`}>
-            {title}
-        </Text>
+    return (
 
-    </TouchableOpacity>
-  )
-}
+        <TouchableOpacity
+            activeOpacity={0.7}
+            style={{
+                backgroundColor: 'white',
+                borderRadius: 10,
+                minHeight: 62,
+                justifyContent: 'center',
+                alignItems: 'center',
+                ...containerStyles // Spread operator for any additional styles
+            }}
+            onPress={onPress}
+        >
+            <Text
+                style={{
+                    color: 'blue', // Assuming primary is blue
+                    fontWeight: '600',
+                    fontSize: 18,
+                    ...textStyles // Spread operator for any additional styles
+                }}
+            >
+                {title}
+            </Text>
+        </TouchableOpacity>
+        
+    );
+};
 
 export default CustomButton;
 
 // 
-//   
+//          
