@@ -7,6 +7,7 @@ import { StatusBar } from 'expo-status-bar'
 
 import beachimg from "@/assets/meditation-images/beach.webp"
 import CustomButton from '@/componets/CustomButton'
+import AppGradient from '@/componets/AppGradient'
 
 const index = () => {
 	const router = useRouter();
