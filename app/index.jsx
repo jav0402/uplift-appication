@@ -13,7 +13,7 @@ export default function App() {
 
         <StatusBar style="auto" />
 
-        <Link href={'/profile'} style={{color:'blue'}}> link to profile</Link>
+        <Link href={'/home'} style={{color:'blue'}}> link to profile</Link>
         
       </SafeAreaView>
 
