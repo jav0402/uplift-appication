@@ -9,9 +9,12 @@ export default function App() {
     <View className='flex-[1] items-center justify-center bg-off-white'>
       <SafeAreaView>
 
-        <Text className='text-3xl'>UpLift</Text>
+        <Text className='text-3xl font-pblack '>UpLift</Text>
+
         <StatusBar style="auto" />
+
         <Link href={'/profile'} style={{color:'blue'}}> link to profile</Link>
+        
       </SafeAreaView>
 
     </View>
