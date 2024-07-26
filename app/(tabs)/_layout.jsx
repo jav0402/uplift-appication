@@ -18,7 +18,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
                 tintColor={color}
                 className="w-6 h-6"
             />
-            <Text className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`} >
+            <Text className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`} style={{color:color}} >
                 {name}
             </Text>
         </View>
@@ -31,7 +31,16 @@ const TabsLayout = () => {
     <>
      <Tabs
         screenOptions={{
-            tabBarShowLabel: false
+            tabBarShowLabel: false,
+            tabBarActiveBackgroundColor: '',
+            tabBarInactiveTintColor: '',
+            tabBarStyle:{
+                backgroundColor:'',
+                borderTopWidth: 1,
+                borderTopColor: '',
+                height: 84,
+
+            }
         }}
      >
         <Tabs.Screen
@@ -46,9 +55,7 @@ const TabsLayout = () => {
                         name='home'
                         focused={focused}
                     />
-            )
-
-
+                )
             }}
         />
         <Tabs.Screen
@@ -63,9 +70,7 @@ const TabsLayout = () => {
                         name='Mood'
                         focused={focused}
                     />
-            )
-
-
+                )
             }}
         />
         <Tabs.Screen
@@ -80,9 +85,7 @@ const TabsLayout = () => {
                         name='Resource'
                         focused={focused}
                     />
-            )
-
-
+                )
             }}
         />
         <Tabs.Screen
@@ -97,12 +100,10 @@ const TabsLayout = () => {
                         name='Profile'
                         focused={focused}
                     />
-            )
-
-
+                )
             }}
         />
-                <Tabs.Screen
+        <Tabs.Screen
             name='Profile'
             options={{
                 title: 'Profile',
@@ -114,11 +115,10 @@ const TabsLayout = () => {
                         name='Profile'
                         focused={focused}
                     />
-            )
-
-
+                )
             }}
         />
+
      </Tabs>
     </>
   )
