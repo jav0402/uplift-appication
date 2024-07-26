@@ -4,40 +4,45 @@ import { Tabs ,Redirect } from 'expo-router'
 
 import { icons } from '../../constants'
 
-const TabIcon = (icon, color, name ,focused) => {
+const TabIcon = ({ icon, color, name, focused }) => {
+    console.log('icon:', icon);  // Debugging line
+    console.log('color:', color);  // Debugging line
+    console.log('focused:', focused);  // Debugging line
+    console.log('name:', name);  // Debugging line
+    
     return (
-        <View>
+        <View >
             <Image
                 source={icon}
                 resizeMode='contain'
                 tintColor={color}
-                classname="w-6 h-6"
+                className="w-6 h-6"
             />
-            <Text classname={`${focused ? 'font-psemibold' : 'font-pregular'} text-ss`}>
+            <Text >
                 {name}
             </Text>
-
         </View>
-    )
-}
-const TabsLayout = () => {
+  );
+};
+
+
+/* const TabsLayout = () => {
   return (
     <>
      <Tabs>
         <Tabs.Screen
             name='home'
             options={{
-            title: 'Home',
-            headerShown: false,
-
-            // tabBarIcon: ({color, focused}) => (
-            //     <TabIcon
-            //         icon={icons.home}
-            //         color={color}
-            //         name='home'
-            //         focused={focused}
-            //     />
-            // )
+                title: 'Home',
+                headerShown: false,
+                tabBarIcon: ({color, focused}) => (
+                    <TabIcon
+                        icon={icons.home}
+                        color={color}
+                        name='home'
+                        focused={focused}
+                    />
+            )
 
 
             }}
@@ -46,7 +51,30 @@ const TabsLayout = () => {
     </>
 
   )
-}
+} */
+const TabsLayout = () => {
+    return (
+        <>
+            <Tabs>
+                <Tabs.Screen
+                    name='home'
+                    options={{
+                        title: 'Home',
+                        headerShown: false,
+                        tabBarIcon: ({ color, focused }) => (
+                            <TabIcon
+                                icon={icons.home}
+                                color={color}
+                                name='home'
+                                focused={focused}
+                            />
+                        )
+                    }}
+                />
+            </Tabs>
+        </>
+    );
+};
 
 // TIME STAMP for tabs to create after login 41:30
 
