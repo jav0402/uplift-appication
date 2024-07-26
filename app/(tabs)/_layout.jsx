@@ -11,14 +11,14 @@ const TabIcon = ({ icon, color, name, focused }) => {
     console.log('name:', name);  // Debugging line
     
     return (
-        <View >
+        <View className="items-center justify-center gap-2">
             <Image
                 source={icon}
                 resizeMode='contain'
                 tintColor={color}
                 className="w-6 h-6"
             />
-            <Text >
+            <Text className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`} >
                 {name}
             </Text>
         </View>
@@ -26,10 +26,14 @@ const TabIcon = ({ icon, color, name, focused }) => {
 };
 
 
-/* const TabsLayout = () => {
+const TabsLayout = () => {
   return (
     <>
-     <Tabs>
+     <Tabs
+        screenOptions={{
+            tabBarShowLabel: false
+        }}
+     >
         <Tabs.Screen
             name='home'
             options={{
@@ -47,34 +51,79 @@ const TabIcon = ({ icon, color, name, focused }) => {
 
             }}
         />
+        <Tabs.Screen
+            name='mood'
+            options={{
+                title: 'Mood',
+                headerShown: false,
+                tabBarIcon: ({color, focused}) => (
+                    <TabIcon
+                        icon={icons.home}
+                        color={color}
+                        name='Mood'
+                        focused={focused}
+                    />
+            )
+
+
+            }}
+        />
+        <Tabs.Screen
+            name='resource'
+            options={{
+                title: 'Resource',
+                headerShown: false,
+                tabBarIcon: ({color, focused}) => (
+                    <TabIcon
+                        icon={icons.home}
+                        color={color}
+                        name='Resource'
+                        focused={focused}
+                    />
+            )
+
+
+            }}
+        />
+        <Tabs.Screen
+            name='profile'
+            options={{
+                title: 'Profile',
+                headerShown: false,
+                tabBarIcon: ({color, focused}) => (
+                    <TabIcon
+                        icon={icons.profile}
+                        color={color}
+                        name='Profile'
+                        focused={focused}
+                    />
+            )
+
+
+            }}
+        />
+                <Tabs.Screen
+            name='Profile'
+            options={{
+                title: 'Profile',
+                headerShown: false,
+                tabBarIcon: ({color, focused}) => (
+                    <TabIcon
+                        icon={icons.profile}
+                        color={color}
+                        name='Profile'
+                        focused={focused}
+                    />
+            )
+
+
+            }}
+        />
      </Tabs>
     </>
-
   )
-} */
-const TabsLayout = () => {
-    return (
-        <>
-            <Tabs>
-                <Tabs.Screen
-                    name='home'
-                    options={{
-                        title: 'Home',
-                        headerShown: false,
-                        tabBarIcon: ({ color, focused }) => (
-                            <TabIcon
-                                icon={icons.home}
-                                color={color}
-                                name='home'
-                                focused={focused}
-                            />
-                        )
-                    }}
-                />
-            </Tabs>
-        </>
-    );
-};
+}
+
 
 // TIME STAMP for tabs to create after login 41:30
 
