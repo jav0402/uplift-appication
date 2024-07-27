@@ -28,19 +28,21 @@ const SignIn = () => {
           <Text className='text-2xl text-white mt-10 font-psemibold text-semibold'>
             login to Uplift
           </Text>
+
           <FormField 
             title='Email'
-            value='form.email'
+            value={form.email}
             handleChangeText={(e) => setForm({ ...form, email:e})}
             otherStyles='mt-7'
             keyboardType='email-address'
           />
           <FormField 
             title='Password'
-            value='form.password'
+            value={form.password}
             handleChangeText={(e) => setForm({ ...form, password:e})}
             otherStyles='mt-7'
           />
+
           <CustomButton
                 title='Sign in'
                 handlePress={() => router.push('/Sign-up')}
@@ -50,6 +52,7 @@ const SignIn = () => {
             <Text className='text-lg text-gray-100 font-pregular '>
               Don't have account?
             </Text>
+
             <Link href={'/Sign-up'} className='text-lg font-pregular text-secondary'>
             Sign up
             </Link>
