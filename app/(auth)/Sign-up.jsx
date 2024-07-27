@@ -32,32 +32,34 @@ const SignUp = () => {
           </Text>
           <FormField 
             title='Email'
-            value='form.email'
+            value={form.email}
             handleChangeText={(e) => setForm({ ...form, email:e})}
             otherStyles='mt-7'
             keyboardType='email-address'
           />
           <FormField 
             title='Password'
-            value='form.password'
+            value={form.password}
             handleChangeText={(e) => setForm({ ...form, password:e})}
             otherStyles='mt-7'
           />
+
           <FormField 
             title='confirm Password'
-            value='form.confirm_password'
+            value={form.confirm_password}
             handleChangeText={(e) => setForm({ ...form, confirm_password:e})}
             otherStyles='mt-7'
           />
+          
           <FormField 
             title='Full Name'
-            value='form.userFullName'
+            value={form.userFullName}
             handleChangeText={(e) => setForm({ ...form, userFullName:e})}
             otherStyles='mt-7'
           />
           <FormField 
             title='Mobile Number'
-            value='form.phone_numberassword'
+            value={form.phone_number}
             handleChangeText={(e) => setForm({ ...form, phone_number:e})}
             otherStyles='mt-7'
           />
