@@ -73,6 +73,7 @@ const SignIn = () => {
 
           <CustomButton
                 title='Sign in'
+                //expo eas 
                 handlePress={(submit) => router.push('/home')}
                 containerStyles='mt-7 '
                 isLoading={isSubmiting}

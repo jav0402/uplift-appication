@@ -24,8 +24,6 @@ module.exports = {
           100: "#FF9001",
           200: "#FF8E01",
         },
-        barColor: "#ffa500",
-
         black: {
           DEFAULT: "#000",
           100: "#1E1E2D",
