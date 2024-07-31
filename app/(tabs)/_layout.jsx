@@ -16,7 +16,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
                 source={icon}
                 resizeMode='contain'
                 tintColor={color}
-                className="w-6 h-6"
+                className="w-6  h-6"
             />
             <Text className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`} style={{color:color}} >
                 {name}
@@ -35,7 +35,7 @@ const TabsLayout = () => {
             tabBarActiveBackgroundColor: '',
             tabBarInactiveTintColor: '',
             tabBarStyle:{
-                backgroundColor:'',
+                backgroundColor:'#ffa500',
                 borderTopWidth: 1,
                 borderTopColor: '',
                 height: 84,
@@ -88,7 +88,7 @@ const TabsLayout = () => {
                 )
             }}
         />
-        <Tabs.Screen
+        {/* <Tabs.Screen
             name='profile'
             options={{
                 title: 'Profile',
@@ -101,8 +101,8 @@ const TabsLayout = () => {
                         focused={focused}
                     />
                 )
-            }}
-        />
+            }} 
+        />*/}
         <Tabs.Screen
             name='Profile'
             options={{

@@ -45,7 +45,7 @@ const SignUp = () => {
           />
 
           <FormField 
-            title='confirm Password'
+            title='Confirm Password'
             value={form.confirm_password}
             handleChangeText={(e) => setForm({ ...form, confirm_password:e})}
             otherStyles='mt-7'
@@ -64,10 +64,15 @@ const SignUp = () => {
             otherStyles='mt-7'
           />
           <CustomButton
-                title='Sign in'
-                handlePress={() => router.push('/Sign-up')}
-                containerStyles='mt-7 '
-              />
+            title='Sign in'
+            handlePress={() => router.push('/Sign-up')}
+            containerStyles='mt-7 '
+          />
+          <CustomButton
+            title='index'
+            handlePress={() => router.push('/home')}
+            containerStyles='mt-7 '
+          />
         </View>
 
         

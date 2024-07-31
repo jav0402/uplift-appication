@@ -8,11 +8,39 @@ import { images } from '../../constants'
 import FormField from '../../components/formField'
 
 const SignIn = () => {
+  
   const [form, setForm] = useState({
     email:'',
     password:''
 
   })
+
+
+  const [isSubmiting,setIsSubmiting] = useState(false)
+  
+  const submit = () => {
+    // if (form.email === "" || form.password === "") {
+    //   Alert.alert("Error", "Please fill in all fields");
+    // }
+
+    // setSubmitting(true);
+
+    // try {
+    //   await signIn(form.email, form.password);
+    //   const result = await getCurrentUser();
+    //   setUser(result);
+    //   setIsLogged(true);
+
+    //   Alert.alert("Success", "User signed in successfully");
+    //   router.replace("/home");
+    // } 
+    // catch (error) {
+    //   Alert.alert("Error", error.message);
+    // } 
+    // finally {
+    //   setSubmitting(false);
+    // }
+  }
 
   return (
     <SafeAreaView 
@@ -45,9 +73,11 @@ const SignIn = () => {
 
           <CustomButton
                 title='Sign in'
-                handlePress={() => router.push('/Sign-up')}
+                handlePress={(submit) => router.push('/home')}
                 containerStyles='mt-7 '
-              />
+                isLoading={isSubmiting}
+          />
+
           <View className='justify-center pt-5 flex-row gap-2'>
             <Text className='text-lg text-gray-100 font-pregular '>
               Don't have account?

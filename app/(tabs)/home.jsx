@@ -1,11 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text, ImageComponent } from 'react-native'
 import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Home = () => {
   return (
-    <View>
+    <SafeAreaView className='bg-primary h-full'>
       <Text>Home</Text>
-    </View>
+    </SafeAreaView>
   )
 }
 
