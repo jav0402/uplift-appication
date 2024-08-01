@@ -19,6 +19,15 @@ const SignIn = () => {
   const [isSubmiting,setIsSubmiting] = useState(false)
   
   const submit = () => {
+
+    /*
+    time spent trying to make this work for login and registration 
+    
+    expo eas 
+
+    total hours spent = 3 
+    */
+
     // if (form.email === "" || form.password === "") {
     //   Alert.alert("Error", "Please fill in all fields");
     // }
