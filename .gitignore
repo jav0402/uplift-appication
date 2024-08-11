@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
 # dependencies
@@ -29,13 +28,13 @@ yarn-error.*
 .DS_Store
 *.pem
 
+# Windows
+%ProgramData%/
+
 # local env files
 .env*.local
 
 # typescript
 *.tsbuildinfo
-=======
-node_modules
->>>>>>> Stashed changes
-node_modules
-node_modules
+
+
