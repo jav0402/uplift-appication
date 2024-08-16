@@ -22,33 +22,15 @@ const SignIn = () => {
 
     /*
     time spent trying to make this work for login and registration 
+
+    https://cloud.appwrite.io/console/organization-66bf057e0037fad42f6f
     
     expo eas 
 
-    total hours spent = 3 
+    total hours spent = 5
+     
     */
 
-    // if (form.email === "" || form.password === "") {
-    //   Alert.alert("Error", "Please fill in all fields");
-    // }
-
-    // setSubmitting(true);
-
-    // try {
-    //   await signIn(form.email, form.password);
-    //   const result = await getCurrentUser();
-    //   setUser(result);
-    //   setIsLogged(true);
-
-    //   Alert.alert("Success", "User signed in successfully");
-    //   router.replace("/home");
-    // } 
-    // catch (error) {
-    //   Alert.alert("Error", error.message);
-    // } 
-    // finally {
-    //   setSubmitting(false);
-    // }
   }
 
   return (
