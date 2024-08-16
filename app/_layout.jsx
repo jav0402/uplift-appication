@@ -1,12 +1,38 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { Slot , SplashScreen, Stack} from 'expo-router'
+import { Slot , SplashScreen, Stack ,useRouter,useSegments} from 'expo-router'
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
+import { useAult,authcontextProvider } from '../context/authContext'
+
 // import { GlobalProvider } from '../context/GloblProvider'
 
 SplashScreen.preventAutoHideAsync();
+
+
+
+
+// const MainLayout =()=>{
+//   const {isAuthenticated}=useAult();
+//   const segments = useSegments();
+//   const router = useRouter();
+
+//   useEffect(()=>{
+//     if(typeof isAuthenticated=='undefined') return;
+//     const inApp = segments[0]=='(tabs)';
+//     if(isAuthenticated && !inApp){
+//       //redirect into home
+//       router.replace('home')
+//     }
+//     else if(isAuthenticated == false){
+//       //redirect to signin
+//       router.replace('Sign-in')
+//     }
+//   },[isAuthenticated])
+//   return <Slot/>
+// }
+
 
 const RootLayout = () => {
  /*  return (
