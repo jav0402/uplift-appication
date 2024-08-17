@@ -25,6 +25,7 @@ const SignIn = () => {
 
   const [isSubmiting,setIsSubmiting] = useState(false)
   
+<<<<<<< HEAD
   const handleLogin = async() => {
     if(!form.email || !form.password){
       Alert.alert('Sign In','Please fill all fields')
