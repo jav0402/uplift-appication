@@ -6,6 +6,7 @@ import { router, Redirect } from 'expo-router';
 import CustomButton from '../../components/customButton';
 import { images } from '../../constants'
 import FormField from '../../components/formField'
+// import { AuthContext,register } from '../../context/authContext';
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -15,7 +16,22 @@ const SignUp = () => {
     userFullName:'',
     phone_number:''
 
-  })
+  });
+  const handleSignUp = () => {
+    const { email, password, confirm_password, userFullName, phone_number } = form;
+    
+    // Basic validation (you can add more comprehensive validation)
+    if (password !== confirm_password) {
+      Alert.alert("Error", "Passwords do not match");
+      return;
+    }
+
+    // Register the user using the SQLite logic
+    register(userFullName, email, password);
+
+    // Navigate to another screen after successful registration (e.g., home or login)
+    router.push('/home');
+  };
   return (
     <SafeAreaView 
       className='bg-primary h-full'
@@ -64,8 +80,8 @@ const SignUp = () => {
             otherStyles='mt-7'
           />
           <CustomButton
-            title='Sign in'
-            handlePress={() => router.push('/Sign-up')}
+            title='Sign up'
+            handlePress={handleSignUp}
             containerStyles='mt-7 '
           />
           <CustomButton
