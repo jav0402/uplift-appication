@@ -38,6 +38,12 @@ const SignIn = () => {
     */
 
     setItAuthenticated(true)
+=======
+  const submit = () => {
+    // if (form.email === "" || form.password === "") {
+    //   Alert.alert("Error", "Please fill in all fields");
+    // }
+>>>>>>> parent of 7eaae2f (msg futre self)
 
 
   }
