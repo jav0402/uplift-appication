@@ -33,6 +33,7 @@ const SignIn = () => {
     }
     /*
     time spent trying to make this work for login and registration 
+<<<<<<< HEAD
 
     total hours spent = 8
      
@@ -47,6 +48,35 @@ const SignIn = () => {
 >>>>>>> parent of 7eaae2f (msg futre self)
 
 
+=======
+    
+    expo eas 
+
+    total hours spent = 3 
+    */
+
+    // if (form.email === "" || form.password === "") {
+    //   Alert.alert("Error", "Please fill in all fields");
+    // }
+
+    // setSubmitting(true);
+
+    // try {
+    //   await signIn(form.email, form.password);
+    //   const result = await getCurrentUser();
+    //   setUser(result);
+    //   setIsLogged(true);
+
+    //   Alert.alert("Success", "User signed in successfully");
+    //   router.replace("/home");
+    // } 
+    // catch (error) {
+    //   Alert.alert("Error", error.message);
+    // } 
+    // finally {
+    //   setSubmitting(false);
+    // }
+>>>>>>> parent of a8391f1 (using appwrite to createa logains and registration)
   }
 
   return (
