@@ -18,9 +18,9 @@ module.exports = {
         // },
 
         
-        primary: "#161622",
+        primary: "#F0EAD6",
         secondary: {
-          DEFAULT: "#FF9C01",
+          DEFAULT: "#FF8C00",
           100: "#FF9001",
           200: "#FF8E01",
         },
