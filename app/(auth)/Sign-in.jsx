@@ -36,9 +36,9 @@ const SignIn = () => {
           <Image
             source={images.logo}
             resizeMode='conatin'
-            className='w-[115] h-[35]'
+            className='w-[120] h-[120]'
           />
-          <Text className='text-2xl text-white mt-10 font-psemibold text-semibold'>
+          <Text className='text-2xl text-secondary mt-10 font-psemibold text-semibold'>
             login to Uplift
           </Text>
 
@@ -65,7 +65,7 @@ const SignIn = () => {
           />
 
           <View className='justify-center pt-5 flex-row gap-2'>
-            <Text className='text-lg text-gray-100 font-pregular '>
+            <Text className='text-lg text-black-100 font-pregular '>
               Don't have account?
             </Text>
 
