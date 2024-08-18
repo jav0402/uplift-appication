@@ -20,27 +20,11 @@ const SignIn = () => {
   const [isSubmiting,setIsSubmiting] = useState(false)
   
   const submit = () => {
-    // if (form.email === "" || form.password === "") {
-    //   Alert.alert("Error", "Please fill in all fields");
-    // }
+    /* 
+    time spent on logic 
 
-    // setSubmitting(true);
-
-    // try {
-    //   await signIn(form.email, form.password);
-    //   const result = await getCurrentUser();
-    //   setUser(result);
-    //   setIsLogged(true);
-
-    //   Alert.alert("Success", "User signed in successfully");
-    //   router.replace("/home");
-    // } 
-    // catch (error) {
-    //   Alert.alert("Error", error.message);
-    // } 
-    // finally {
-    //   setSubmitting(false);
-    // }
+    hours : 8.5
+     */
   }
 
   return (

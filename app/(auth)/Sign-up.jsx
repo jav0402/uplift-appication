@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image } from 'react-native'
+import { View, Text, ScrollView, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router, Redirect } from 'expo-router';
@@ -14,23 +14,42 @@ const SignUp = () => {
     password:'',
     confirm_password:'',
     userFullName:'',
-    phone_number:''
+    Username:''
 
   });
   const handleSignUp = () => {
-    const { email, password, confirm_password, userFullName, phone_number } = form;
+    const { email, password, confirm_password, userFullName, Username } = form;
     
     // Basic validation (you can add more comprehensive validation)
-    if (password !== confirm_password) {
-      Alert.alert("Error", "Passwords do not match");
-      return;
-    }
+    if (!email || !password || !confirm_password || !userFullName || !Username) {
+        if (!email ) {
+            Alert.alert("Error", "Email left Empty");
+            return;
+        }
+
+        if(password==''){
+            Alert.alert("Error", "Passwords not filled in");
+
+        }
+        else if (password != confirm_password) {
+            Alert.alert("Error", "Passwords do not match");
+            return;
+        }
+
+        else {
+            Alert.alert("Error", "fill in all fields");
+            return;
+        }
+
+      }
+    
+      
 
     // Register the user using the SQLite logic
-    register(userFullName, email, password);
+    // register(userFullName,Username, email, password);
 
     // Navigate to another screen after successful registration (e.g., home or login)
-    router.push('/home');
+    router.push('/Sign-in');
   };
   return (
     <SafeAreaView 
@@ -46,6 +65,7 @@ const SignUp = () => {
           <Text className='text-2xl text-white mt-10 font-psemibold text-semibold'>
             login to Uplift
           </Text>
+          
           <FormField 
             title='Email'
             value={form.email}
@@ -74,9 +94,9 @@ const SignUp = () => {
             otherStyles='mt-7'
           />
           <FormField 
-            title='Mobile Number'
+            title='Username'
             value={form.phone_number}
-            handleChangeText={(e) => setForm({ ...form, phone_number:e})}
+            handleChangeText={(e) => setForm({ ...form, Username:e})}
             otherStyles='mt-7'
           />
           <CustomButton
