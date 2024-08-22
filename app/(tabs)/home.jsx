@@ -8,6 +8,8 @@ const Home = () => {
   return (
     <SafeAreaView className='bg-primary h-full'>
       <Text>Home</Text>
+      
+      {/* notifications icon */}
       <View className='items-end mr-5'>
         <MaterialIcons 
           name="notifications"

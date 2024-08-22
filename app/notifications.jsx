@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 5,
         backgroundColor: '#fefce8',
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderColor: '#000000'
     },
     image: {
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     },
     text: {
         paddingLeft: 2,
-        marginTop: 10,
-        fontSize: 20,
+        marginTop: 15,
+        fontSize: 18,
         textAlign:'center'
     },
     row: {
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 });
 
 const Notification = () => {
+    // enable refreshing
     const [refreshing, setRefreshing] = useState(false)
     const onRefresh = async () => {
         setRefreshing(true);
@@ -41,9 +42,13 @@ const Notification = () => {
   return (
     <SafeAreaView className='bg-primary h-full'>
         <FlatList 
-            data={[{ img: icons.profile, msg: "It's time for your daily meditation" }, { img: icons.profile, msg: 'Your weekly mood log review is ready!' }]}
+            data={[
+                { img: icons.profile, msg: "It's time for your daily meditation" }, 
+                { img: icons.profile, msg: 'Your weekly mood log review is ready!' }
+            ]}
             // data={[]}
             keyExtractor={(item) => item.msg}
+            // display notif
             renderItem={({ item }) => (
                 <View style={styles.container}>
                     <View style={styles.row}>
@@ -63,10 +68,10 @@ const Notification = () => {
                     </View>
                 </View>
             )}
-
+            // for empty state
             ListEmptyComponent={() => (
                 <EmptyState
-                    title="You're all caught up"
+                    title="You're all caught up!"
                     subtitle="Come back later for more reminders"
                 />
             )}
@@ -74,10 +79,10 @@ const Notification = () => {
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
         />
 
-<Button
-        title='Home'
-        onPress={()=> router.push('/home')}
-      />
+        <Button
+            title='Home'
+            onPress={()=> router.push('/home')}
+        />
 
     </SafeAreaView>
   )
