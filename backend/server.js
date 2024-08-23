@@ -1,3 +1,4 @@
+process.loadEnvFile('./.env')
 const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
@@ -33,7 +34,7 @@ function getLocalIpAddress() {
 
 const localIp = getLocalIpAddress();
 
-const port = 3000; // Port 3000 is the default port
+const port = process.env.PORT || 3000; // Port 3000 is the default port
 app.listen(port, () => {
     console.log(`Server is running on http://${localIp}:${port}`);
 });
