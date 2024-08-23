@@ -17,7 +17,6 @@ const Profile = () => {
   return (
     <SafeAreaView className="bg-white flex-1">
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-
         {/* Header Section - settings, add friend, profile pic, username, bio */}
         <View className="flex-row justify-between items-center p-4">
           <MaterialIcons name="settings" size={30} color="black" />
@@ -28,7 +27,6 @@ const Profile = () => {
           <Text className="text-lg font-bold">User name</Text>
           <Text className="text-sm text-gray-500">user bio</Text>
         </View>
-
         {/* Evaluations and Mood Tracking */}
         <View className="flex-row justify-around mt-4">
           <View className="items-center">
