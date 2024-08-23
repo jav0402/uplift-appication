@@ -6,6 +6,7 @@ import * as Progress from 'react-native-progress'; // Import the progress bar
 import { icons } from '../../constants'
 
 const Profile = () => {
+  // Hardcoded goals, to be replaced with data from db
   const goals = [
     { id: '1', title: 'Mindful Moments Achiever', description: 'Practice mindfulness daily!', progress: 360, total: 500 },
     { id: '2', title: 'Weekend Warrior', description: 'Two self-care activities on', progress: 1, total: 2 },
@@ -16,31 +17,31 @@ const Profile = () => {
     <SafeAreaView className="bg-white flex-1">
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
         
-        {/* Header Section */}
+        {/* Header Section - settings, add friend, profile pic, username, bio */}
         <View className="flex-row justify-between items-center p-4">
           <MaterialIcons name="settings" size={30} color="black" />
           <Image source={icons.profile} resizeMode='contain' />
           <MaterialIcons name="person-add" size={30} color="black" />
         </View>
         <View className="items-center">
-          <Text className="text-lg font-bold">User name</Text>
+          <Text className="text-2xl font-bold">User name</Text>
           <Text className="text-sm text-gray-500">user bio</Text>
         </View>
         
-        {/* Evaluations and Mood Tracking */}
+        {/* Stats - evaluations and mood tracks count */}
         <View className="flex-row justify-around mt-4">
           <View className="items-center">
-            <Text className="text-lg font-bold">15</Text>
+            <Text className="text-2xl font-bold">15</Text>
             <Text className="text-xs text-gray-500">Evaluations</Text>
           </View>
           <View className="border-r border-gray-300 mx-2"></View>
           <View className="items-center">
-            <Text className="text-lg font-bold">24</Text>
-            <Text className="text-xs text-gray-500">Track mood</Text>
+            <Text className="text-2xl font-bold">24</Text>
+            <Text className="text-xs text-gray-500">Mood tracks</Text>
           </View>
         </View>
 
-        {/* Insights & Stats */}
+        {/* Other stats */}
         <View className="mt-8 px-4">
           <Text className="text-lg font-bold">Insights & Stats</Text>
           <View className="flex-row justify-around mt-4">
