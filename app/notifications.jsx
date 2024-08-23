@@ -6,7 +6,7 @@ import { icons } from '../constants'
 import { router} from 'expo-router';
 
 const Notification = () => {
-    // enable refreshing
+    // Enable refreshing
     const [refreshing, setRefreshing] = useState(false)
     const onRefresh = async () => {
         setRefreshing(true);
@@ -14,14 +14,17 @@ const Notification = () => {
     }
   return (
     <SafeAreaView className='bg-primary h-full'>
+        {/* List of notifications */}
         <FlatList 
             data={[
                 { img: icons.profile, msg: "It's time for your daily meditation" }, 
                 { img: icons.profile, msg: 'Your weekly mood log review is ready!' }
             ]}
+            // Empty data test set:
             // data={[]}
+
             keyExtractor={(item) => item.msg}
-            // display notif
+            // Display notif
             renderItem={({ item }) => (
                 <View className='flex-1 p-1.5 bg-yellow-50 border border-black'>
                     <View className='flex-row flex-wrap'>
@@ -30,6 +33,7 @@ const Notification = () => {
                     </View>
                 </View>
             )}
+            // List header
             ListHeaderComponent={() => (
                 <View className='my-6 px-4 space-y-6'>
                     <View className='justify-between items-start flex-row mb-6'>
@@ -39,17 +43,17 @@ const Notification = () => {
                     </View>
                 </View>
             )}
-            // for empty state
+            // For empty state (No notifications)
             ListEmptyComponent={() => (
                 <EmptyState
                     title="You're all caught up!"
                     subtitle="Come back later for more reminders"
                 />
             )}
-
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
         />
 
+        {/* Back to home button */}
         <Button
             title='Home'
             onPress={()=> router.push('/home')}
