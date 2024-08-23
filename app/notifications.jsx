@@ -1,36 +1,9 @@
-import { View, Text, FlatList, RefreshControl, Image,  StyleSheet, Button} from 'react-native'
+import { View, Text, FlatList, RefreshControl, Image, Button} from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import EmptyState from '../components/emptyState'
 import { icons } from '../constants'
 import { router} from 'expo-router';
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 5,
-        paddingBottom: 5,
-        backgroundColor: '#fefce8',
-        borderWidth: 0.5,
-        borderColor: '#000000'
-    },
-    image: {
-        width: 50,
-        height: 50,
-        margin: 5,
-        resizeMode: 'contain'
-    },
-    text: {
-        paddingLeft: 2,
-        marginTop: 15,
-        fontSize: 18,
-        textAlign:'center'
-    },
-    row: {
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-    }
-});
 
 const Notification = () => {
     // enable refreshing
@@ -50,14 +23,12 @@ const Notification = () => {
             keyExtractor={(item) => item.msg}
             // display notif
             renderItem={({ item }) => (
-                <View style={styles.container}>
-                    <View style={styles.row}>
-                            <Image style={styles.image} source={item.img} />
-                            <Text style={styles.text}>{item.msg}</Text>
+                <View className='flex-1 p-1.5 bg-yellow-50 border border-black'>
+                    <View className='flex-row flex-wrap'>
+                            <Image className='w-12 h-12 m-1.5' style={{ resizeMode: 'contain' }} source={item.img} />
+                            <Text className='pl-0.5 mt-3.5 text-lg text-center'>{item.msg}</Text>
                     </View>
-                    
                 </View>
-                
             )}
             ListHeaderComponent={() => (
                 <View className='my-6 px-4 space-y-6'>
