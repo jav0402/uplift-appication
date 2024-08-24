@@ -122,6 +122,22 @@ const TabsLayout = () => {
             }}
         />
 
+        <Tabs.Screen
+            name='journal'
+            options={{
+                title: 'Journal',
+                headerShown: false,
+                tabBarIcon: ({color, focused}) => (
+                    <TabIcon
+                        icon={icons.profile}
+                        color={color}
+                        name='Journal'
+                        focused={focused}
+                    />
+                )
+            }}
+        />
+
      </Tabs>
     </>
     
