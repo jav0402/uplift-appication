@@ -34,30 +34,30 @@ const Mood = () => {
 
   // Moods data including colors, text, and icons
   const moods = {
-    great: {
-      color: 'bg-green-300',
-      text: "Great",
-      icon: 'face-grin-beam',
-    },
-    happy: {
-      color: 'bg-yellow-300',
-      text: "Happy",
-      icon: 'face-smile',
-    },
-    neutral: {
-      color: 'bg-gray-300',
-      text: "Neutral",
-      icon: 'face-meh',
+    terrible: {
+      color: 'bg-yellow-700',
+      text: "Terrible",
+      icon: 'face-dizzy',
     },
     sad: {
       color: 'bg-blue-300',
       text: "Sad",
       icon: 'face-frown',
     },
-    terrible: {
-      color: 'bg-yellow-700',
-      text: "Terrible",
-      icon: 'face-dizzy',
+    neutral: {
+      color: 'bg-gray-300',
+      text: "Neutral",
+      icon: 'face-meh',
+    },
+    happy: {
+      color: 'bg-yellow-300',
+      text: "Happy",
+      icon: 'face-smile',
+    },
+    great: {
+      color: 'bg-green-300',
+      text: "Great",
+      icon: 'face-grin-beam',
     },
   };
 
@@ -89,7 +89,7 @@ const Mood = () => {
             {/* Current selected mood icon and text display*/}
             <View className="items-center">
               <FontAwesome6 name={moods[mood].icon} size={150} color="white" />
-              <Text className="text-white text-2xl mt-4">I'm Feeling {moods[mood].text}</Text>
+              <Text className="text-white text-2xl font-bold mt-4">I'm Feeling {moods[mood].text}</Text>
             </View>
             {/* Mood selection and buttons display */}
             <View className="items-center">
@@ -119,7 +119,7 @@ const Mood = () => {
                 // Switch to factor selection display
                 onPress={()=> toggleDisplay(mood)}
               >
-                <Text className="text-black text-lg font-bold text-center">Set Mood</Text>
+                <Text className="text-black text-lg font-bold text-center">Continue</Text>
               </TouchableOpacity>
             </View>
           </>
@@ -129,6 +129,7 @@ const Mood = () => {
             {/* Main header display */}
             <View className="items-center">
               <Text className="text-white text-4xl font-bold text-center">What are the factors affecting your mood?</Text>
+              <Text className="text-white text-2xl font-bold mt-4">Mood: {moods[mood].text}</Text>
             </View>
             {/* Factor selection and buttons display */}
             <View className="items-center">
@@ -142,7 +143,7 @@ const Mood = () => {
                     // Toggle factor selection
                     onPress={() => toggleFactor(factor.name)}
                   >
-                    <FontAwesome6 name={factor.icon} color='black' size={30}
+                    <FontAwesome6 name={factor.icon} color='black' size={40}
                     />
                     <Text className="text-black mt-2 text-center">{factor.name}</Text>
                   </TouchableOpacity>
@@ -153,7 +154,7 @@ const Mood = () => {
                 className="bg-white py-4 px-8 mt-8 rounded-full w-[90%]"
                 onPress={storeData}
               >
-                <Text className="text-black text-lg font-bold text-center">Save Factors</Text>
+                <Text className="text-black text-lg font-bold text-center">Submit</Text>
               </TouchableOpacity>
               {/* Back button - to mood selection */}
               <TouchableOpacity
