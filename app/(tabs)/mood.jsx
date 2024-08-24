@@ -35,7 +35,7 @@ const Mood = () => {
   // Moods data including colors, text, and icons
   const moods = {
     terrible: {
-      color: 'bg-yellow-700',
+      color: 'bg-red-300',
       text: "Terrible",
       icon: 'face-dizzy',
     },
@@ -50,7 +50,7 @@ const Mood = () => {
       icon: 'face-meh',
     },
     happy: {
-      color: 'bg-yellow-300',
+      color: 'bg-amber-200',
       text: "Happy",
       icon: 'face-smile',
     },
@@ -115,11 +115,11 @@ const Mood = () => {
               </View>
               {/* Set Mood button */}
               <TouchableOpacity 
-                className="bg-white py-4 px-8 mt-8 rounded-full w-full"
+                className="bg-black py-4 px-8 mt-8 rounded-full w-full"
                 // Switch to factor selection display
                 onPress={()=> toggleDisplay(mood)}
               >
-                <Text className="text-black text-lg font-bold text-center">Continue</Text>
+                <Text className="text-white text-lg font-bold text-center">Continue</Text>
               </TouchableOpacity>
             </View>
           </>
@@ -139,7 +139,7 @@ const Mood = () => {
                   <TouchableOpacity
                     key={index}
                     // Change background colour when selected
-                    className={`p-4 m-2 rounded-lg w-24 items-center ${selectedFactors.includes(factor.name) ? 'bg-orange-300' : 'bg-white'}`}
+                    className={`p-4 m-2 rounded-lg w-24 items-center ${selectedFactors.includes(factor.name) ? 'bg-orange-400' : 'bg-white'}`}
                     // Toggle factor selection
                     onPress={() => toggleFactor(factor.name)}
                   >
@@ -149,16 +149,16 @@ const Mood = () => {
                   </TouchableOpacity>
                 ))}
               </View>
-              {/* Save Factors button */}
+              {/* Submit button */}
               <TouchableOpacity
-                className="bg-white py-4 px-8 mt-8 rounded-full w-[90%]"
+                className="bg-black py-4 px-8 mt-8 rounded-full w-[90%]"
                 onPress={storeData}
               >
-                <Text className="text-black text-lg font-bold text-center">Submit</Text>
+                <Text className="text-white text-lg font-bold text-center">Submit</Text>
               </TouchableOpacity>
               {/* Back button - to mood selection */}
               <TouchableOpacity
-                className="bg-black py-4 px-8 mt-8 rounded-full w-[90%]"
+                className="bg-gray-400 py-4 px-8 mt-4 rounded-full w-[90%]"
                 onPress={()=> toggleDisplay(mood)}
               >
                 <Text className="text-white text-lg font-bold text-center">Back</Text>
