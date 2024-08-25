@@ -1,174 +1,171 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context'
+// import { LineChart } from 'react-native-chart-kit';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { router } from 'expo-router';
 
-const Mood = () => {
-  // Default mood set to 'neutral'
-  const [mood, setMood] = useState('neutral');
-  // Hide factor selection display by default
-  const [factors, setFactors] = useState(false);
-  
-  const [selectedFactors, setSelectedFactors] = useState([]);
-
-  /**
-   * Toggle display from mood selection to factor selection
-   * @param selectedMood - current mood selected
-   * If at mood selection display, setFactors = true and toggle to factor selection
-   * If at factor selection, toggle back to mood selection and reset any selected factors
-   */
-  const toggleDisplay = (selectedMood) => {
-    !factors ? (setMood(selectedMood), setFactors(true)) : (setFactors(false), setSelectedFactors([]))
-  }
-  const toggleFactor = (factor) => {
-    if (selectedFactors.includes(factor)) {
-      setSelectedFactors(selectedFactors.filter((item) => item !== factor));
-    } else {
-      setSelectedFactors([...selectedFactors, factor]);
-    }
-  }
-  // Placeholder function, to be replaced with data storing statements
-  const storeData = () => {
-    console.log("Mood data saved");
-  }
-
-  // Moods data including colors, text, and icons
-  const moods = {
-    terrible: {
-      color: 'bg-red-300',
-      text: "Terrible",
-      icon: 'face-dizzy',
-    },
-    sad: {
-      color: 'bg-blue-300',
-      text: "Sad",
-      icon: 'face-frown',
-    },
-    neutral: {
-      color: 'bg-gray-300',
-      text: "Neutral",
-      icon: 'face-meh',
-    },
-    happy: {
-      color: 'bg-amber-200',
-      text: "Happy",
-      icon: 'face-smile',
-    },
-    great: {
-      color: 'bg-green-300',
-      text: "Great",
-      icon: 'face-grin-beam',
-    },
-  };
-
-  // Factors data, name and icon
-  const factorsList = [
-    { name: 'Work', icon: 'briefcase' },
-    { name: 'School', icon: 'book' },
-    { name: 'Love', icon: 'heart' },
-    { name: 'Friends', icon: 'user-group' },
-    { name: 'Family', icon: 'house-chimney' },
-    { name: 'Money', icon: 'money-bill' },
-    { name: 'Health', icon: 'heart-pulse' },
-    { name: 'Life', icon: 'user-large' },
-    { name: 'None', icon: 'times-circle' },
-  ];
-
-  return (
-    // Background set to selected mood colour
-    <SafeAreaView className={`flex-1 ${moods[mood].color} justify-center items-center`}>
-      <View className="flex-1 justify-evenly">
-        {/* Default: display mood selection */}
-        {!factors ? (
-          // Mood selection display
-          <>
-            {/* Main header display*/}
-            <View className="items-center">
-              <Text className="text-white text-4xl font-bold text-center">How are you feeling today?</Text>
-            </View>
-            {/* Current selected mood icon and text display*/}
-            <View className="items-center">
-              <FontAwesome6 name={moods[mood].icon} size={150} color="white" />
-              <Text className="text-white text-2xl font-bold mt-4">I'm Feeling {moods[mood].text}</Text>
-            </View>
-            {/* Mood selection and buttons display */}
-            <View className="items-center">
-              {/* Mood selection */}
-              <View className="flex-row">
-                {Object.keys(moods).map((key) => (
-                  // User interaction component 
-                  <TouchableOpacity
-                    key={key}
-                    // Set mood as current mood
-                    onPress={() => setMood(key)}
-                    className="mx-2"
-                  >
-                    {/* Display icons for user interaction */}
-                    <FontAwesome6
-                      name={moods[key].icon}
-                      size={40}
-                      // Change colour when active
-                      color={mood === key ? 'white' : 'black'}
-                    />
-                  </TouchableOpacity>
-                ))}
-              </View>
-              {/* Set Mood button */}
-              <TouchableOpacity 
-                className="bg-black py-4 px-8 mt-8 rounded-full w-full"
-                // Switch to factor selection display
-                onPress={()=> toggleDisplay(mood)}
-              >
-                <Text className="text-white text-lg font-bold text-center">Continue</Text>
-              </TouchableOpacity>
-            </View>
-          </>
-        ) : (
-          // Factor selection display
-          <>
-            {/* Main header display */}
-            <View className="items-center">
-              <Text className="text-white text-4xl font-bold text-center">What are the factors affecting your mood?</Text>
-              <Text className="text-white text-2xl font-bold mt-4">Mood: {moods[mood].text}</Text>
-            </View>
-            {/* Factor selection and buttons display */}
-            <View className="items-center">
-              {/* Factors selection */}
-              <View className="flex-row flex-wrap justify-around w-full">
-                {factorsList.map((factor, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    // Change background colour when selected
-                    className={`p-4 m-2 rounded-lg w-24 items-center ${selectedFactors.includes(factor.name) ? 'bg-orange-400' : 'bg-white'}`}
-                    // Toggle factor selection
-                    onPress={() => toggleFactor(factor.name)}
-                  >
-                    <FontAwesome6 name={factor.icon} color='black' size={40}
-                    />
-                    <Text className="text-black mt-2 text-center">{factor.name}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-              {/* Submit button */}
-              <TouchableOpacity
-                className="bg-black py-4 px-8 mt-8 rounded-full w-[90%]"
-                onPress={storeData}
-              >
-                <Text className="text-white text-lg font-bold text-center">Submit</Text>
-              </TouchableOpacity>
-              {/* Back button - to mood selection */}
-              <TouchableOpacity
-                className="bg-gray-400 py-4 px-8 mt-4 rounded-full w-[90%]"
-                onPress={()=> toggleDisplay(mood)}
-              >
-                <Text className="text-white text-lg font-bold text-center">Back</Text>
-              </TouchableOpacity>
-            </View>
-          </>
-        )}
-      </View>
-    </SafeAreaView>
-  );
+function getStaticMoodLogs() {
+    const moodLogs = [
+        { mood: 'great', factors: ['Work', 'Family'], date: new Date() },
+        { mood: 'neutral', factors: ['Friends', 'Love'], date: new Date(Date.now() - 86400000) }, // 1 day ago
+        { mood: 'happy', factors: ['Work'], date: new Date(Date.now() - 2 * 86400000) }, // 2 days ago
+        { mood: 'terrible', factors: ['Health'], date: new Date(Date.now() - 3 * 86400000) }, // 3 days ago
+        { mood: 'sad', factors: ['Money'], date: new Date(Date.now() - 4 * 86400000) }, // 4 days ago
+        { mood: 'terrible', factors: ['Love'], date: new Date(Date.now() - 5 * 86400000) }, // 5 days ago
+    ];
+    return moodLogs;
 }
 
-export default Mood
+const Mood = () => {
+    // State for chart time range (days, weeks, months)
+    const [timeRange, setTimeRange] = useState('days');
+    const [moodLogs, setMoodLogs] = useState([]);
+
+    // Load data on component mount (replace with actual data fetching)
+    useEffect(() => {
+        // Using static data for now
+        const moodLogs = getStaticMoodLogs();
+        setMoodLogs(moodLogs);
+    }, []);
+
+    // Filter by time
+    const filterMoodLogsByTimeRange = (logs, range) => {
+        const now = new Date();
+        let filteredLogs = logs;
+        if (range === 'days') {
+            filteredLogs = logs.filter(log => log.date >= new Date(now.getTime() - 86400000));
+        } else if (range === 'weeks') {
+            filteredLogs = logs.filter(log => log.date >= new Date(now.getTime() - 7 * 86400000));
+        } else if (range === 'months') {
+            filteredLogs = logs.filter(log => log.date >= new Date(now.getTime() - 30 * 86400000));
+        }
+        return filteredLogs;
+    };
+    const filteredLogs = filterMoodLogsByTimeRange(moodLogs, timeRange);
+
+    // Init counts
+    const moodCounts = {
+        great: 0,
+        happy: 0,
+        neutral: 0,
+        sad: 0,
+        terrible: 0
+    };
+    const factorCounts = {};
+    
+    // Count increment logic 
+    filteredLogs.forEach(log => {
+        if (moodCounts[log.mood] !== undefined) {
+            moodCounts[log.mood] += 1;
+        }
+
+        log.factors.forEach(factor => {
+            if (factorCounts[factor]) {
+                factorCounts[factor] += 1;
+            } else {
+            factorCounts[factor] = 1;
+            }
+        });
+    });
+
+    // Convert mood logs to chart data
+    const moodLabels = filteredLogs.map(log => log.date.toDateString());
+    const moodData = filteredLogs.map(log => {
+        switch (log.mood) {
+            case 'great': return 5;
+            case 'happy': return 4;
+            case 'neutral': return 3;
+            case 'sad': return 2;
+            case 'terrible': return 1;
+            default: return 0;
+        }
+    });
+
+    // Mapping moods to icons and colors, factors to name and icons
+    const moods = {
+        terrible: { color: '#fc8181', icon: 'face-dizzy' },
+        sad: { color: '#90cdf4', icon: 'face-frown' },
+        neutral: { color: '#a0aec0', icon: 'face-meh' },
+        happy: { color: '#f6e05e', icon: 'face-smile' },
+        great: { color: '#68d391', icon: 'face-grin-beam' },
+    };
+    const factorsList = [
+        { name: 'Work', icon: 'briefcase' },
+        { name: 'School', icon: 'book' },
+        { name: 'Love', icon: 'heart' },
+        { name: 'Friends', icon: 'user-group' },
+        { name: 'Family', icon: 'house-chimney' },
+        { name: 'Money', icon: 'money-bill' },
+        { name: 'Health', icon: 'heart-pulse' },
+        { name: 'Life', icon: 'user-large' },
+        { name: 'None', icon: 'times-circle' },
+    ];
+
+    return (
+        <SafeAreaView className="flex-1 bg-primary">
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="flex-1">
+                {/* Page header */}
+                <Text className="text-3xl text-black font-bold m-5">Mood Stats</Text>
+                {/* Filter row */}
+                <View className="flex-row justify-evenly items-center p-4">
+                    {['days', 'weeks', 'months'].map((range) => (
+                        <TouchableOpacity
+                        key={range}
+                        onPress={() => setTimeRange(range)}
+                        className={`px-4 py-2 mx-1 rounded-full ${timeRange === range ? 'bg-secondary' : 'bg-black'}`}
+                        >
+                        <Text className="text-white capitalize">{range}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+
+                {/* Line chart */}
+                
+
+                {/* Mood Counts */}
+                <View className="bg-black rounded-2xl m-4 w-[90%] self-center">
+                    {/* Title */}
+                    <Text className="text-base text-white font-psemibold m-4">Mood History</Text>
+                    {/* Display icons and counts for each mood */}
+                    <View className="flex-row justify-around py-4"> 
+                        {Object.keys(moodCounts).map((key) => (
+                            <View key={key} className="items-center">
+                                <FontAwesome6 name={moods[key].icon} size={40} color={moods[key].color} />
+                                <Text className="text-white mt-2">{`${key.charAt(0).toUpperCase() + key.slice(1)}: ${moodCounts[key]}`}</Text>
+                            </View>
+                        ))}
+                    </View>
+                </View>
+                
+                {/* Factor Counts */}
+                <View className="bg-black rounded-2xl m-4 w-[90%] self-center">
+                    {/* Title */}
+                    <Text className="text-base text-white font-psemibold m-4">Factors History</Text>
+                    {/* Allow horizontal scrolling */}
+                    <ScrollView className="flex-row m-4" horizontal={true} showsHorizontalScrollIndicator={false}>
+                        {Object.keys(factorCounts).map((key) => (
+                            <View key={key} className="mx-4 items-center">
+                                <FontAwesome6 name={factorsList.find((f) => f.name === key)?.icon} size={30} color="white" />
+                                <Text className="text-white mt-2 text-center">{`${key}: ${factorCounts[key]}`}</Text>
+                            </View>
+                        ))}
+                    </ScrollView>
+                </View>
+            </ScrollView>
+
+                {/* Button navigating to log new mood page */}
+                <View className="absolute bottom-6 w-full items-center">
+                    <TouchableOpacity
+                    className="bg-black items-center justify-center rounded-full w-16 h-16"
+                    onPress={() => router.push('../mood-logging')}
+                    >
+                    <Text className="text-white text-2xl">+</Text>
+                    </TouchableOpacity>
+                </View>
+                    
+        </SafeAreaView>
+    );
+};
+
+export default Mood;
