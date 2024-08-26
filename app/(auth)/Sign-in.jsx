@@ -56,14 +56,14 @@ const SignIn = () => {
     <SafeAreaView 
       className='bg-primary h-full'
     >
-      <ScrollView>
-        <View className='w-full justify-center h-full px-4 py-6'>
+      <ScrollView >
+        <View className='w-full flex-start h-full px-4 py-6'>
           <Image
             source={images.logo}
             resizeMode='contain'
-            className='w-[115] h-[35]'
+            className=' w-40 h-40 '
           />
-          <Text className='text-2xl text-secondary mt-10 mb-2 font-semibold '>
+          <Text className='text-2xl text-secondary font-semibold '>
             Login to Uplift
           </Text>
 
@@ -89,20 +89,21 @@ const SignIn = () => {
                 isLoading={isSubmiting}
           />
 
-          <View className='justify-center pt-5 flex-row gap-2'>
-            <Text className='text-lg text-gray-100 font-pregular '>
-              Don't have an account?
-            </Text>
-
-            <Link href={'/Sign-up'} className='text-lg font-pregular text-secondary'>
-            Sign up
-            </Link>
-
-          </View>
+          
         </View>
 
         
       </ScrollView>
+      <View className='justify-center p-5 flex-row gap-2'>
+            <Text className='text-lg'>
+              Don't have an account?
+            </Text>
+
+            <Link href={'/Sign-up'} className='text-lg text-secondary'>
+            Sign up here
+            </Link>
+
+          </View>
 
     </SafeAreaView>
   )

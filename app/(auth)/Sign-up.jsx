@@ -44,13 +44,13 @@ const SignUp = () => {
      
       <ScrollView  contentContainerStyle={{ flexGrow: 1}}>
          {/* Logo and Heading */}
-      <View className='items-center top-10 mb-8'>
+      <View className='items-center '>
             <Image
               source={images.logo}
               resizeMode='contain'
-              className='w-25 h-7'
+              className='w-40 h-40'
             />
-            <Text className='text-2xl text-secondary mt-4 mb-2 font-semibold text-center'>
+            <Text className='text-2xl text-secondary font-semibold text-center'>
               Embark on Wellness
             </Text>
           </View>
