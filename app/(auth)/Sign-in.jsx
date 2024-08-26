@@ -20,6 +20,15 @@ const SignIn = () => {
   const [isSubmiting,setIsSubmiting] = useState(false)
   
   const submit = () => {
+
+    /*
+    time spent trying to make this work for login and registration 
+    
+    expo eas 
+
+    total hours spent = 3 
+    */
+
     // if (form.email === "" || form.password === "") {
     //   Alert.alert("Error", "Please fill in all fields");
     // }
@@ -51,11 +60,11 @@ const SignIn = () => {
         <View className='w-full justify-center h-full px-4 py-6'>
           <Image
             source={images.logo}
-            resizeMode='conatin'
+            resizeMode='contain'
             className='w-[115] h-[35]'
           />
-          <Text className='text-2xl text-white mt-10 font-psemibold text-semibold'>
-            login to Uplift
+          <Text className='text-2xl text-secondary mt-10 mb-2 font-semibold '>
+            Login to Uplift
           </Text>
 
           <FormField 
@@ -82,7 +91,7 @@ const SignIn = () => {
 
           <View className='justify-center pt-5 flex-row gap-2'>
             <Text className='text-lg text-gray-100 font-pregular '>
-              Don't have account?
+              Don't have an account?
             </Text>
 
             <Link href={'/Sign-up'} className='text-lg font-pregular text-secondary'>
