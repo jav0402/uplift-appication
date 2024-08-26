@@ -5,10 +5,11 @@ import { Tabs ,Redirect } from 'expo-router'
 import { icons } from '../../constants'
 
 const TabIcon = ({ icon, color, name, focused }) => {
-    console.log('icon:', icon);  // Debugging line
-    console.log('color:', color);  // Debugging line
-    console.log('focused:', focused);  // Debugging line
-    console.log('name:', name);  // Debugging line
+    // console.log('icon:', icon);  // Debugging line
+    // console.log('color:', color);  // Debugging line
+    // console.log('focused:', focused);  // Debugging line
+    // console.log('name:', name);  // Debugging line
+    
     
     return (
         <View className="items-center justify-center gap-2">
@@ -27,6 +28,8 @@ const TabIcon = ({ icon, color, name, focused }) => {
 
 
 const TabsLayout = () => {
+    console.log('Signed In')
+
   return (
     <>
      <Tabs
@@ -121,7 +124,9 @@ const TabsLayout = () => {
 
      </Tabs>
     </>
+    
   )
+
 }
 
 

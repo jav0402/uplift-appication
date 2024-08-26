@@ -6,6 +6,7 @@ import { router, Redirect, Link } from 'expo-router';
 import CustomButton from '../../components/customButton';
 import { images } from '../../constants'
 import FormField from '../../components/formField'
+// import { AuthContext,register } from '../../context/authContext';
 
 const SignUp = () => {
   const [form, setForm] = useState({
