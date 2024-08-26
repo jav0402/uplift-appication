@@ -62,7 +62,7 @@ const SignIn = () => {
             resizeMode='contain'
             className='w-[115] h-[35]'
           />
-          <Text className='text-2xl text-white mt-10 font-psemibold text-semibold'>
+          <Text className='text-2xl text-secondary mt-10 mb-2 font-semibold '>
             Login to Uplift
           </Text>
 

@@ -23,6 +23,7 @@ module.exports = {
           DEFAULT: "#FF8C00",
           100: "#FF9001",
           200: "#FF8E01",
+          300: "#F8F0E3"
         },
         black: {
           DEFAULT: "#000",

@@ -40,18 +40,19 @@ const SignUp = () => {
 
   return (
     <SafeAreaView className='bg-primary flex-1'>
-      {/* Logo and Heading */}
-      <View className='items-center top-20 mb-8'>
+     
+      <ScrollView  contentContainerStyle={{ flexGrow: 1}}>
+         {/* Logo and Heading */}
+      <View className='items-center top-10 mb-8'>
             <Image
               source={images.logo}
               resizeMode='contain'
-              className='w-32 h-10'
+              className='w-25 h-7'
             />
-            <Text className='text-3xl text-secondary mt-4 mb-2 font-semibold text-center'>
+            <Text className='text-2xl text-secondary mt-4 mb-2 font-semibold text-center'>
               Embark on Wellness
             </Text>
           </View>
-      <ScrollView  contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
         <View className='w-full px-6 py-8'>
 
           {step === 1 && (
@@ -93,7 +94,7 @@ const SignUp = () => {
             title='Password'
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password:e})}
-            otherStyles='mt-4 mb-4'
+            otherStyles='mb-4'
             // placeholder='Enter your password'
             secureTextEntry
           />
@@ -123,7 +124,7 @@ const SignUp = () => {
           
         </View>
       </ScrollView>
-      <View className='bottom-10 flex-row justify-center items-center'>
+      <View className='p-5 flex-row justify-center items-center'>
             <Text className='text-lg'>
               Already have an account?
             </Text>
