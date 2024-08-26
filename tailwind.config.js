@@ -18,9 +18,9 @@ module.exports = {
         // },
 
         
-        primary: "#161622",
+        primary: "#F0EAD6",
         secondary: {
-          DEFAULT: "#FF9C01",
+          DEFAULT: "#FF8C00",
           100: "#FF9001",
           200: "#FF8E01",
         },
@@ -31,7 +31,8 @@ module.exports = {
         },
 
         gray: {
-          100: "#CDCDE0",
+          DEFAULT: "#FFFFFF",
+          100: "#2F4F4F",
         },
 
       },

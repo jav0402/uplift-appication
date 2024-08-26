@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "UpLift",
-    "slug": "uplift",    
+    "slug": "uplift",
     "scheme": "uplift",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -25,7 +25,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ]
   }
 }

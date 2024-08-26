@@ -1,7 +1,7 @@
-import { View, Text, ScrollView, Image } from 'react-native'
+import { View, Text, ScrollView, Image, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { router, Redirect } from 'expo-router';
+import { router, Redirect, Link } from 'expo-router';
 
 import CustomButton from '../../components/customButton';
 import { images } from '../../constants'
@@ -15,69 +15,122 @@ const SignUp = () => {
     userFullName:'',
     phone_number:''
 
-  })
+  });
+
+  const [step, setStep] = useState(1);
+
+  const handleNextStep = () => {
+    if (step < 2) setStep(step + 1);
+  };
+
+  const handlePrevStep = () => {
+    if (step > 1) setStep(step - 1);
+  };
+
+   // Add form validation logic here
+   const handleSignUp = () => {
+    // Perform validation and sign up logic
+    if (form.password !== form.confirm_password) {
+      alert('Passwords do not match');
+      return;
+    }
+    // Add actual sign-up logic here
+    // router.push('/Sign-up');
+  };
+
   return (
-    <SafeAreaView 
-      className='bg-primary h-full'
-    >
-      <ScrollView>
-        <View className='w-full justify-center h-full px-4 py-6'>
-          <Image
-            source={images.logo}
-            resizeMode='conatin'
-            className='w-[115] h-[35]'
+    <SafeAreaView className='bg-primary flex-1'>
+      {/* Logo and Heading */}
+      <View className='items-center top-20 mb-8'>
+            <Image
+              source={images.logo}
+              resizeMode='contain'
+              className='w-32 h-10'
+            />
+            <Text className='text-3xl text-secondary mt-4 mb-2 font-semibold text-center'>
+              Embark on Wellness
+            </Text>
+          </View>
+      <ScrollView  contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+        <View className='w-full px-6 py-8'>
+
+          {step === 1 && (
+            <>
+          <FormField 
+            title='Full name'
+            value={form.userFullName}
+            handleChangeText={(e) => setForm({ ...form, userFullName:e})}
+            otherStyles='mb-4 '
+            
           />
-          <Text className='text-2xl text-white mt-10 font-psemibold text-semibold'>
-            login to Uplift
-          </Text>
+
+          <FormField 
+            title='Mobile Number'
+            value={form.phone_number}
+            handleChangeText={(e) => setForm({ ...form, phone_number:e})}
+            otherStyles='mb-4 border-secondary text-red-500 bg-primary'
+            
+            keyboardType='phone-pad'
+          />
+
           <FormField 
             title='Email'
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email:e})}
-            otherStyles='mt-7'
+            otherStyles='mb-4'
             keyboardType='email-address'
+            
           />
+          <View className='flex-row justify-end'>
+                <CustomButton title='Next' handlePress={handleNextStep} containerStyles='mt-6 w-1/3' />
+          </View>
+            </>
+          )}
+
+          {step === 2 && (
+            <>
           <FormField 
             title='Password'
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password:e})}
-            otherStyles='mt-7'
+            otherStyles='mt-4 mb-4'
+            // placeholder='Enter your password'
+            secureTextEntry
           />
 
           <FormField 
             title='Confirm Password'
             value={form.confirm_password}
             handleChangeText={(e) => setForm({ ...form, confirm_password:e})}
-            otherStyles='mt-7'
+            otherStyles='mb-4'
+            // placeholder='Confirm your password'
+            secureTextEntry
           />
           
-          <FormField 
-            title='Full Name'
-            value={form.userFullName}
-            handleChangeText={(e) => setForm({ ...form, userFullName:e})}
-            otherStyles='mt-7'
-          />
-          <FormField 
-            title='Mobile Number'
-            value={form.phone_number}
-            handleChangeText={(e) => setForm({ ...form, phone_number:e})}
-            otherStyles='mt-7'
-          />
-          <CustomButton
-            title='Sign in'
-            handlePress={() => router.push('/Sign-up')}
-            containerStyles='mt-7 '
-          />
-          <CustomButton
-            title='index'
-            handlePress={() => router.push('/home')}
-            containerStyles='mt-7 '
-          />
+          <View className='flex-row justify-center px-3 '>
+                <CustomButton title='Back' handlePress={handlePrevStep} containerStyles='mt-6 w-1/3 mr-3' />
+                <CustomButton title='Sign up' handlePress={handleSignUp} containerStyles='mt-6 w-1/3 ml-2' />
+              </View>
+
+              <TouchableOpacity onPress={() => router.push('/home')} className='mt-4'>
+                <Text className='text-lg text-center text-secondary'>
+                  Go to Home
+                </Text>
+              </TouchableOpacity>
+            </>
+          )}
+
+          
         </View>
-
-        
       </ScrollView>
-
+      <View className='bottom-10 flex-row justify-center items-center'>
+            <Text className='text-lg'>
+              Already have an account?
+            </Text>
+            <Link href='/Sign-in' className='text-lg text-secondary ml-2'>
+              Sign In
+            </Link>
+          </View>
     </SafeAreaView>
   )
 }
