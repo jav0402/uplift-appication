@@ -37,4 +37,5 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-
+# Database
+*.db
