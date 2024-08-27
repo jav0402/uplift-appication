@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-import { getCurrentUser } from "../lib/user.js";
+import { getCurrentUser } from "../lib/user";
 
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
