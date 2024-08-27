@@ -126,6 +126,11 @@ export default function App() {
                 handlePress={() => router.push('/Sign-up')}
                 containerStyles='mt-5 '
               />
+                            <CustomButton
+                title='home'
+                handlePress={() => router.push('/home')}
+                containerStyles='mt-5 '
+              />
 
               {/* subject to change dependign on the color */}
 

@@ -1,6 +1,7 @@
-import { View, Text,button, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, Button, StyleSheet, ScrollView } from 'react-native'
 import React, {useState , useEffect} from 'react'
-import {RadioButton } from 'react-native-paper'
+import { RadioButton } from 'react-native-paper'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 const shuffleArray=(array) => {
@@ -79,9 +80,86 @@ const quiz = () => {
   }
 
   return (
-    <View>
-      <Text>quiz</Text>
-    </View>
+    <SafeAreaView className='bg-slate-200 p-5'>
+      <ScrollView>
+        <Text className='text-2xl font-bold text-center mb-5'>
+          Basic Self Evaluation Quiz 
+        </Text>
+
+        {/* Anxiety Questions */}
+        <Text className='text-xl font-semibold mt-5 mb-3'>Anxiety</Text>
+        {anxQn.map((question, index) => (
+          <View key={index} className='mb-5'>
+            <Text className='text-lg mb-3'>
+              {question}
+            </Text>
+            <RadioButton.Group onValueChange={(value) => {
+              console.log('Selected value:', value);
+              handleAnsChange(setAnxietyAns, index, parseInt(value));}}
+              value={anxietyAns[index].toString()}>
+              <View className='flex-row-reverse justify-between'>
+                {[5, 4, 3, 2, 1].map(value => (
+                  <View key={value} className='mr-2 ml-2'>
+                    <Text className='text-center mb-1'>{value === 5 ? "SA" : value === 1 ? "SD" : `${value}`}</Text>
+                    <View className='bg-blue-200 rounded-full p-2'>
+                      <RadioButton value={value.toString()} />
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </RadioButton.Group>
+          </View>
+        ))}
+
+        {/* Depression Questions */}
+        <Text className='text-xl font-semibold mt-5 mb-3'>Depression</Text>
+        {depQn.map((question, index) => (
+          <View key={index} className='mb-5'>
+            <Text className='text-lg mb-3'>
+              {question}
+            </Text>
+            <RadioButton.Group onValueChange={(value) => handleAnsChange(setDepressionAns, index, parseInt(value))}
+              value={depressionAns[index].toString()}>
+              <View className='flex-row-reverse justify-between'>
+                {[5, 4, 3, 2, 1].map(value => (
+                  <View key={value} className='mr-2 ml-2'>
+                    <Text className='text-center mb-1'>{value === 5 ? "SA" : value === 1 ? "SD" : `${value}`}</Text>
+                    <View className='bg-blue-200 rounded-full p-2'>
+                      <RadioButton value={value.toString()} />
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </RadioButton.Group>
+          </View>
+        ))}
+
+        {/* Other Mental Health Concerns Questions */}
+        <Text className='text-xl font-semibold mt-5 mb-3'>Other Mental Health Concerns</Text>
+        {otherQn.map((question, index) => (
+          <View key={index} className='mb-5'>
+            <Text className='text-lg mb-3'>
+              {question}
+            </Text>
+            <RadioButton.Group onValueChange={(value) => handleAnsChange(setOtherAns, index, parseInt(value))}
+              value={otherAns[index].toString()}>
+              <View className='flex-row-reverse justify-between'>
+                {[5, 4, 3, 2, 1].map(value => (
+                  <View key={value} className='mr-2 ml-2'>
+                    <Text className='text-center mb-1'>{value === 5 ? "SA" : value === 1 ? "SD" : `${value}`}</Text>
+                    <View className='bg-blue-200 rounded-full p-2'>
+                      <RadioButton value={value.toString()} />
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </RadioButton.Group>
+          </View>
+        ))}
+
+        <Button title="Submit" onPress={handleSubmit} />
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
