@@ -9,8 +9,8 @@ const TabIcon = ({ icon, color, name, focused }) => {
     // console.log('color:', color);  // Debugging line
     // console.log('focused:', focused);  // Debugging line
     // console.log('name:', name);  // Debugging line
-    
-    
+
+
     return (
         <View className="items-center justify-center gap-2">
             <Image
@@ -28,8 +28,6 @@ const TabIcon = ({ icon, color, name, focused }) => {
 
 
 const TabsLayout = () => {
-    console.log('Signed In')
-
   return (
     <>
      <Tabs
@@ -104,7 +102,7 @@ const TabsLayout = () => {
                         focused={focused}
                     />
                 )
-            }} 
+            }}
         />*/}
         <Tabs.Screen
             name='Profile'
@@ -124,7 +122,7 @@ const TabsLayout = () => {
 
      </Tabs>
     </>
-    
+
   )
 
 }

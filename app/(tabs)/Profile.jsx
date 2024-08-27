@@ -4,8 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress'; // Import the progress bar
 import { icons } from '../../constants'
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const Profile = () => {
+
+ const { user } = useGlobalContext();
 
   // Hardcoded goals, to be replaced with data from db
   const goals = [
@@ -24,7 +27,7 @@ const Profile = () => {
           <MaterialIcons name="person-add" size={30} color="black" />
         </View>
         <View className="items-center">
-          <Text className="text-lg font-bold">User name</Text>
+          <Text className="text-lg font-bold">{user.name}</Text>
           <Text className="text-sm text-gray-500">user bio</Text>
         </View>
         {/* Evaluations and Mood Tracking */}

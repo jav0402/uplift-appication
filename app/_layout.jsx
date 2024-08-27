@@ -3,24 +3,11 @@ import React from 'react'
 import { Slot , SplashScreen, Stack} from 'expo-router'
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
-import { StatusBar } from 'expo-status-bar'
-// import { GlobalProvider } from '../context/GloblProvider'
+import  GlobalProvider from '../context/GlobalProvider'
 
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
- /*  return (
-    <View style = {styles.container}>
-      <Text>RootLayout</Text>
-    </View>
-  ) */
-/*   return (
-    <>
-      <Text>Header</Text>
-        <Slot />
-      <Text>footer</Text>
-    </>
-  ) */
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
@@ -36,7 +23,7 @@ const RootLayout = () => {
   useEffect(() => {
     if(error) throw error;
 
-    if(fontsLoaded){ 
+    if(fontsLoaded){
       SplashScreen.hideAsync();
     }
   },[fontsLoaded, error])
@@ -46,27 +33,17 @@ const RootLayout = () => {
   }
 
   return(
-    // <GlobalProvider>
+    <GlobalProvider>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="search/[query]" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="search/[query]" options={{ headerShown: false }} />*/}
         <Stack.Screen name="notifications" options={{ headerShown: false }} />
       </Stack>
-    // </GlobalProvider>
+    </GlobalProvider>
   )
 }
 
 export default RootLayout;
 
-// const styles = StyleSheet.create({
-//     container: {
-//         display: 'flex',
-//         flex: 1 ,
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//     }
-// })
-
-//
