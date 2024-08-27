@@ -70,14 +70,22 @@ passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'passwor
 // User registration
 router.post('/register', async (req, res) => {
     try {
-        const { email, username, password } = req.body;
+        const { email, password, name, phone_number } = req.body;
         const salt = crypto.randomBytes(16);
         const hashedPassword = await hashPassword(password, salt);
-        await dbRun(db, "INSERT INTO users_auth (username, hashed_password, salt, email) VALUES (?, ?, ?, ?)", [username, hashedPassword, salt, email]);
-
-        return res.status(200); // User registration successful
-
+        await dbRun(db, "INSERT INTO users_auth ( hashed_password, salt, email) VALUES (?, ?, ?)", [hashedPassword, salt, email]);
+        await dbRun(db,
+            "INSERT INTO users_info (user_id, name, email, phone_no) VALUES ((SELECT id FROM users_auth WHERE email = ?), ?, ?, ?)",
+            [
+                email,
+                name,
+                email,
+                phone_number
+            ]
+        );
+        return res.status(200).send("User registration successful") // User registration successful
     } catch (err) {
+        console.log(err);
         return res.status(500).send("User registration failed");
     }
 });
@@ -88,22 +96,31 @@ router.post('/login', (req, res, next) => {
         if (err) {
             return next(err);
         }
+
         if (!user) {
             return res.status(401).send("Incorrect username or password.")
         }
 
         // Get user data
-        const { email, username, id } = user;
+        const { email, id } = user;
         // Create a JWT token
-        const token = jwt.sign({ id, username, email }, JWT_SECRET);
+        const token = jwt.sign({ id, email }, JWT_SECRET);
 
         return res.status(200).json({ message: "Login successful", token });
     })(req, res, next);
 });
 
 // Protected route
-router.get('/user', authenticateToken, (req, res) => {
-    res.status(200).json({ user: req.user });
+router.get('/user', authenticateToken, async (req, res) => {
+    try {
+        const user = await dbGet(db, "SELECT * FROM users_info WHERE email = ?", [req.user.email]);
+        if (!user) {
+            return res.status(500).send("User not found");
+        }
+        return res.status(200).json(user);
+    } catch (error) {
+        return res.status(500).send("Failed to fetch user data");
+    }
 });
 
 module.exports = router;
