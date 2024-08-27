@@ -24,7 +24,7 @@ const quiz = () => {
   const [depQn, setDepQn] = useState([])
   const [otherQn, setOtherQn] = useState([])
 
-  const anxietyQuestionsList = [
+  const anxietyQnList = [
     "I often feel anxious or worried.",
     "I have trouble sleeping or staying asleep due to anxiety.",
     "I find it difficult to relax or unwind.",
@@ -33,7 +33,7 @@ const quiz = () => {
     "My anxiety makes it hard to focus on tasks."
   ];
 
-  const depressionQuestionsList = [
+  const depressionQnList = [
     "I feel sad or hopeless more often than not.",
     "I struggle with feelings of worthlessness or guilt.",
     "I have difficulty enjoying activities that I used to find pleasurable.",
@@ -42,7 +42,7 @@ const quiz = () => {
     "I have lost interest in things I used to enjoy."
   ];
 
-  const otherQuestionsList = [
+  const otherQnList = [
     "I experience mood swings that affect my daily life.",
     "I have trouble concentrating or making decisions.",
     "I feel tired or fatigued even after a full night's sleep.",
@@ -50,8 +50,34 @@ const quiz = () => {
     "I feel that my mental health is impacting my physical health.",
     "I have physical symptoms like headaches or stomachaches that I believe are related to my mental state."
   ];
+
+  useEffect(() => {
+    setAnxQn(shuffleArray([...anxietyQnList]))
+    setDepQn(shuffleArray([...depressionQnList]))
+    setOtherQn(shuffleArray([...otherQnList]))
+  },[])
   
+  const handleAnsChange = (setAnsFunc, index, value) => {
+    const newAns = [...setAnsFunc]
+    newAns[index] = value 
+    setAnsFunc(newAns)
+  }
+
+  const calculatorScore = (ans) => {
+    return ans.reduce((acc, curr) => acc + curr, 0);
+
+  }
   
+  const handleSubmit = () => {
+    const anxScore = calculatorScore(anxietyAns)
+    const depScore = calculatorScore(depressionAns)
+    const otherScore = calculatorScore(otherAns)
+
+    console.log("anxiety, depression, other ",anxScore," ",depScore," ",otherScore)
+
+    // alert(`anxiety : ${anxScore}, depression : ${depScore}, other : ${otherScore}`)
+  }
+
   return (
     <View>
       <Text>quiz</Text>
