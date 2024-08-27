@@ -10,7 +10,7 @@
     "reset-backend": "rm backend/database.db && sqlite3 backend/database.db < backend/db_schema.sql",
     "server": "node backend/server.js",
     "full": "concurrently --raw --handle-input --kill-others \"npm run start\" \"npm run server\"",
-    "full-reset": "npm run reset-backend && concurrently \"npm run server\" \"npm run start\""
+    "full-reset": "npm run reset-backend && npm run full"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.0.0",
