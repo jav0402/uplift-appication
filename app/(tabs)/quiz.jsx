@@ -25,6 +25,7 @@ const quiz = () => {
   const [depQn, setDepQn] = useState([])
   const [otherQn, setOtherQn] = useState([])
 
+  
   const anxietyQnList = [
     "I often feel anxious or worried.",
     "I have trouble sleeping or staying asleep due to anxiety.",
