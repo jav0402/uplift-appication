@@ -41,6 +41,7 @@ const RootLayout = () => {
         {/* <Stack.Screen name="search/[query]" options={{ headerShown: false }} />*/}
         <Stack.Screen name="notifications" options={{ headerShown: false }} />
         <Stack.Screen name="mood-logging" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="quiz" options={{ headerShown: false }} /> */}
       </Stack>
     </GlobalProvider>
   )
