@@ -60,21 +60,6 @@ const TabsLayout = () => {
             }}
         />
         <Tabs.Screen
-            name='mood'
-            options={{
-                title: 'Mood',
-                headerShown: false,
-                tabBarIcon: ({color, focused}) => (
-                    <TabIcon
-                        icon={icons.home}
-                        color={color}
-                        name='Mood'
-                        focused={focused}
-                    />
-                )
-            }}
-        />
-        <Tabs.Screen
             name='resource'
             options={{
                 title: 'Resource',
@@ -89,6 +74,22 @@ const TabsLayout = () => {
                 )
             }}
         />
+        <Tabs.Screen
+            name='mood'
+            options={{
+                title: 'Mood',
+                headerShown: false,
+                tabBarIcon: ({color, focused}) => (
+                    <TabIcon
+                        icon={icons.home}
+                        color={color}
+                        name='Mood'
+                        focused={focused}
+                    />
+                )
+            }}
+        />
+        
         {/* <Tabs.Screen
             name='profile'
             options={{
@@ -104,6 +105,22 @@ const TabsLayout = () => {
                 )
             }}
         />*/}
+        
+        <Tabs.Screen
+            name='journal'
+            options={{
+                title: 'Journal',
+                headerShown: false,
+                tabBarIcon: ({color, focused}) => (
+                    <TabIcon
+                        icon={icons.profile}
+                        color={color}
+                        name='Journal'
+                        focused={focused}
+                    />
+                )
+            }}
+        />
         <Tabs.Screen
             name='Profile'
             options={{
@@ -120,23 +137,8 @@ const TabsLayout = () => {
             }}
         />
 
-        <Tabs.Screen
-            name='journal'
-            options={{
-                title: 'Journal',
-                headerShown: false,
-                tabBarIcon: ({color, focused}) => (
-                    <TabIcon
-                        icon={icons.profile}
-                        color={color}
-                        name='Journal'
-                        focused={focused}
-                    />
-                )
-            }}
-        />
-
      </Tabs>
+     
     </>
 
   )
