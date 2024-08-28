@@ -7,7 +7,7 @@ BEGIN TRANSACTION;
 
 CREATE TABLE IF NOT EXISTS users_auth (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE NOT NULL,
+    -- username TEXT UNIQUE NOT NULL,
     hashed_password BLOB,
     salt BLOB,
     email TEXT UNIQUE NOT NULL
@@ -16,19 +16,18 @@ CREATE TABLE IF NOT EXISTS users_auth (
 CREATE TABLE IF NOT EXISTS users_info (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER UNIQUE NOT NULL,
-    username TEXT UNIQUE NOT NULL,
-    first_name TEXT NOT NULL,
-    last_name TEXT NOT NULL,
+    name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
-    avatar TEXT,
+    phone_no TEXT,
     FOREIGN KEY(user_id) REFERENCES users_auth(id)
     FOREIGN KEY(email) REFERENCES users_auth(email)
-    FOREIGN KEY(username) REFERENCES users_auth(username)
+    -- username TEXT UNIQUE NOT NULL,
+    -- FOREIGN KEY(username) REFERENCES users_auth(username)
 );
 
 -- Insert default data (if necessary here)
 
--- db.js is used to insert default data into the database as it requires the crypt module to has the password and salt
+-- database-init.js is used to insert default data into the database as it requires the crypt module to has the password and salt
 
 COMMIT;
 
