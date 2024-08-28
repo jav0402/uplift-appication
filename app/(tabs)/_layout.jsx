@@ -104,6 +104,23 @@ const TabsLayout = () => {
                 )
             }}
         />*/}
+
+        <Tabs.Screen
+            name='journal'
+            options={{
+                title: 'Journal',
+                headerShown: false,
+                tabBarIcon: ({color, focused}) => (
+                    <TabIcon
+                        icon={icons.home}
+                        color={color}
+                        name='Journal'
+                        focused={focused}
+                    />
+                )
+            }}
+        />
+
         <Tabs.Screen
             name='Profile'
             options={{
@@ -114,22 +131,6 @@ const TabsLayout = () => {
                         icon={icons.profile}
                         color={color}
                         name='Profile'
-                        focused={focused}
-                    />
-                )
-            }}
-        />
-
-        <Tabs.Screen
-            name='journal'
-            options={{
-                title: 'Journal',
-                headerShown: false,
-                tabBarIcon: ({color, focused}) => (
-                    <TabIcon
-                        icon={icons.profile}
-                        color={color}
-                        name='Journal'
                         focused={focused}
                     />
                 )
