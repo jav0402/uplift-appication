@@ -58,7 +58,7 @@ const Home = () => {
       <ScrollView>
         {/* Header Section */}
         <View className='flex-row justify-between items-center px-5 py-3'>
-          <Text className='text-2xl font-semibold text-black'>{greeting}</Text>
+          <Text className='text-2xl mt-10 font-semibold text-black'>{greeting}</Text>
           <TouchableOpacity onPress={() => router.push('../notifications')}>
             <MaterialIcons name="notifications" size={30} color="orange" />
           </TouchableOpacity>
@@ -72,7 +72,7 @@ const Home = () => {
         </View>
 
         {/* Self-Assessment Tool Navigation */}
-        <View className='mt-8 p-5'>
+        <View className='p-5'>
           <CustomButton
             title="Take Self-Assessment"
             onPress={() => router.push('/self-assessment')}
@@ -100,7 +100,7 @@ const Home = () => {
         </View>
 
         {/* Activity Tracker Section */}
-        <View className='px-5 py-5'>
+        {/* <View className='px-5 py-5'>
           <Text className='text-xl font-semibold text-black mb-3'>Today's Activity</Text>
           <View className='bg-white rounded-lg p-4 shadow'>
             {activityData ? (
@@ -121,9 +121,28 @@ const Home = () => {
               <Text className='text-gray-600'>No activity data available.</Text>
             )}
           </View>
+        </View> */}
 
+        {/* Activity Tracker Section */}
+        <View className='px-5 py-5'>
+          <Text className='text-xl font-semibold text-black mb-3'>Today's Activity</Text>
+          <View className='bg-white rounded-lg p-4 shadow'>
+            <Text className='text-base font-medium text-gray-800 mb-2'>Mindfulness Minutes</Text>
+            <View className='h-2 bg-gray-300 rounded-full mb-3'>
+              <View className='h-full bg-orange-400 rounded-full w-1/2' />
+            </View>
+            <Text className='text-sm text-gray-600'>50/100 minutes</Text>
 
+            <Text className='text-base font-medium text-gray-800 mt-4 mb-2'>Steps Taken</Text>
+            <View className='h-2 bg-gray-300 rounded-full mb-3'>
+              <View className='h-full bg-orange-400 rounded-full w-3/4' />
+            </View>
+            <Text className='text-sm text-gray-600'>7,500/10,000 steps</Text>
+          </View>
         </View>
+
+
+
         {/* Daily Check-In Section */}
         <View className='px-5 py-5'>
           <Text className='text-xl font-semibold text-black mb-3'>How are you feeling today?</Text>
