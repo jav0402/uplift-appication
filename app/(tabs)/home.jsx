@@ -75,7 +75,7 @@ const Home = () => {
         <View className='p-5'>
           <CustomButton
             title="Take Self-Assessment"
-            onPress={() => router.push('/self-assessment')}
+            handlePress={() => router.push('/quiz')}
             color="#FF8C00"
           />
         </View>
@@ -86,13 +86,13 @@ const Home = () => {
           <View className='flex-row justify-center'>
             <CustomButton
               title="Meditation"
-              onPress={() => router.push('../meditation')}
+              handlePress={() => router.push('/meditation')}
               color="#FF8C00"
               containerStyles='mt-6 w-1/2 mr-2'
             />
             <CustomButton
               title="Breathing"
-              onPress={() => router.push('../breathing')}
+              handlePress={() => router.push('/breathing')}
               color="#FF8C00"
               containerStyles='mt-6 w-1/2 ml-2'
             />
