@@ -86,13 +86,13 @@ const Home = () => {
           <View className='flex-row justify-center'>
             <CustomButton
               title="Meditation"
-              handlePress={() => router.push('/meditation')}
+              handlePress={() => router.push('/resource')}
               color="#FF8C00"
               containerStyles='mt-6 w-1/2 mr-2'
             />
             <CustomButton
               title="Breathing"
-              handlePress={() => router.push('/breathing')}
+              handlePress={() => router.push('/resource')}
               color="#FF8C00"
               containerStyles='mt-6 w-1/2 ml-2'
             />
@@ -198,13 +198,13 @@ const Home = () => {
           <View className='flex-row justify-center'>
             <CustomButton
               title="Articles"
-              onPress={() => router.push('../articles')}
+              handlePress={() => router.push('/resource')}
               color="#FF8C00"
               containerStyles='mt-6 w-1/2 mr-2'
             />
             <CustomButton
-              title="Podcasts"
-              onPress={() => router.push('../podcasts')}
+              title="Videos"
+              handlePress={() => router.push('/resource')}
               color="#FF8C00"
               containerStyles='mt-6 w-1/2 ml-2'
             />
