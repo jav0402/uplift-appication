@@ -153,7 +153,7 @@ const quiz = () => {
   const results = (anxScore, depScore, otherScore) => {
     let anxRes, depRes, otherRes;
   
-    // Determine anxiety result
+    // anxiety result
     if (anxScore >= 6 && anxScore <= 12) {
       anxRes = `Low risk anxiety: ${anxScore}`;
     } else if (anxScore >= 13 && anxScore <= 18) {
@@ -162,7 +162,7 @@ const quiz = () => {
       anxRes = `High risk anxiety: ${anxScore}`;
     }
   
-    // Determine depression result
+    // depression result
     if (depScore >= 6 && depScore <= 12) {
       depRes = `Low risk depression: ${depScore}`;
     } else if (depScore >= 13 && depScore <= 18) {
@@ -171,7 +171,7 @@ const quiz = () => {
       depRes = `High risk depression: ${depScore}`;
     }
   
-    // Determine other mental health concerns result
+    // other result
     if (otherScore >= 6 && otherScore <= 12) {
       otherRes = `Low risk other concerns: ${otherScore}`;
     } else if (otherScore >= 13 && otherScore <= 18) {
@@ -179,8 +179,7 @@ const quiz = () => {
     } else if (otherScore >= 19 && otherScore <= 30) {
       otherRes = `High risk other concerns: ${otherScore}`;
     }
-  
-    // Return all results as a combined string
+    
     return `${anxRes}\n${depRes}\n${otherRes}`;
   }
   
