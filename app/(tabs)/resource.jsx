@@ -76,7 +76,6 @@ const Resources = () => {
     );
   }
 
-  // const searchInput = ( {title, value, placeholder, handleChangeText, otherStyles, ...props} )
   return (
     <SafeAreaView className="bg-primary h-full flex-1">
       {/* Search bar */}

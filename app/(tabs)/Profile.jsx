@@ -5,6 +5,7 @@ import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress'; // Import the progress bar
 import { icons } from '../../constants'
 import { useGlobalContext } from '../../context/GlobalProvider';
+import { router } from 'expo-router';
 
 const Profile = () => {
 
@@ -20,11 +21,19 @@ const Profile = () => {
   return (
     <SafeAreaView className="bg-white flex-1">
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-        {/* Header Section - settings, add friend, profile pic, username, bio */}
-        <View className="flex-row justify-between items-center p-4">
-          <MaterialIcons name="settings" size={30} color="black" />
-          <Image source={icons.profile} resizeMode='contain' />
-          <MaterialIcons name="person-add" size={30} color="black" />
+        {/* Header Section - settings, profile pic, username, bio */}
+        <View className="flex-row items-center p-4">
+          <View className="flex-1">
+            <MaterialIcons 
+            name="settings"
+            size={30}
+            color="black"
+            onPress={() => router.push('../settings')} />
+          </View>
+          <View className="flex-1 items-center">
+            <Image source={icons.profile} resizeMode='contain' style={{alignItems: 'center'}} />
+          </View>
+          <View className="flex-1"></View>
         </View>
         <View className="items-center">
           <Text className="text-lg font-bold">{user.name}</Text>

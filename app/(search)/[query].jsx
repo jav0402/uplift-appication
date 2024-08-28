@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import EmptyState from '../../components/emptyState'
-import SearchInput from '../../components/searchInput'
 
 const search = () => {
   const { query } = useLocalSearchParams();
