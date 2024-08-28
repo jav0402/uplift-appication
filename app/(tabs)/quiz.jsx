@@ -144,9 +144,47 @@ const quiz = () => {
     const otherScore = calculateScore('Other');
 
     console.log("Anxiety: ", anxietyScore, "Depression: ", depressionScore, "Other: ", otherScore);
+    
+    const resultMessage = results(anxietyScore,depressionScore,otherScore)
+    alert(resultMessage); 
+    // alert(`Anxiety: ${anxietyScore}, : ${depressionScore}, Other: ${otherScore}`);
+ }
 
-    // alert(`Anxiety: ${anxietyScore}, Depression: ${depressionScore}, Other: ${otherScore}`);
+  const results = (anxScore, depScore, otherScore) => {
+    let anxRes, depRes, otherRes;
+  
+    // Determine anxiety result
+    if (anxScore >= 6 && anxScore <= 12) {
+      anxRes = `Low risk anxiety: ${anxScore}`;
+    } else if (anxScore >= 13 && anxScore <= 18) {
+      anxRes = `Moderate risk anxiety: ${anxScore}`;
+    } else if (anxScore >= 19 && anxScore <= 30) {
+      anxRes = `High risk anxiety: ${anxScore}`;
+    }
+  
+    // Determine depression result
+    if (depScore >= 6 && depScore <= 12) {
+      depRes = `Low risk depression: ${depScore}`;
+    } else if (depScore >= 13 && depScore <= 18) {
+      depRes = `Moderate risk depression: ${depScore}`;
+    } else if (depScore >= 19 && depScore <= 30) {
+      depRes = `High risk depression: ${depScore}`;
+    }
+  
+    // Determine other mental health concerns result
+    if (otherScore >= 6 && otherScore <= 12) {
+      otherRes = `Low risk other concerns: ${otherScore}`;
+    } else if (otherScore >= 13 && otherScore <= 18) {
+      otherRes = `Moderate risk other concerns: ${otherScore}`;
+    } else if (otherScore >= 19 && otherScore <= 30) {
+      otherRes = `High risk other concerns: ${otherScore}`;
+    }
+  
+    // Return all results as a combined string
+    return `${anxRes}\n${depRes}\n${otherRes}`;
   }
+  
+
 
   return (
       <SafeAreaView className='bg-slate-200 p-5'>
@@ -167,7 +205,7 @@ const quiz = () => {
                 <View className='flex-row-reverse justify-between'>
                   {[5, 4, 3, 2, 1].map(value => (
                     <View key={value} className='mr-2 ml-2'>
-                      <Text className='text-center mb-1'>{value === 5 ? "SA" : value === 1 ? "SD" : `${value}`}</Text>
+                      <Text className='text-center mb-1'>{value === 5 ? "S-a" : value === 1 ? "D-a" : `${value}`}</Text>
                       <View className='bg-blue-200 rounded-full p-2'>
                         <RadioButton value={value.toString()} />
                       </View>
@@ -184,5 +222,23 @@ const quiz = () => {
     )
   }
   
+/* 
+Anxiety Score Range:
+6-12: Low anxiety risk.
+13-18: Moderate anxiety.
+19-30: High anxiety.
 
+
+Depression Score Range:
+6-12: Low depression risk.
+13-18: Moderate depression.
+19-30: High depression.
+
+
+Other Mental Health Concerns Score Range:
+6-12: Low risk.
+13-18: Moderate concern.
+19-30: High concern. 
+
+*/
 export default quiz
