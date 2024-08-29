@@ -2,6 +2,7 @@ import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshContr
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import EmptyState from '../../components/emptyState'
+import SearchInput from '../../components/searchInput'
 
 const Resources = () => {
   // Enable refreshing for resources
@@ -77,6 +78,9 @@ const Resources = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full flex-1">
+      {/* Search bar */}
+      <SearchInput />
+
       {/* Filter Section */}
       <View className="px-4 mt-4">
         <Text className="text-lg font-bold">Filter Resources</Text>
