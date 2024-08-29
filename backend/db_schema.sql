@@ -3,8 +3,6 @@ PRAGMA foreign_keys=ON;
 
 BEGIN TRANSACTION;
 
--- Create your tables with SQL commands here (watch out for slight syntactical differences with SQLite vs MySQL)
-
 CREATE TABLE IF NOT EXISTS users_auth (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     -- username TEXT UNIQUE NOT NULL,
@@ -23,6 +21,16 @@ CREATE TABLE IF NOT EXISTS users_info (
     FOREIGN KEY(email) REFERENCES users_auth(email)
     -- username TEXT UNIQUE NOT NULL,
     -- FOREIGN KEY(username) REFERENCES users_auth(username)
+);
+
+CREATE TABLE IF NOT EXISTS quiz (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER UNIQUE NOT NULL,
+    anxiety INTEGER,
+    depression INTEGER,
+    other INTEGER,
+    date TEXT NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users_info(id)
 );
 
 -- Insert default data (if necessary here)
