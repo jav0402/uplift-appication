@@ -33,6 +33,23 @@ CREATE TABLE IF NOT EXISTS quiz (
     FOREIGN KEY(user_id) REFERENCES users_info(id)
 );
 
+CREATE TABLE IF NOT EXISTS mood (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER UNIQUE NOT NULL,
+    mood INTEGER NOT NULL,
+    work INTEGER NOT NULL,
+    school INTEGER NOT NULL,
+    love INTEGER NOT NULL,
+    friends INTEGER NOT NULL,
+    family INTEGER NOT NULL,
+    money INTEGER NOT NULL,
+    health INTEGER NOT NULL,
+    life INTEGER NOT NULL,
+    none INTEGER NOT NULL,
+    date TEXT NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users_info(id)
+);
+
 -- Insert default data (if necessary here)
 
 -- database-init.js is used to insert default data into the database as it requires the crypt module to has the password and salt

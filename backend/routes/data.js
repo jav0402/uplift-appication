@@ -5,15 +5,33 @@ const { dbRun } = require('../utils/db-async');
 const db = require('../utils/database-init');
 
 router.post('/quiz', async (req, res) => {
-    try {
-        const { user_id, anxiety, depression, other, date } = req.body;
-        await dbRun(db, "INSERT INTO quiz (user_id, anxiety, depression, other, date) VALUES (?, ?, ?, ?, ?)", [user_id, anxiety, depression, other, date]);
+    let columns = Object.keys(req.body).join(',');
+    let placeholders = Object.keys(req.body).map(() => '?').join(',');
+    let values = Object.values(req.body);
 
-        return res.status(200).send("Quiz results updated successfully");
-    } catch (error) {
-        console.log(error);
-        return res.status(500).send("Error updating quiz results");
-    }
+    let query = `INSERT INTO quiz (${columns}) VALUES (${placeholders})`;
+    dbRun(db, query, values)
+        .then(() => res.status(200).send("Quiz results updated successfully"))
+        .catch((error) => {
+            console.log(error);
+            return res.status(500).send("Error updating quiz results");
+        });
+
+
+});
+
+router.post('/mood', async (req, res) => {
+    let columns = Object.keys(req.body).join(',');
+    let placeholders = Object.keys(req.body).map(() => '?').join(',');
+    let values = Object.values(req.body);
+
+    let query = `INSERT INTO mood (${columns}) VALUES (${placeholders})`;
+    dbRun(db, query, values)
+        .then(() => res.status(200).send("Mood data updated successfully"))
+        .catch((error) => {
+            console.log(error);
+            return res.status(500).send("Error updating mood data");
+        });
 
 });
 
