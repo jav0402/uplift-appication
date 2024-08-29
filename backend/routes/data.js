@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { dbRun } = require('../utils/db-async');
+const { dbRun, dbGet } = require('../utils/db-async');
 const db = require('../utils/database-init');
 
 router.post('/quiz', async (req, res) => {
@@ -32,7 +32,19 @@ router.post('/mood', async (req, res) => {
             console.log(error);
             return res.status(500).send("Error updating mood data");
         });
-
 });
+
+router.get('/mood', async (req, res) => {
+    let query = `SELECT * FROM mood WHERE user_id = ${req.params.id}`;
+    dbGet(db, query)
+        .then((rows) => {
+            if (!rows) return res.status(404).send("No mood data found");
+            return res.status(200).send(rows)
+        })
+        .catch((error) => {
+            console.log(error);
+            return res.status(500).send("Error retrieving mood data");
+        });
+})
 
 module.exports = router;

@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { BarChart } from 'react-native-gifted-charts';
 import { router } from 'expo-router';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -25,16 +26,12 @@ function getStaticMoodLogs() {
 const Mood = () => {
     // State for chart time range (days, weeks, months)
     const [timeRange, setTimeRange] = useState('days');
-    const [moodLogs, setMoodLogs] = useState([]);
     // State to toggle between moods and factors
     const [viewType, setViewType] = useState('moods');
 
-    // Load data on component mount (replace with actual data fetching)
-    useEffect(() => {
-        // Using static data for now
-        const moodLogs = getStaticMoodLogs();
-        setMoodLogs(moodLogs);
-    }, []);
+    const {user} = useGlobalContext();
+    // Fetches mood data for the current user
+    const {data: moodLogs, isLoading, refetch} = dataHook(() => getMoodData(user));
 
      // Mapping moods to icons and colors, factors to name and icons
      const moods = {
@@ -76,8 +73,8 @@ const Mood = () => {
     // Init counts and chart data
     const moodCounts = { Great: 0, Happy: 0, Neutral: 0, Sad: 0, Terrible: 0 };
     const factorCounts = {};
- 
-    // Count increment logic 
+
+    // Count increment logic
     filteredLogs.forEach(log => {
         if (moodCounts[log.mood] !== undefined) {
             moodCounts[log.mood] += 1;
@@ -105,8 +102,8 @@ const Mood = () => {
     const mostFrequentMood = Object.keys(moodCounts).reduce((a, b) => moodCounts[a] > moodCounts[b] ? a : b);
 
     // Get the most impactful factor
-    const mostImpactfulFactor = Object.keys(factorCounts).length > 0 
-    ? Object.keys(factorCounts).reduce((a, b) => factorCounts[a] > factorCounts[b] ? a : b) 
+    const mostImpactfulFactor = Object.keys(factorCounts).length > 0
+    ? Object.keys(factorCounts).reduce((a, b) => factorCounts[a] > factorCounts[b] ? a : b)
     : 'None';
 
     return (
@@ -213,7 +210,7 @@ const Mood = () => {
                     {/* Title */}
                     <Text className="text-lg text-black font-psemibold m-4">Mood History</Text>
                     {/* Display icons and counts for each mood */}
-                    <View className="flex-row justify-around py-4"> 
+                    <View className="flex-row justify-around py-4">
                         {Object.keys(moodCounts).map((key) => (
                             <View key={key} className="items-center">
                                 <FontAwesome6 name={moods[key].icon} size={40} color={moods[key].color} />
@@ -222,7 +219,7 @@ const Mood = () => {
                         ))}
                     </View>
                 </View>
-                
+
                 {/* Factor Counts */}
                 <View className="bg-amber-50 rounded-2xl m-4 w-[90%] self-center">
                     {/* Title */}
@@ -250,7 +247,7 @@ const Mood = () => {
                     <Text className="text-black text-2xl">+</Text>
                     </TouchableOpacity>
                 </View>
-                    
+
         </SafeAreaView>
     );
 };
