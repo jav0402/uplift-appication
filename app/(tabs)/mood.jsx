@@ -115,13 +115,13 @@ const Mood = () => {
                 {/* Page header */}
                 <Text className="text-3xl text-black font-bold m-5">Mood Stats</Text>
                 {/* Time range selection row */}
-                <View className="flex-row justify-center items-center mx-6 my-4 p-2 bg-black rounded-full">
+                <View className="flex-row justify-center items-center mx-6 my-4 p-2 bg-white rounded-full">
                     {['days', 'weeks', 'months'].map((range) => (
                         <TouchableOpacity
                         key={range}
                         onPress={() => setTimeRange(range)}
                         className={`flex-1 py-3 rounded-full ${
-                            timeRange === range ? 'bg-slate-400' : 'bg-transparent'
+                            timeRange === range ? 'bg-orange-300' : 'bg-transparent'
                         }`}
                         >
                         <Text className={`text-center text-base capitalize ${timeRange === range ? 'text-black' : 'text-gray-500'}`}>
@@ -131,12 +131,12 @@ const Mood = () => {
                     ))}
                 </View>
                 {/* Mood or Factor toggle */}
-                <View className="flex-row justify-center self-center p-2 w-[50%] bg-black rounded-full">
+                <View className="flex-row justify-center self-center p-2 w-[50%] bg-white rounded-full">
                     {/* Moods */}
                     <TouchableOpacity
                     onPress={() => setViewType('moods')}
                     className={`flex-1 py-3 rounded-full ${
-                        viewType === 'moods' ? 'bg-slate-400' : 'bg-transparent'
+                        viewType === 'moods' ? 'bg-orange-300' : 'bg-transparent'
                     }`}
                     >
                     <Text className={`text-center text-xs ${viewType === 'moods' ? 'text-black' : 'text-gray-500'}`}>Moods</Text>
@@ -145,7 +145,7 @@ const Mood = () => {
                     <TouchableOpacity
                     onPress={() => setViewType('factors')}
                     className={`flex-1 py-3 rounded-full ${
-                        viewType === 'factors' ? 'bg-slate-400' : 'bg-transparent'
+                        viewType === 'factors' ? 'bg-orange-300' : 'bg-transparent'
                     }`}
                     >
                     <Text className={`text-center ${viewType === 'factors' ? 'text-black' : 'text-gray-500'}`}>Factors</Text>
@@ -153,8 +153,8 @@ const Mood = () => {
                 </View>
 
                 {/* Bar Chart for Mood or Factor Counts */}
-                <View className="bg-black rounded-2xl m-4 w-[90%] self-center items-center p-4">
-                    <Text className="text-lg text-white font-semibold mb-4">{viewType === 'moods' ? 'Mood History' : 'Factor History'}</Text>
+                <View className="bg-amber-50 rounded-2xl m-4 w-[90%] self-center items-center p-4">
+                    <Text className="text-lg text-black font-semibold mb-4">{viewType === 'moods' ? 'Mood History' : 'Factor History'}</Text>
                     <BarChart
                     data={barChartData}
                     barWidth={30}
@@ -165,8 +165,8 @@ const Mood = () => {
                     showScrollIndicator
                     noOfSections={5}
                     maxValue={10}
-                    backgroundColor={"black"}
-                    xAxisLabelTextStyle={{ color: 'white', fontSize: 12 }}
+                    backgroundColor={"#fffbeb"}
+                    xAxisLabelTextStyle={{ color: 'black', fontSize: 12 }}
                     // Show name and qty on press
                     renderTooltip={(item) => {
                         return (
@@ -209,32 +209,32 @@ const Mood = () => {
                 </View>
 
                 {/* Mood Counts */}
-                <View className="bg-black rounded-2xl m-4 w-[90%] self-center">
+                <View className="bg-amber-50 rounded-2xl m-4 w-[90%] self-center">
                     {/* Title */}
-                    <Text className="text-lg text-white font-psemibold m-4">Mood History</Text>
+                    <Text className="text-lg text-black font-psemibold m-4">Mood History</Text>
                     {/* Display icons and counts for each mood */}
                     <View className="flex-row justify-around py-4"> 
                         {Object.keys(moodCounts).map((key) => (
                             <View key={key} className="items-center">
                                 <FontAwesome6 name={moods[key].icon} size={40} color={moods[key].color} />
-                                <Text className="text-white mt-2">{`${key.charAt(0).toUpperCase() + key.slice(1)}: ${moodCounts[key]}`}</Text>
+                                <Text className="text-black mt-2">{`${key.charAt(0).toUpperCase() + key.slice(1)}: ${moodCounts[key]}`}</Text>
                             </View>
                         ))}
                     </View>
                 </View>
                 
                 {/* Factor Counts */}
-                <View className="bg-black rounded-2xl m-4 w-[90%] self-center">
+                <View className="bg-amber-50 rounded-2xl m-4 w-[90%] self-center">
                     {/* Title */}
-                    <Text className="text-lg text-white font-psemibold m-4">Factors History</Text>
+                    <Text className="text-lg text-black font-psemibold m-4">Factors History</Text>
                     {/* Allow horizontal scrolling */}
                     <ScrollView className="flex-row m-4" horizontal={true} showsHorizontalScrollIndicator={false}>
                         {Object.entries(factorCounts)
                             .sort(([,a], [,b]) => b-a) // Sort factors by count in descending order
                             .map(([key, value]) => (
                                 <View key={key} className="mx-4 items-center">
-                                    <FontAwesome6 name={factorsList.find((f) => f.name === key)?.icon} size={30} color="white" />
-                                    <Text className="text-white mt-2 text-center">{`${key}: ${value}`}</Text>
+                                    <FontAwesome6 name={factorsList.find((f) => f.name === key)?.icon} size={30} color="#8884d8" />
+                                    <Text className="text-black mt-2 text-center">{`${key}: ${value}`}</Text>
                                 </View>
                         ))}
                     </ScrollView>
