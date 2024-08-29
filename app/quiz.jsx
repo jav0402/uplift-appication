@@ -149,10 +149,8 @@ const quiz = () => {
         alert(resultMessage);
 
         const quizSent = sendQuizResults(user, anxietyScore, depressionScore, otherScore, new Date().toLocaleDateString());
-        if (!quizSent) {
-            alert('Failed to send quiz results');
-        }
-        alert('Quiz results sent successfully');
+        if (!quizSent) alert('Failed to send quiz results');
+        else alert('Quiz results sent successfully');
     }
 
     const results = (anxScore, depScore, otherScore) => {
