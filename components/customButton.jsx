@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 const CustomButton = ({title, handlePress, containerStyles, textStyles, isLoading}) => {
   const [pressed, setPressed] = useState(false);
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
         onPressIn={() => setPressed(true)}
         onPressOut={() => setPressed(false)}
         onPress={handlePress}
@@ -26,7 +26,7 @@ const CustomButton = ({title, handlePress, containerStyles, textStyles, isLoadin
         disabled={isLoading}
     >
 
-        <Text 
+        <Text
             className={`text-primary font-psemibold text-lg ${textStyles} tracking-widest uppercase`}
         >
             {title}
