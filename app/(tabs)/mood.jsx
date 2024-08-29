@@ -5,6 +5,8 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { BarChart } from 'react-native-gifted-charts';
 import { router } from 'expo-router';
 import { useGlobalContext } from '../../context/GlobalProvider';
+import dataHook from '../../lib/dataHook';
+import { getMoodData } from '../../lib/data';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -29,12 +31,14 @@ const Mood = () => {
     // State to toggle between moods and factors
     const [viewType, setViewType] = useState('moods');
 
-    const {user} = useGlobalContext();
-    // Fetches mood data for the current user
-    const {data: moodLogs, isLoading, refetch} = dataHook(() => getMoodData(user));
+    // Get user object from global context
+    const { user } = useGlobalContext();
 
-     // Mapping moods to icons and colors, factors to name and icons
-     const moods = {
+    // Fetches mood data for the current user
+    const { data: moodLogs = [], isLoading, refetch } = dataHook(() => getMoodData(user));
+
+    // Mapping moods to icons and colors, factors to name and icons
+    const moods = {
         Terrible: { color: '#fc8181', icon: 'face-dizzy' },
         Sad: { color: '#90cdf4', icon: 'face-frown' },
         Neutral: { color: '#a0aec0', icon: 'face-meh' },
@@ -68,6 +72,7 @@ const Mood = () => {
         });
         return filteredLogs;
     };
+
     const filteredLogs = filterMoodLogs(moodLogs, timeRange);
 
     // Init counts and chart data
@@ -88,23 +93,23 @@ const Mood = () => {
     const barChartData =
         viewType === 'moods'
             ? Object.keys(moodCounts).map((mood) => ({
-                  label: mood,
-                  value: moodCounts[mood],
-                  frontColor: moods[mood].color,
-              }))
+                label: mood,
+                value: moodCounts[mood],
+                frontColor: moods[mood].color,
+            }))
             : Object.keys(factorCounts).map((factor) => ({
-                  label: factor,
-                  value: factorCounts[factor],
-                  frontColor: '#8884d8',
-              }));
+                label: factor,
+                value: factorCounts[factor],
+                frontColor: '#8884d8',
+            }));
 
     // Get the most frequent mood
     const mostFrequentMood = Object.keys(moodCounts).reduce((a, b) => moodCounts[a] > moodCounts[b] ? a : b);
 
     // Get the most impactful factor
     const mostImpactfulFactor = Object.keys(factorCounts).length > 0
-    ? Object.keys(factorCounts).reduce((a, b) => factorCounts[a] > factorCounts[b] ? a : b)
-    : 'None';
+        ? Object.keys(factorCounts).reduce((a, b) => factorCounts[a] > factorCounts[b] ? a : b)
+        : 'None';
 
     return (
         <SafeAreaView className="flex-1 bg-primary">
@@ -115,15 +120,14 @@ const Mood = () => {
                 <View className="flex-row justify-center items-center mx-6 my-4 p-2 bg-white rounded-full">
                     {['days', 'weeks', 'months'].map((range) => (
                         <TouchableOpacity
-                        key={range}
-                        onPress={() => setTimeRange(range)}
-                        className={`flex-1 py-3 rounded-full ${
-                            timeRange === range ? 'bg-orange-300' : 'bg-transparent'
-                        }`}
+                            key={range}
+                            onPress={() => setTimeRange(range)}
+                            className={`flex-1 py-3 rounded-full ${timeRange === range ? 'bg-orange-300' : 'bg-transparent'
+                                }`}
                         >
-                        <Text className={`text-center text-base capitalize ${timeRange === range ? 'text-black' : 'text-gray-500'}`}>
-                        {range}
-                        </Text>
+                            <Text className={`text-center text-base capitalize ${timeRange === range ? 'text-black' : 'text-gray-500'}`}>
+                                {range}
+                            </Text>
                         </TouchableOpacity>
                     ))}
                 </View>
@@ -131,21 +135,19 @@ const Mood = () => {
                 <View className="flex-row justify-center self-center p-2 w-[50%] bg-white rounded-full">
                     {/* Moods */}
                     <TouchableOpacity
-                    onPress={() => setViewType('moods')}
-                    className={`flex-1 py-3 rounded-full ${
-                        viewType === 'moods' ? 'bg-orange-300' : 'bg-transparent'
-                    }`}
+                        onPress={() => setViewType('moods')}
+                        className={`flex-1 py-3 rounded-full ${viewType === 'moods' ? 'bg-orange-300' : 'bg-transparent'
+                            }`}
                     >
-                    <Text className={`text-center text-xs ${viewType === 'moods' ? 'text-black' : 'text-gray-500'}`}>Moods</Text>
+                        <Text className={`text-center text-xs ${viewType === 'moods' ? 'text-black' : 'text-gray-500'}`}>Moods</Text>
                     </TouchableOpacity>
                     {/* Factors */}
                     <TouchableOpacity
-                    onPress={() => setViewType('factors')}
-                    className={`flex-1 py-3 rounded-full ${
-                        viewType === 'factors' ? 'bg-orange-300' : 'bg-transparent'
-                    }`}
+                        onPress={() => setViewType('factors')}
+                        className={`flex-1 py-3 rounded-full ${viewType === 'factors' ? 'bg-orange-300' : 'bg-transparent'
+                            }`}
                     >
-                    <Text className={`text-center ${viewType === 'factors' ? 'text-black' : 'text-gray-500'}`}>Factors</Text>
+                        <Text className={`text-center ${viewType === 'factors' ? 'text-black' : 'text-gray-500'}`}>Factors</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -153,34 +155,34 @@ const Mood = () => {
                 <View className="bg-amber-50 rounded-2xl m-4 w-[90%] self-center items-center p-4">
                     <Text className="text-lg text-black font-semibold mb-4">{viewType === 'moods' ? 'Mood History' : 'Factor History'}</Text>
                     <BarChart
-                    data={barChartData}
-                    barWidth={30}
-                    roundedTop
-                    height={200}
-                    width={screenWidth *0.6}
-                    isAnimated
-                    showScrollIndicator
-                    noOfSections={5}
-                    maxValue={10}
-                    backgroundColor={"#fffbeb"}
-                    xAxisLabelTextStyle={{ color: 'black', fontSize: 12 }}
-                    // Show name and qty on press
-                    renderTooltip={(item) => {
-                        return (
-                            <View
-                            style={{
-                            marginBottom: 20,
-                            marginLeft: -15,
-                            backgroundColor: '#ffcefe',
-                            paddingHorizontal: 6,
-                            paddingVertical: 4,
-                            borderRadius: 4,
-                            }}
-                            >
-                            <Text>{`${item.label}: ${item.value}`}</Text>
-                            </View>
-                        );
-                    }}
+                        data={barChartData}
+                        barWidth={30}
+                        roundedTop
+                        height={200}
+                        width={screenWidth * 0.6}
+                        isAnimated
+                        showScrollIndicator
+                        noOfSections={5}
+                        maxValue={10}
+                        backgroundColor={"#fffbeb"}
+                        xAxisLabelTextStyle={{ color: 'black', fontSize: 12 }}
+                        // Show name and qty on press
+                        renderTooltip={(item) => {
+                            return (
+                                <View
+                                    style={{
+                                        marginBottom: 20,
+                                        marginLeft: -15,
+                                        backgroundColor: '#ffcefe',
+                                        paddingHorizontal: 6,
+                                        paddingVertical: 4,
+                                        borderRadius: 4,
+                                    }}
+                                >
+                                    <Text>{`${item.label}: ${item.value}`}</Text>
+                                </View>
+                            );
+                        }}
                     />
                 </View>
 
@@ -188,15 +190,15 @@ const Mood = () => {
                 <View className="flex-row justify-between self-center w-[90%] m-4">
                     {/* Most frequent mood */}
                     <View
-                    className="w-[48%] h-24 rounded-xl justify-center items-center"
-                    // For dynamic color changing
-                    style={{ backgroundColor: moods[mostFrequentMood].color }}
+                        className="w-[48%] h-24 rounded-xl justify-center items-center"
+                        // For dynamic color changing
+                        style={{ backgroundColor: moods[mostFrequentMood].color }}
                     >
                         <Text className="text-white text-base font-semibold">Most Frequent Mood</Text>
                         <Text className="text-white text-2xl font-bold ml-2 mt-2">{mostFrequentMood}</Text>
                     </View>
                     {/* Most frequent factor */}
-                    <View className="w-[48%] h-24 rounded-xl justify-center items-center" style={{backgroundColor: "#8884d8"}}>
+                    <View className="w-[48%] h-24 rounded-xl justify-center items-center" style={{ backgroundColor: "#8884d8" }}>
                         <Text className="text-white text-base font-semibold">Most Frequent Factor</Text>
                         <View className="flex-row items-center mt-2">
                             <FontAwesome6 name={factorsList.find(f => f.name === mostImpactfulFactor).icon} size={24} color="white" />
@@ -227,26 +229,26 @@ const Mood = () => {
                     {/* Allow horizontal scrolling */}
                     <ScrollView className="flex-row m-4" horizontal={true} showsHorizontalScrollIndicator={false}>
                         {Object.entries(factorCounts)
-                            .sort(([,a], [,b]) => b-a) // Sort factors by count in descending order
+                            .sort(([, a], [, b]) => b - a) // Sort factors by count in descending order
                             .map(([key, value]) => (
                                 <View key={key} className="mx-4 items-center">
                                     <FontAwesome6 name={factorsList.find((f) => f.name === key)?.icon} size={30} color="#8884d8" />
                                     <Text className="text-black mt-2 text-center">{`${key}: ${value}`}</Text>
                                 </View>
-                        ))}
+                            ))}
                     </ScrollView>
                 </View>
             </ScrollView>
 
-                {/* Button navigating to log new mood page */}
-                <View className="absolute bottom-4 w-full items-center">
-                    <TouchableOpacity
+            {/* Button navigating to log new mood page */}
+            <View className="absolute bottom-4 w-full items-center">
+                <TouchableOpacity
                     className="bg-white items-center justify-center rounded-full w-16 h-16"
                     onPress={() => router.push('../mood-logging')}
-                    >
+                >
                     <Text className="text-black text-2xl">+</Text>
-                    </TouchableOpacity>
-                </View>
+                </TouchableOpacity>
+            </View>
 
         </SafeAreaView>
     );

@@ -36,7 +36,7 @@ const LogMood = () => {
     }
     // Placeholder function, to be replaced with data storing statements
     const storeData = () => {
-        sendMoodData(user, mood, selectedFactors, new Date().toLocaleDateString());
+        sendMoodData(user, moods[mood].name, selectedFactors, new Date().toLocaleDateString());
         router.push('/mood');
     }
 
@@ -46,26 +46,31 @@ const LogMood = () => {
             color: 'bg-red-300',
             text: "Terrible",
             icon: 'face-dizzy',
+            name: 'Terrible'
         },
         sad: {
             color: 'bg-blue-300',
             text: "Sad",
             icon: 'face-frown',
+            name: 'Sad'
         },
         neutral: {
             color: 'bg-gray-300',
             text: "Neutral",
             icon: 'face-meh',
+            name: 'Neutral'
         },
         happy: {
             color: 'bg-amber-200',
             text: "Happy",
             icon: 'face-smile',
+            name: 'Happy'
         },
         great: {
             color: 'bg-green-300',
             text: "Great",
             icon: 'face-grin-beam',
+            name: 'Great'
         },
     };
 

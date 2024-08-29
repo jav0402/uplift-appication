@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { dbRun, dbGet } = require('../utils/db-async');
+const { dbRun, dbAll } = require('../utils/db-async');
 const db = require('../utils/database-init');
 
 router.post('/quiz', async (req, res) => {
@@ -34,9 +34,9 @@ router.post('/mood', async (req, res) => {
         });
 });
 
-router.get('/mood', async (req, res) => {
+router.get('/mood/:id', async (req, res) => {
     let query = `SELECT * FROM mood WHERE user_id = ${req.params.id}`;
-    dbGet(db, query)
+    dbAll(db, query)
         .then((rows) => {
             if (!rows) return res.status(404).send("No mood data found");
             return res.status(200).send(rows)
