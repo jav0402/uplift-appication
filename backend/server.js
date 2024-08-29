@@ -18,6 +18,9 @@ app.use(passport.initialize());
 const authRouter = require('./routes/auth');
 app.use('/auth', authRouter);
 
+const dataRouter = require('./routes/data');
+app.use('/data', dataRouter);
+
 // Function to get the local IP address, Used for checking with front end
 function getLocalIpAddress() {
     const interfaces = os.networkInterfaces();
