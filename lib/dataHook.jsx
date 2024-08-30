@@ -9,7 +9,6 @@ const dataHook = (fn) => {
         setIsLoading(true);
         try {
             const response = await fn();
-            console.log('response:', response);  // Debugging line
             setData(response);
         } catch (error) {
             Alert.alert('Error', error.message)

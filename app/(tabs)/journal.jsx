@@ -4,21 +4,18 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import EmptyState from '../../components/emptyState'
 import { useGlobalContext } from '../../context/GlobalProvider';
 import dataHook from '../../lib/dataHook';
-import { getJournalData } from '../../lib/data';
+import { getJournalData, sendJournalData } from '../../lib/data';
 
 const Journal = () => {
 
     const { user } = useGlobalContext();
 
-    const { data: entries, isLoading, refetch } = dataHook(() => getJournalData(user));
+    const { data: entries, isLoading, refetch } = dataHook(async () => {
+        const { success, data } = await getJournalData(user);
+        if (success) return data;
+        return [];
+    });
 
-    // const [entries, setEntries] = useState([
-    //     { id: '1', title: 'Ranting session', content: 'So today I was...ewfiowefiwoefowiefoiwefowiehfoiwehfoiwehfoihweoifhoiwehfiwehfoiwehfoiwneichoiewfoiwesofnosdifnosndfoinfoiwenfoiwenfoiwenfoiwenfoiwnefoiwenfoioerngfoirwngoiwnerfoiwenfoiwneofnwioenfowienfoiwenfoiwenfoiwenfoiwenfoiwnefoiwenfoiwenfoicwneociwneoifn', feeling: 'Frustrated', date: new Date(), theme: 'bg-yellow-200' },
-    //     { id: '2', title: 'Random thoughts', content: 'asdfghjkl...wefiuweuifbwieufbiwuebfiwuef wefiuwebfiuwef wefibweiufbwieuf wefijbweifbweiufbiwuebfiuwbef weifubweifubwiefubiuwe', feeling: 'Crazy', date: new Date(), theme: 'bg-white' },
-    //     { id: '3', title: 'test entry', content: 'asdfghjkl...wrfinwoeifowiefoiwefhowiefnowuebfowuebfowuebfowuebfowuboweufbowebowuebfouwebufoweubiofwuebfowieuboe', feeling: 'ok', date: new Date(), theme: 'bg-blue-200' },
-    // ]);
-    // Empty data test set:
-    // const [entries, setEntries] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [newEntry, setNewEntry] = useState({ title: '', content: '', feeling: '', theme: 'bg-white' });
     const [selectedEntry, setSelectedEntry] = useState(null);
@@ -29,18 +26,19 @@ const Journal = () => {
     ];
 
     // Store new journal entry
-    const handleSaveEntry = () => {
-        const newJournal = {
-            ...newEntry,
-            date: new Date(),
-        };
+    const handleSaveEntry = async () => {
         // Send post request to save new entry to db
-        // some fucntion
-        //
+        let entrySubmitted = await sendJournalData(user, newEntry);
+
+        // If failed to save entry, show alert
+        if (!entrySubmitted) {
+            Alert.alert('Error', 'Failed to save entry');
+            return;
+        }
+
         // refetch entries
-        //
-        // Add new entry to entries state
-        setEntries([newJournal, ...entries]);
+        await refetch();
+
         // Reset new entry state
         setNewEntry({ title: '', content: '', feeling: '', theme: 'bg-white' });
         // Close modal
