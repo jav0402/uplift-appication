@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, FlatList, TextInput, Modal, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, TextInput, Modal, ScrollView, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import EmptyState from '../../components/emptyState'
@@ -27,6 +27,12 @@ const Journal = () => {
 
     // Store new journal entry
     const handleSaveEntry = async () => {
+        // Validation: Ensure all fields are filled
+        if (!newEntry.title.trim() || !newEntry.content.trim() || !newEntry.feeling.trim()) {
+            Alert.alert('Validation Error', 'All fields are required!');
+            return;
+        }
+
         // Send post request to save new entry to db
         let entrySubmitted = await sendJournalData(user, newEntry);
 
