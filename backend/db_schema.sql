@@ -50,6 +50,17 @@ CREATE TABLE IF NOT EXISTS mood (
     FOREIGN KEY(user_id) REFERENCES users_info(id)
 );
 
+CREATE TABLE IF NOT EXISTS journal (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    feeling TEXT NOT NULL,
+    theme TEXT NOT NULL,
+    date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users_info(id)
+);
+
 -- Insert default data (if necessary here)
 
 -- database-init.js is used to insert default data into the database as it requires the crypt module to has the password and salt

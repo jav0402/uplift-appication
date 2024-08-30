@@ -47,4 +47,32 @@ router.get('/mood/:id', async (req, res) => {
         });
 })
 
+router.get('/journal/:id', async (req, res) => {
+    let query = `SELECT * FROM journal WHERE user_id = ${req.params.id}`;
+    dbAll(db, query)
+        .then((rows) => {
+            if (!rows) return res.status(404).send("No journal data found");
+            return res.status(200).send(rows)
+        })
+        .catch((error) => {
+            console.log(error);
+            return res.status(500).send("Error retrieving journal data");
+        });
+
+})
+
+router.post('/journal', async (req, res) => {
+    let columns = Object.keys(req.body).join(',');
+    let placeholders = Object.keys(req.body).map(() => '?').join(',');
+    let values = Object.values(req.body);
+
+    let query = `INSERT INTO journal (${columns}) VALUES (${placeholders})`;
+    dbRun(db, query, values)
+        .then(() => res.status(200).send("Journal data updated successfully"))
+        .catch((error) => {
+            console.log(error);
+            return res.status(500).send("Error updating journal data");
+        });
+})
+
 module.exports = router;
