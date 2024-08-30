@@ -2,16 +2,23 @@ import { View, Text, TouchableOpacity, FlatList, TextInput, Modal, ScrollView } 
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import EmptyState from '../../components/emptyState'
+import { useGlobalContext } from '../../context/GlobalProvider';
+import dataHook from '../../lib/dataHook';
+import { getJournalData } from '../../lib/data';
 
 const Journal = () => {
-    const [entries, setEntries] = useState([
-        { id: '1', title: 'Ranting session', content: 'So today I was...ewfiowefiwoefowiefoiwefowiehfoiwehfoiwehfoihweoifhoiwehfiwehfoiwehfoiwneichoiewfoiwesofnosdifnosndfoinfoiwenfoiwenfoiwenfoiwenfoiwnefoiwenfoioerngfoirwngoiwnerfoiwenfoiwneofnwioenfowienfoiwenfoiwenfoiwenfoiwenfoiwnefoiwenfoiwenfoicwneociwneoifn', feeling: 'Frustrated', date: new Date(), theme: 'bg-yellow-200' },
-        { id: '2', title: 'Random thoughts', content: 'asdfghjkl...wefiuweuifbwieufbiwuebfiwuef wefiuwebfiuwef wefibweiufbwieuf wefijbweifbweiufbiwuebfiuwbef weifubweifubwiefubiuwe', feeling: 'Crazy', date: new Date(), theme: 'bg-white' },
-        { id: '3', title: 'test entry', content: 'asdfghjkl...wrfinwoeifowiefoiwefhowiefnowuebfowuebfowuebfowuebfowuboweufbowebowuebfouwebufoweubiofwuebfowieuboe', feeling: 'ok', date: new Date(), theme: 'bg-blue-200' },
-    ]);
+
+    const { user } = useGlobalContext();
+
+    const { data: entries, isLoading, refetch } = dataHook(() => getJournalData(user));
+
+    // const [entries, setEntries] = useState([
+    //     { id: '1', title: 'Ranting session', content: 'So today I was...ewfiowefiwoefowiefoiwefowiehfoiwehfoiwehfoihweoifhoiwehfiwehfoiwehfoiwneichoiewfoiwesofnosdifnosndfoinfoiwenfoiwenfoiwenfoiwenfoiwnefoiwenfoioerngfoirwngoiwnerfoiwenfoiwneofnwioenfowienfoiwenfoiwenfoiwenfoiwenfoiwnefoiwenfoiwenfoicwneociwneoifn', feeling: 'Frustrated', date: new Date(), theme: 'bg-yellow-200' },
+    //     { id: '2', title: 'Random thoughts', content: 'asdfghjkl...wefiuweuifbwieufbiwuebfiwuef wefiuwebfiuwef wefibweiufbwieuf wefijbweifbweiufbiwuebfiuwbef weifubweifubwiefubiuwe', feeling: 'Crazy', date: new Date(), theme: 'bg-white' },
+    //     { id: '3', title: 'test entry', content: 'asdfghjkl...wrfinwoeifowiefoiwefhowiefnowuebfowuebfowuebfowuebfowuboweufbowebowuebfouwebufoweubiofwuebfowieuboe', feeling: 'ok', date: new Date(), theme: 'bg-blue-200' },
+    // ]);
     // Empty data test set:
     // const [entries, setEntries] = useState([]);
-
     const [modalVisible, setModalVisible] = useState(false);
     const [newEntry, setNewEntry] = useState({ title: '', content: '', feeling: '', theme: 'bg-white' });
     const [selectedEntry, setSelectedEntry] = useState(null);
@@ -25,9 +32,13 @@ const Journal = () => {
     const handleSaveEntry = () => {
         const newJournal = {
             ...newEntry,
-            id: Date.now().toString(), // Placeholder ID, can remove once autoincrement pk set up
             date: new Date(),
         };
+        // Send post request to save new entry to db
+        // some fucntion
+        //
+        // refetch entries
+        //
         // Add new entry to entries state
         setEntries([newJournal, ...entries]);
         // Reset new entry state
@@ -42,55 +53,55 @@ const Journal = () => {
     };
 
     return (
-    <SafeAreaView className="flex-1 bg-primary justify-center items-center">
-        <View className="flex-1 justify-evenly w-full">
-            {/* Journal entries list */}
-            <FlatList
-            // Sort according to time, can be removed after retrieval is from db
-            data={entries.sort((a, b) => b.date - a.date)}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-                // Display entries, show full entry on press
-                <TouchableOpacity 
-                className="h-24 overflow-hidden my-1"
-                onPress={() => handleEntryPress(item)}>
-                    <View className={`p-4 m-2 rounded-lg ${item.theme}`}>
-                        <Text className="font-bold text-xl text-black">{item.title}</Text>
-                        <Text className="mt-2 text-base text-black">Feeling: {item.feeling}</Text>
-                    </View>
-                </TouchableOpacity> 
-            )}
-            // List header
-            ListHeaderComponent={() => (
-                <Text className='text-3xl font-psemibold my-4 px-4 '>Journal</Text>
-            )}
-            // For empty state (No journal entries)
-            ListEmptyComponent={() => (
-                <EmptyState
-                title="No journal entries yet"
-                subtitle="Start penning down your thoughts down now!"
+        <SafeAreaView className="flex-1 bg-primary justify-center items-center">
+            <View className="flex-1 justify-evenly w-full">
+                {/* Journal entries list */}
+                <FlatList
+                    // Sort according to time, can be removed after retrieval is from db
+                    data={entries.sort((a, b) => b.date - a.date)}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        // Display entries, show full entry on press
+                        <TouchableOpacity
+                            className="h-24 overflow-hidden my-1"
+                            onPress={() => handleEntryPress(item)}>
+                            <View className={`p-4 m-2 rounded-lg ${item.theme}`}>
+                                <Text className="font-bold text-xl text-black">{item.title}</Text>
+                                <Text className="mt-2 text-base text-black">Feeling: {item.feeling}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                    // List header
+                    ListHeaderComponent={() => (
+                        <Text className='text-3xl font-psemibold my-4 px-4 '>Journal</Text>
+                    )}
+                    // For empty state (No journal entries)
+                    ListEmptyComponent={() => (
+                        <EmptyState
+                            title="No journal entries yet"
+                            subtitle="Start penning down your thoughts down now!"
+                        />
+                    )}
                 />
-            )}
-            />
-            {/* New entry button, absolute position at bottom of screen */}
-            <View className="items-center">
-                <TouchableOpacity
-                className="absolute bottom-6 justify-center bg-black py-4 px-8 rounded-full w-[90%]"
-                onPress={() => {
-                    // Display modal
-                    setSelectedEntry(null);
-                    setModalVisible(true);
-                }}
-                >
-                <Text className="text-white text-lg font-bold text-center">New Entry</Text>
-                </TouchableOpacity>
+                {/* New entry button, absolute position at bottom of screen */}
+                <View className="items-center">
+                    <TouchableOpacity
+                        className="absolute bottom-6 justify-center bg-black py-4 px-8 rounded-full w-[90%]"
+                        onPress={() => {
+                            // Display modal
+                            setSelectedEntry(null);
+                            setModalVisible(true);
+                        }}
+                    >
+                        <Text className="text-white text-lg font-bold text-center">New Entry</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
-        
-        {/* Entry Modal - existing and new entry display */}
-        <Modal visible={modalVisible} animationType="slide">
-            {/* Background color set to existing entry bg color or app primary color for new entry */}
-            <SafeAreaView className={`flex-1 p-4 ${selectedEntry ? selectedEntry.theme : 'bg-primary'}`}>
+
+            {/* Entry Modal - existing and new entry display */}
+            <Modal visible={modalVisible} animationType="slide">
+                {/* Background color set to existing entry bg color or app primary color for new entry */}
+                <SafeAreaView className={`flex-1 p-4 ${selectedEntry ? selectedEntry.theme : 'bg-primary'}`}>
                     {/* Header */}
                     <View className="mt-14">
                         <Text className="text-3xl font-bold">{selectedEntry ? '' : 'New Journal Entry'}</Text>
@@ -109,74 +120,74 @@ const Journal = () => {
                                 {/* Back button, absolute position at bottom of screen */}
                                 <View className="items-center">
                                     <TouchableOpacity
-                                    className="absolute bottom-20 justify-center bg-gray-400 py-4 px-8 mt-8 rounded-full w-[90%]"
-                                    onPress={() => setModalVisible(false)}
+                                        className="absolute bottom-20 justify-center bg-gray-400 py-4 px-8 mt-8 rounded-full w-[90%]"
+                                        onPress={() => setModalVisible(false)}
                                     >
-                                    <Text className="text-white text-lg font-bold text-center">Back</Text>
+                                        <Text className="text-white text-lg font-bold text-center">Back</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                           
+
                         </>
                     ) : (
                         // For new entry display
                         <>
-                        <ScrollView>
-                            {/* Feeling text input */}
-                            <TextInput
-                            placeholder="How are you feeling now?"
-                            value={newEntry.feeling}
-                            onChangeText={(text) => setNewEntry({ ...newEntry, feeling: text })}
-                            // Dynamic background (same for subsequent text inputs)
-                            className={`p-4 my-4 rounded-lg ${newEntry.theme} text-black`}
-                            />
-                            {/* Title text input */}
-                            <TextInput
-                            placeholder="Enter title"
-                            value={newEntry.title}
-                            onChangeText={(text) => setNewEntry({ ...newEntry, title: text })}
-                            className={`p-4 my-4 rounded-lg ${newEntry.theme} text-black`}
-                            />
-                            {/* Content text input */}
-                            <TextInput
-                            placeholder="Enter content"
-                            value={newEntry.content}
-                            onChangeText={(text) => setNewEntry({ ...newEntry, content: text })}
-                            multiline
-                            className={`p-4 my-4 rounded-lg h-[60%] ${newEntry.theme} text-black`}
-                            />
-                            {/* Color scheme selection */}
-                            <Text className="text-lg font-bold">Select Background Color:</Text>
-                            <View className="flex-row flex-wrap mt-2">
-                                {colors.map((color, index) => (
-                                    <TouchableOpacity
-                                    key={index}
-                                    className={`w-10 h-10 m-2 rounded-full ${color}`}
-                                    onPress={() => setNewEntry({ ...newEntry, theme: `${color}` })}
-                                    />
-                                ))}
-                            </View>
-                            {/* Submit Button */}
-                            <TouchableOpacity
-                            className="bg-black py-4 px-8 mt-8 rounded-full"
-                            onPress={handleSaveEntry}
-                            >
-                            <Text className="text-white text-lg font-bold text-center">Submit Entry</Text>
-                            </TouchableOpacity>
-                            {/* Cancel Button */}
-                            <TouchableOpacity
-                            className="bg-gray-400 py-4 px-8 mt-4 rounded-full"
-                            onPress={() => setModalVisible(false)}
-                            >
-                            <Text className="text-white text-lg font-bold text-center">Cancel</Text>
-                            </TouchableOpacity>
-                        </ScrollView>
+                            <ScrollView>
+                                {/* Feeling text input */}
+                                <TextInput
+                                    placeholder="How are you feeling now?"
+                                    value={newEntry.feeling}
+                                    onChangeText={(text) => setNewEntry({ ...newEntry, feeling: text })}
+                                    // Dynamic background (same for subsequent text inputs)
+                                    className={`p-4 my-4 rounded-lg ${newEntry.theme} text-black`}
+                                />
+                                {/* Title text input */}
+                                <TextInput
+                                    placeholder="Enter title"
+                                    value={newEntry.title}
+                                    onChangeText={(text) => setNewEntry({ ...newEntry, title: text })}
+                                    className={`p-4 my-4 rounded-lg ${newEntry.theme} text-black`}
+                                />
+                                {/* Content text input */}
+                                <TextInput
+                                    placeholder="Enter content"
+                                    value={newEntry.content}
+                                    onChangeText={(text) => setNewEntry({ ...newEntry, content: text })}
+                                    multiline
+                                    className={`p-4 my-4 rounded-lg h-[60%] ${newEntry.theme} text-black`}
+                                />
+                                {/* Color scheme selection */}
+                                <Text className="text-lg font-bold">Select Background Color:</Text>
+                                <View className="flex-row flex-wrap mt-2">
+                                    {colors.map((color, index) => (
+                                        <TouchableOpacity
+                                            key={index}
+                                            className={`w-10 h-10 m-2 rounded-full ${color}`}
+                                            onPress={() => setNewEntry({ ...newEntry, theme: `${color}` })}
+                                        />
+                                    ))}
+                                </View>
+                                {/* Submit Button */}
+                                <TouchableOpacity
+                                    className="bg-black py-4 px-8 mt-8 rounded-full"
+                                    onPress={handleSaveEntry}
+                                >
+                                    <Text className="text-white text-lg font-bold text-center">Submit Entry</Text>
+                                </TouchableOpacity>
+                                {/* Cancel Button */}
+                                <TouchableOpacity
+                                    className="bg-gray-400 py-4 px-8 mt-4 rounded-full"
+                                    onPress={() => setModalVisible(false)}
+                                >
+                                    <Text className="text-white text-lg font-bold text-center">Cancel</Text>
+                                </TouchableOpacity>
+                            </ScrollView>
                         </>
                     )}
-            </SafeAreaView>
-        </Modal>
-    </SafeAreaView>
-    );    
+                </SafeAreaView>
+            </Modal>
+        </SafeAreaView>
+    );
 }
 
 export default Journal
