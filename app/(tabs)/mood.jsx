@@ -10,21 +10,6 @@ import { getMoodData } from '../../lib/data';
 
 const screenWidth = Dimensions.get('window').width;
 
-// Static data for now
-function getStaticMoodLogs() {
-    const moodLogs = [
-        { mood: 'Great', factors: ['Work', 'Family'], date: new Date() },
-        { mood: 'Neutral', factors: ['Friends', 'Love'], date: new Date(Date.now() - 86400000) }, // 1 day ago
-        { mood: 'Happy', factors: ['Work'], date: new Date(Date.now() - 2 * 86400000) }, // 2 days ago
-        { mood: 'Terrible', factors: ['Health'], date: new Date(Date.now() - 3 * 86400000) }, // 3 days ago
-        { mood: 'Sad', factors: ['Money'], date: new Date(Date.now() - 4 * 86400000) }, // 4 days ago
-        { mood: 'Terrible', factors: ['Love'], date: new Date(Date.now() - 5 * 86400000) }, // 5 days ago
-        { mood: 'Terrible', factors: ['Love'], date: new Date(Date.now() - 15 * 86400000) }, // 15 days ago
-        { mood: 'Great', factors: ['Family'], date: new Date(Date.now() - 17 * 86400000) }, // 17 days ago
-    ];
-    return moodLogs;
-}
-
 const Mood = () => {
     // State for chart time range (days, weeks, months)
     const [timeRange, setTimeRange] = useState('days');
@@ -54,7 +39,7 @@ const Mood = () => {
         { name: 'Money', icon: 'money-bill' },
         { name: 'Health', icon: 'heart-pulse' },
         { name: 'Life', icon: 'user-large' },
-        { name: 'None', icon: 'times-circle' },
+        { name: 'Others', icon: 'times-circle' },
     ];
 
     // Filter logs by time range
@@ -109,7 +94,7 @@ const Mood = () => {
     // Get the most impactful factor
     const mostImpactfulFactor = Object.keys(factorCounts).length > 0
         ? Object.keys(factorCounts).reduce((a, b) => factorCounts[a] > factorCounts[b] ? a : b)
-        : 'None';
+        : null;
 
     return (
         <SafeAreaView className="flex-1 bg-primary">
@@ -188,21 +173,21 @@ const Mood = () => {
 
                 {/* Summary stats */}
                 <View className="flex-row justify-between self-center w-[90%] m-4">
-                    {/* Most frequent mood */}
+                    {/* Most frequent mood, display if there is */}
                     <View
                         className="w-[48%] h-24 rounded-xl justify-center items-center"
                         // For dynamic color changing
-                        style={{ backgroundColor: moods[mostFrequentMood].color }}
+                        style={{ backgroundColor: filteredLogs.length > 0 ? moods[mostFrequentMood].color : '#a0aec0'}}
                     >
                         <Text className="text-white text-base font-semibold">Most Frequent Mood</Text>
-                        <Text className="text-white text-2xl font-bold ml-2 mt-2">{mostFrequentMood}</Text>
+                        <Text className="text-white text-2xl font-bold ml-2 mt-2">{filteredLogs.length > 0 ? mostFrequentMood : 'No stats yet'}</Text>
                     </View>
-                    {/* Most frequent factor */}
+                    {/* Most frequent factor, display if there is */}
                     <View className="w-[48%] h-24 rounded-xl justify-center items-center" style={{ backgroundColor: "#8884d8" }}>
                         <Text className="text-white text-base font-semibold">Most Frequent Factor</Text>
                         <View className="flex-row items-center mt-2">
-                            <FontAwesome6 name={factorsList.find(f => f.name === mostImpactfulFactor).icon} size={24} color="white" />
-                            <Text className="text-white text-2xl font-bold ml-2">{mostImpactfulFactor}</Text>
+                            <FontAwesome6 name={filteredLogs.length > 0 ? factorsList.find(f => f.name === mostImpactfulFactor).icon : ''} size={24} color="white" />
+                            <Text className="text-white text-2xl font-bold ml-2">{filteredLogs.length > 0 ? mostImpactfulFactor : 'No stats yet'}</Text>
                         </View>
                     </View>
                 </View>
