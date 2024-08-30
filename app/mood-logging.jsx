@@ -34,7 +34,7 @@ const LogMood = () => {
             setSelectedFactors([...selectedFactors, factor]);
         }
     }
-    // Placeholder function, to be replaced with data storing statements
+    // Insert mood data into database
     const storeData = () => {
         sendMoodData(user, moods[mood].name, selectedFactors, new Date().toLocaleDateString());
         router.push('/mood');
@@ -84,7 +84,7 @@ const LogMood = () => {
         { name: 'Money', icon: 'money-bill' },
         { name: 'Health', icon: 'heart-pulse' },
         { name: 'Life', icon: 'user-large' },
-        { name: 'None', icon: 'times-circle' },
+        { name: 'Others', icon: 'times-circle' },
     ];
 
     return (

@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS mood (
     Money INTEGER NOT NULL,
     Health INTEGER NOT NULL,
     Life INTEGER NOT NULL,
-    None INTEGER NOT NULL,
+    Others INTEGER NOT NULL,
     date TEXT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users_info(id)
 );
