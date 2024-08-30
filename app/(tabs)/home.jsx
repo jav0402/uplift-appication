@@ -9,18 +9,18 @@ import { useGlobalContext } from '../../context/GlobalProvider';
 
 const Home = () => {
     const { user } = useGlobalContext();
-    const [loading, setLoading] = useState(true);
     const [greeting, setGreeting] = useState('');
-    const [activityData, setActivityData] = useState(null);
     const [selectedMood, setSelectedMood] = useState(null);
+    // const [loading, setLoading] = useState(true);
+    // const [activityData, setActivityData] = useState(null);
 
     useEffect(() => {
         // Set dynamic greeting based on the time of day
         const name = user?.name;
         const hour = moment().hour();
-        if (hour < 12) setGreeting('Good Morning, ${name}');
-        else if (hour < 18) setGreeting('Good Afternoon, ${name}');
-        else setGreeting('Good Evening, ${name}');
+        if (hour < 12) setGreeting(`Good Morning, ${name}`);
+        else if (hour < 18) setGreeting(`Good Afternoon, ${name}`);
+        else setGreeting(`Good Evening, ${name}`);
 
         // Simulate fetching data
         fetchData();
@@ -42,13 +42,9 @@ const Home = () => {
     const fetchData = async () => {
         try {
             // Simulate an API call
-            const response = await fetch('https://api.example.com/activity');
-            const data = await response.json();
-            setActivityData(data);
         } catch (error) {
             console.error('Error fetching activity data:', error);
         } finally {
-            setLoading(false);
         }
     };
 
@@ -78,7 +74,7 @@ const Home = () => {
                 <View className='p-5'>
                     <CustomButton
                         title="Take Self-Assessment"
-                        onPress={() => router.push('/self-assessment')}
+                        handlePress={() => router.push('../quiz')}
                         color="#FF8C00"
                     />
                 </View>

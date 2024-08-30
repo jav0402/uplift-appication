@@ -24,21 +24,29 @@ const SignIn = () => {
     const submit = async () => {
         if (form.email === "" || form.password === "") {
             Alert.alert("Error", "Please fill in all fields");
+            return
         }
 
         setIsSubmitting(true);
 
         try {
-            await signIn(form.email, form.password);
+            const [status, message] = await signIn(form.email, form.password);
+            if (!status) {
+                throw new Error(message);
+            }
+
             const result = await getCurrentUser();
+            if (!result) {
+                throw new Error("Unable to get current user.");
+            }
+
             setUser(result);
             setIsLogged(true);
 
-            Alert.alert("Success", "User signed in successfully");
             router.replace("/home");
         }
         catch (error) {
-            Alert.alert("Error", error.message);
+            Alert.alert(error.message);
         }
         finally {
             setIsSubmitting(false);
