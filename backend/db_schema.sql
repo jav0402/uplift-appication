@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS resources (
     title TEXT NOT NULL,
     description TEXT NOT NULL,
     link TEXT NOT NULL,
-    type TEXT NOT NULL,
+    type TEXT NOT NULL
 );
 
 -- database-init.js is used to insert default data into the database as it requires the crypt module to hash the password and salt
