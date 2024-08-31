@@ -75,4 +75,19 @@ router.post('/journal', async (req, res) => {
         });
 })
 
+router.get('/resources/:type', async (req, res) => {
+    let type = req.params.type;
+    let query = `SELECT * FROM resources`;
+    if (type != 'ALL') query += ` WHERE type = '${type}'`;
+    dbAll(db, query)
+        .then((rows) => {
+            if (!rows) return res.status(404).send("No resources found");
+            return res.status(200).send(rows)
+        })
+        .catch((error) => {
+            console.log(error);
+            return res.status(500).send("Error retrieving resources");
+        });
+});
+
 module.exports = router;
