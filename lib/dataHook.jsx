@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 
-const dataHook = (fn) => {
+const dataHook = (fn, dependencies = []) => {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true);
 
@@ -20,7 +20,7 @@ const dataHook = (fn) => {
 
     useEffect(() => {
         fetchData();
-    }, [])
+    }, dependencies)
 
     const refetch = () => fetchData();
 

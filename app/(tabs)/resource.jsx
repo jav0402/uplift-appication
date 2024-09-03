@@ -20,7 +20,8 @@ const Resources = () => {
      filtering is done on the client side, we can just fetch all the resources and filter.
      However, in the future, this can be optimised by fetching only the required resources.
      */
-    const { data: articles, isLoading, refetch } = dataHook(() => getResourcesData(filter));
+    const { data: articles, isLoading, refetch } = dataHook(() => getResourcesData(filter, searchQuery), [filter, searchQuery]);
+    const [searchQuery, setSearchQuery] = useState('')
 
     // State to hold the current filter (Default = all)
     const [filter, setFilter] = useState('ALL');
@@ -32,6 +33,12 @@ const Resources = () => {
         // Filter accordingly for other options
         return article.type === filter.toLowerCase();
     });
+
+    // Handle search query change
+    const handleSearch = (query) => {
+        setSearchQuery(query); // Update the search query state
+        refetch(); // Refetch the data with the new search query
+    }
 
     // Show loading indicator while resource is being fetched
     if (isLoading) {
@@ -45,7 +52,7 @@ const Resources = () => {
     return (
         <SafeAreaView className="bg-primary h-full flex-1">
             {/* Search bar */}
-            <SearchInput />
+            <SearchInput handleSearch={handleSearch}/>
 
             {/* Filter Section */}
             <View className="px-4 mt-4">

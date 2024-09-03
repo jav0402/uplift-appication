@@ -15,7 +15,7 @@ var db = new sqlite3.Database("./backend/database.db", function(err) {
         db.serialize(async () => {
             try {
                 // Check if there are existing users
-                const userCount = await dbGet(db, "SELECT COUNT(*) AS count FROM users_auth");
+                const { count: userCount } = await dbGet(db, "SELECT COUNT(*) AS count FROM users_auth");
                 if (userCount > 0) {
                     console.log("[db-init] Users already exist in the users_auth table, skipping user creation.");
                 } else {
@@ -23,7 +23,7 @@ var db = new sqlite3.Database("./backend/database.db", function(err) {
                 }
 
                 // Check if data already exists in the resources table
-                const resourceCount = await dbGet(db, "SELECT COUNT(*) AS count FROM resources");
+                const { count: resourceCount } = await dbGet(db, "SELECT COUNT(*) AS count FROM resources");
                 if (resourceCount > 0) {
                     console.log("[db-init] Data already exists in the resources table, skipping CSV import.");
                 } else {

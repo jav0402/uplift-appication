@@ -75,11 +75,22 @@ router.post('/journal', async (req, res) => {
         });
 })
 
-router.get('/resources/:type', async (req, res) => {
-    let type = req.params.type;
-    let query = `SELECT * FROM resources`;
-    if (type != 'ALL') query += ` WHERE type = '${type}'`;
-    dbAll(db, query)
+router.get('/resources', async (req, res) => {
+    const {type, search} = req.query;
+    let query = `SELECT * FROM resources WHERE 1=1`;
+    const params = [];
+
+    if(type && type !== 'ALL') {
+        query += ` AND type = ?`;
+        params.push(type);
+    }
+
+    if(search) {
+        query += ` AND (title LIKE ? OR description LIKE ?)`;
+        params.push(`%${search}%`, `%${search}%`);
+    }
+
+    dbAll(db, query, params)
         .then((rows) => {
             if (!rows) return res.status(404).send("No resources found");
             return res.status(200).send(rows)
