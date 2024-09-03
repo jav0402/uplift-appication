@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { usePathname, router } from 'expo-router';
 import { icons } from "../constants";
 
-const searchInput = ({ initialQuery }) => {
+const searchInput = ({ initialQuery, handleSearch }) => {
     const pathname = usePathname()
     const [query, setQuery] = useState( initialQuery || '')
 
@@ -22,11 +22,10 @@ const searchInput = ({ initialQuery }) => {
                 if(query === '') {
                     return Alert.alert('Missing query', "Please fill in something to search results across database")
                 };
-                if(pathname.startsWith('/(search)')) router.setParams({query});
-                else router.push(`/(search)/${query}`);
+                handleSearch(query);
             }}
             >
-                <Image 
+                <Image
                     source={icons.search}
                     className="w-5, h-5"
                     resizeMode="contain"

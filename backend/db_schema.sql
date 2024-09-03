@@ -61,9 +61,15 @@ CREATE TABLE IF NOT EXISTS journal (
     FOREIGN KEY(user_id) REFERENCES users_info(id)
 );
 
--- Insert default data (if necessary here)
+CREATE TABLE IF NOT EXISTS resources (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    link TEXT NOT NULL,
+    type TEXT NOT NULL
+);
 
--- database-init.js is used to insert default data into the database as it requires the crypt module to has the password and salt
+-- database-init.js is used to insert default data into the database as it requires the crypt module to hash the password and salt
 
 COMMIT;
 
