@@ -13,11 +13,9 @@ if (process.env.NODE_ENV !== 'test') {
             process.exit(1); // bail out we can't connect to the DB
         } else {
             console.log("[db-init] Database connected");
-            console.log(db);
             db.run("PRAGMA foreign_keys=ON"); // tell SQLite to pay attention to foreign key constraints
             db.serialize(async () => {
                 try {
-                    console.log(await dbGet(db, "SELECT COUNT(*) AS count FROM users_auth"));
                     // Check if there are existing users
                     const { count: userCount } = await dbGet(db, "SELECT COUNT(*) AS count FROM users_auth");
                     if (userCount > 0) {
