@@ -2,7 +2,7 @@ require('dotenv').config({ path: './backend/.env' }); // Load environment variab
 
 const request = require('supertest');
 const express = require('express');
-const router = require('../backend/routes/auth'); // Adjust the path to your router file
+const router = require('../backend/routes/auth');
 const jwt = require('jsonwebtoken');
 
 const app = express();
@@ -19,7 +19,7 @@ jest.mock('../backend/utils/db-async', () => ({
 jest.mock('../backend/utils/auth-helpers', () => {
     const originalModule = jest.requireActual('../backend/utils/auth-helpers');
     return {
-        ...originalModule, // Spread the original exports
+        ...originalModule,
         hashPassword: jest.fn(), // Mock only hashPassword
     };
 });
@@ -29,10 +29,6 @@ const { hashPassword } = require('../backend/utils/auth-helpers');
 
 describe('Auth API Endpoints', () => {
     const JWT_SECRET = process.env.JWT_SECRET;
-
-    beforeAll(() => {
-        // Set up any pre-test configurations, if needed
-    });
 
     afterEach(() => {
         // Clear all mocks after each test to prevent leakage
