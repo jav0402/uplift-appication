@@ -8,35 +8,9 @@ const jwt = require('jsonwebtoken');
 
 const db = require('../utils/database-init');
 const { dbGet, dbRun } = require('../utils/db-async');
+const { hashPassword, authenticateToken } = require('../utils/auth-helpers');
 
 const JWT_SECRET = process.env.JWT_SECRET;
-
-// Function to hash a password
-function hashPassword(password, salt) {
-    try {
-        const hashedPassword = crypto.pbkdf2Sync(password, salt, 310000, 32, 'sha256');
-        return Promise.resolve(hashedPassword);
-    } catch (err) {
-        return Promise.reject(err);
-    }
-}
-
-// ensure JWT token is authenticated
-function authenticateToken(req, res, next) {
-    const headerAuth = req.headers.authorization;
-    if (!headerAuth) {
-        res.sendStatus(401); // Unauthorized
-    };
-    const token = headerAuth.split(' ')[1];
-    jwt.verify(token, JWT_SECRET, (err, user) => {
-        if (err) {
-            return res.sendStatus(403);
-        }
-        req.user = user;
-        next();
-    });
-}
-
 
 // Passport Local Strategy
 passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, async function verify(email, password, cb) {
@@ -85,7 +59,6 @@ router.post('/register', async (req, res) => {
         );
         return res.status(200).send("User registration successful") // User registration successful
     } catch (err) {
-        console.log(err);
         return res.status(500).send("User registration failed");
     }
 });

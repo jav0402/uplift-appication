@@ -1,7 +1,7 @@
 import bookmark from "../assets/icons/bookmark.png";
 import home from "../assets/icons/home.png";
 import plus from "../assets/icons/plus.png";
-import profile from "../assets/icons/profile.png";
+import profile from "../assets/icons/user.png";
 import leftArrow from "../assets/icons/left-arrow.png";
 import menu from "../assets/icons/menu.png";
 import search from "../assets/icons/search.png";
@@ -12,6 +12,9 @@ import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
 import notification from "../assets/icons/notification.png";
+import mood from "../assets/icons/mood.png";
+import resources from "../assets/icons/resources.png";
+import journal from "../assets/icons/diary.png";
 
 export default {
   play,
@@ -28,5 +31,8 @@ export default {
   eyeHide,
   eye,
   play,
-  notification
+  notification,
+  mood,
+  resources,
+  journal
 };

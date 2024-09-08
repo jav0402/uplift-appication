@@ -51,12 +51,17 @@ const Resources = () => {
 
     return (
         <SafeAreaView className="bg-primary h-full flex-1">
-            {/* Search bar */}
-            <SearchInput handleSearch={handleSearch}/>
+            <Text className='text-3xl text-center font-psemibold px-4 mt-10 mb-2'>Resources</Text>
+        {/* Container to align "Filter Resources" and the search bar in a row */}
+        <View className="flex-row items-center px-4 mt-2">
+            <Text className="text-lg font-bold mr-4">Filter Resources</Text>
+
+            {/* Adjust the size of the search bar */}
+            <SearchInput handleSearch={handleSearch} />
+        </View>
 
             {/* Filter Section */}
             <View className="px-4 mt-4">
-                <Text className="text-lg font-bold">Filter Resources</Text>
                 <View className="flex-row mt-2">
                     {['ALL', 'ARTICLES', 'TECHNIQUES', 'VIDEOS'].map((filterType, index) => (
                         // Display filter buttons with labels
@@ -72,7 +77,7 @@ const Resources = () => {
             </View>
 
             {/* Resources List */}
-            <View className="px-4 mt-4">
+            <View className="px-4 mt-4 mb-5">
                 <FlatList
                     data={filteredArticles}
                     keyExtractor={(item) => item.id.toString()}
@@ -88,9 +93,9 @@ const Resources = () => {
                         </TouchableOpacity>
                     )}
                     // Resources header
-                    ListHeaderComponent={() => (
-                        <Text className='text-2xl font-psemibold'>Resources</Text>
-                    )}
+                    // ListHeaderComponent={() => (
+                        
+                    // )}
 
                     // For empty state
                     ListEmptyComponent={() => (

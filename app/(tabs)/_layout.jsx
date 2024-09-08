@@ -66,7 +66,7 @@ const TabsLayout = () => {
                 headerShown: false,
                 tabBarIcon: ({color, focused}) => (
                     <TabIcon
-                        icon={icons.home}
+                        icon={icons.mood}
                         color={color}
                         name='Mood'
                         focused={focused}
@@ -81,7 +81,7 @@ const TabsLayout = () => {
                 headerShown: false,
                 tabBarIcon: ({color, focused}) => (
                     <TabIcon
-                        icon={icons.home}
+                        icon={icons.resources}
                         color={color}
                         name='Resource'
                         focused={focused}
@@ -89,21 +89,6 @@ const TabsLayout = () => {
                 )
             }}
         />
-        {/* <Tabs.Screen
-            name='profile'
-            options={{
-                title: 'Profile',
-                headerShown: false,
-                tabBarIcon: ({color, focused}) => (
-                    <TabIcon
-                        icon={icons.profile}
-                        color={color}
-                        name='Profile'
-                        focused={focused}
-                    />
-                )
-            }}
-        />*/}
 
         <Tabs.Screen
             name='journal'
@@ -112,7 +97,7 @@ const TabsLayout = () => {
                 headerShown: false,
                 tabBarIcon: ({color, focused}) => (
                     <TabIcon
-                        icon={icons.home}
+                        icon={icons.journal}
                         color={color}
                         name='Journal'
                         focused={focused}

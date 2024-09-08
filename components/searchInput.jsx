@@ -8,11 +8,11 @@ const searchInput = ({ initialQuery, handleSearch }) => {
     const [query, setQuery] = useState( initialQuery || '')
 
     return (
-        <View className="border-2 border-black-200 w-[90%] h-16 px-4 bg-black-100 rounded-2xl self-center mt-1 focus:border-white items-center flex-row space-x-4">
+        <View className="border-2 border-black-200 w-[60%] h-10 px-4 bg-black-100 rounded-2xl self-center mt-1 focus:border-white items-center flex-row space-x-4">
             <TextInput
                 className="text-base mt-0.5 text-white flex-1 font-pregular"
                 value={query}
-                placeholder="Search for resources"
+                placeholder="Search..."
                 placeholderTextColor="#CDCDE0"
                 onChangeText={(e) => setQuery(e)}
 

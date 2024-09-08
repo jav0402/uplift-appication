@@ -47,8 +47,7 @@ const RootLayout = () => {
                 <Stack.Screen name="timer/[id]" options={{ headerShown: false }} />
                 <Stack.Screen name="adjustTimer" options={{ headerShown: false }} />
                 <Stack.Screen name="meditation" options={{ headerShown: false }} />
-
-
+                <Stack.Screen name="quiz" options={{ headerShown: false }} />
             </Stack>
             </TimerProvider>
         </GlobalProvider>
