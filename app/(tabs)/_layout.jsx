@@ -118,6 +118,7 @@ const TabsLayout = () => {
                         name='Profile'
                         focused={focused}
                     />
+
                 )
             }}
         />

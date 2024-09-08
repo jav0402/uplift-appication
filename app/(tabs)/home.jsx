@@ -82,7 +82,7 @@ const Home = () => {
                     <View className='flex-row justify-center'>
                         <CustomButton
                             title="Meditation"
-                            onPress={() => router.push('../../meditation')}
+                            handlePress={() => router.push('/meditation')}
                             color="#FF8C00"
                             containerStyles='mt-6 w-1/2 mr-2'
                         />
