@@ -84,7 +84,7 @@ const Meditation = () => {
                             ]}
                            style={styles.gradient}
                          >
-                   <Text className="text-black text-3xl font-bold text-center">
+                   <Text className="text-white text-3xl font-bold text-center">
                      {item.title}
                    </Text>
                    </LinearGradient>
