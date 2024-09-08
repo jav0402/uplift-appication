@@ -7,17 +7,6 @@ module.exports = {
       // all colors subject to changes 
       colors: {
         
-        // 'off-white': {
-        //   DEFAULT: '#E3E3E3',
-        // },
-        // dark: {
-        //   DEFAULT: '#1C1C1E',
-        // },
-        // 'soft-dark': {
-        //   DEFAULT: '#2A2A2F',
-        // },
-
-        
         primary: "#F0EAD6",
         secondary: {
           DEFAULT: "#FF8C00",

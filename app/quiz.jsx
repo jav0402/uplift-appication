@@ -1,9 +1,14 @@
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'; // Import an icon from react-native-vector-icons
+import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react'
+import CustomButton from '../components/customButton';
 import { RadioButton } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { sendQuizResults } from '../lib/data'
 import { useGlobalContext } from '../context/GlobalProvider'
+
+const ITEMS_PER_PAGE = 3;
 
 const shuffleArray = (array) => {
     let currentIndex = array.length, randomIndex;
@@ -19,6 +24,7 @@ const shuffleArray = (array) => {
 
 
 const quiz = () => {
+    const navigation = useNavigation();
     const { user } = useGlobalContext()
     const [anxietyAns, setAnxietyAns] = useState(Array(6).fill(0))
     const [depressionAns, setDepressionAns] = useState(Array(6).fill(0))
@@ -30,6 +36,7 @@ const quiz = () => {
 
 
     const [questions, setQuestions] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
 
     const allQuestions = [
         {
@@ -141,17 +148,25 @@ const quiz = () => {
     }
 
     const handleSubmit = () => {
+        // Check if all questions have been answered
+        const allAnswered = questions.every((q) => q.answer !== '0');
+        
+        if (!allAnswered) {
+            alert('Please answer all questions before submitting.');
+            return;
+        }
+    
         const anxietyScore = calculateScore('Anxiety');
         const depressionScore = calculateScore('Depression');
         const otherScore = calculateScore('Other');
-
+    
         const resultMessage = results(anxietyScore, depressionScore, otherScore)
         alert(resultMessage);
-
+    
         const quizSent = sendQuizResults(user, anxietyScore, depressionScore, otherScore, new Date().toLocaleDateString());
         if (!quizSent) alert('Failed to send quiz results');
         else alert('Quiz results sent successfully');
-    }
+    };
 
     const results = (anxScore, depScore, otherScore) => {
         let anxRes, depRes, otherRes;
@@ -186,43 +201,180 @@ const quiz = () => {
         return `${anxRes}\n${depRes}\n${otherRes}`;
     }
 
+    const currentQuestions = questions.slice(currentPage * ITEMS_PER_PAGE, (currentPage + 1) * ITEMS_PER_PAGE);
 
+    const handleNextPage = () => {
+        const currentQuestions = questions.slice(currentPage * ITEMS_PER_PAGE, (currentPage + 1) * ITEMS_PER_PAGE);
+        
+        // Check if all questions on the current page are answered
+        const allAnswered = currentQuestions.every((q) => q.answer !== '0');
+        
+        if (!allAnswered) {
+            alert('Please answer all questions before proceeding to the next page.');
+            return;
+        }
+    
+        // Move to the next page
+        if ((currentPage + 1) * ITEMS_PER_PAGE < questions.length) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const progress = ((currentPage + 1) * ITEMS_PER_PAGE) / questions.length;
 
     return (
-        <SafeAreaView className='bg-slate-200 p-5'>
-            <ScrollView>
-                <Text className='text-2xl font-bold text-center mb-5'>
-                    Basic Self Evaluation Quiz
-                </Text>
+        <SafeAreaView style={styles.container}>
+             
+        <ScrollView>
+            <TouchableOpacity onPress={() => navigation.goBack()} className='mb-5'>
+                <Icon name="arrow-back" size={24} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.title}>
+                Basic Self Evaluation Quiz
+            </Text>
+            <Text style={styles.subtitle}>
+                5 for Strongly Agree & 1 for Strongly Disagree
+            </Text>
 
-                {questions.map((question, index) => (
-                    <View key={index} className='mb-5'>
-                        <Text className='text-lg mb-3'>
-                            {question.text}
-                        </Text>
-                        <RadioButton.Group
-                            onValueChange={(value) => handleAnsChange(index, value)}
-                            value={question.answer}
-                        >
-                            <View className='flex-row-reverse justify-between'>
-                                {[5, 4, 3, 2, 1].map(value => (
-                                    <View key={value} className='mr-2 ml-2'>
-                                        <Text className='text-center mb-1'>{value === 5 ? "S-a" : value === 1 ? "D-a" : `${value}`}</Text>
-                                        <View className='bg-blue-200 rounded-full p-2'>
-                                            <RadioButton value={value.toString()} />
-                                        </View>
+            {currentQuestions.map((question, index) => (
+                <View key={index} style={styles.questionContainer}>
+                    <Text style={styles.questionText}>
+                        {question.text}
+                    </Text>
+                    <RadioButton.Group
+                        onValueChange={(value) => handleAnsChange(currentPage * ITEMS_PER_PAGE + index, value)}
+                        value={question.answer}
+                    >
+                        <View style={styles.radioGroup}>
+                            {[5, 4, 3, 2, 1].map(value => (
+                                <View key={value} style={styles.radioButtonContainer}>
+                                    <Text style={styles.radioLabel}>{value}</Text>
+                                    <View style={styles.radioBackground}>
+                                        <RadioButton value={value.toString()} />
                                     </View>
-                                ))}
-                            </View>
-                        </RadioButton.Group>
-                    </View>
-                ))}
+                                </View>
+                            ))}
+                        </View>
+                    </RadioButton.Group>
+                </View>
+            ))}
 
-                <Button title="Submit" onPress={handleSubmit} />
-            </ScrollView>
-        </SafeAreaView>
-    )
+                  {/* Show pagination buttons */}
+            <View style={styles.paginationContainer} className='flex-row justify-center'>
+                {/* Show Previous button except on the first page */}
+                {currentPage > 0 && (
+                    <View style={{ flex: 1 }}>
+                        <CustomButton
+                            title="Previous"
+                            handlePress={handlePreviousPage}
+                            containerStyles="bg-secondary"
+                            textStyles="text-primary"
+                            isLoading={false}
+                        />
+                    </View>
+                )}
+
+                {/* Show Next or Submit button based on the page */}
+                <View style={{ flex: 1}}>
+                    {currentPage < Math.ceil(questions.length / ITEMS_PER_PAGE) - 1 ? (
+                        <CustomButton
+                            title="Next"
+                            handlePress={handleNextPage}
+                            containerStyles="bg-secondary"
+                            textStyles="text-primary"
+                            isLoading={false}
+                        />
+                    ) : (
+                        <CustomButton
+                            title="Submit"
+                            handlePress={handleSubmit}
+                            containerStyles="bg-secondary"  // Apply custom pale green color class
+                            textStyles="text-white"
+                            isLoading={false}
+                        />
+                    )}
+                </View>
+            </View>
+
+            <View style={styles.progressBar}>
+                <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
+            </View>
+        </ScrollView>
+    </SafeAreaView>
+)
 }
+
+const styles = StyleSheet.create({
+container: {
+    backgroundColor: '#F0EAD6', // primary color
+    padding: 20,
+    flex: 1
+},
+title: {
+    fontFamily: 'Poppins-Bold', // using Poppins font
+    fontSize: 24,
+    color: '#1E1E2D', // black-100
+    textAlign: 'center',
+    marginBottom: 20
+},
+subtitle: {
+    fontFamily: 'Poppins-ExtraLight', // using Poppins font
+    fontSize: 14,
+    color: '#1E1E2D', // black-100
+    textAlign: 'center',
+    marginBottom: 20
+},
+questionContainer: {
+    marginBottom: 20
+},
+questionText: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 18,
+    color: '#1E1E2D', // black-100
+    marginBottom: 10
+},
+radioGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+},
+radioButtonContainer: {
+    marginHorizontal: 5
+},
+radioLabel: {
+    textAlign: 'center',
+    marginBottom: 5,
+    fontFamily: 'Poppins-Light',
+    color: '#2F4F4F' // gray-100
+},
+radioBackground: {
+    backgroundColor: '#FF8E01', // secondary-200
+    borderRadius: 50,
+    padding: 5
+},
+pagination: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 20
+},
+progressBar: {
+    height: 10,
+    width: '100%',
+    backgroundColor: '#E0E0E0',
+    borderRadius: 5,
+    overflow: 'hidden',
+    marginVertical: 20
+},
+progressFill: {
+    height: '100%',
+    backgroundColor: '#FF8C00'
+}
+});
 
 /*
 Anxiety Score Range:
