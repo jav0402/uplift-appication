@@ -4,6 +4,7 @@ import { Slot, SplashScreen, Stack } from 'expo-router'
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
 import GlobalProvider from '../context/GlobalProvider'
+import TimerProvider from '../context/time'
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,6 +35,7 @@ const RootLayout = () => {
 
     return (
         <GlobalProvider>
+        <TimerProvider>
             <Stack>
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 <Stack.Screen name="(auth)" options={{ headerShown: false }} />
@@ -43,8 +45,12 @@ const RootLayout = () => {
                 <Stack.Screen name="mood-logging" options={{ headerShown: false }} />
                 <Stack.Screen name="settings" options={{ headerShown: false }} />
                 <Stack.Screen name="timer/[id]" options={{ headerShown: false }} />
-                <Stack.Screen name="adjustTiming" options={{ headerShown: false }} />
+                <Stack.Screen name="adjustTimer" options={{ headerShown: false }} />
+                <Stack.Screen name="meditation" options={{ headerShown: false }} />
+
+
             </Stack>
+            </TimerProvider>
         </GlobalProvider>
     )
 }

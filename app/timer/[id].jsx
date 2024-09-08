@@ -1,16 +1,19 @@
 import { View, Text, ImageBackground, Pressable } from 'react-native'
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import MEDITATION_IMAGES from '../../constants/meditation-image'
 import { AntDesign} from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import CustomButton from "../../components/customButton";
 import { Audio } from 'expo-av';
+import { TimerContext } from '../../context/time';
 import {MEDITATION_DATA, AUDIO_FILES} from "../../constants/meditation-data" 
 
 const Sound = () => {
   const { id, image } = useLocalSearchParams();
 
-  const [secondsRemaining, setSecondsRemaining] = useState(10);
+  const { duration: secondsRemaining, setDuration } =
+        useContext(TimerContext);
+
   const [isMeditating, setMeditating] = useState(false);
   const [audioSound, setSound] = useState(null);
   const [isPlayingAudio, setPlayingAudio] = useState(false);
@@ -32,7 +35,7 @@ const Sound = () => {
     }
     if (isMeditating) {
       timerId = setTimeout(() => {
-          setSecondsRemaining(prev => prev - 1);
+          setDuration(prev => prev - 1);
       },1000);
     }
 
@@ -50,7 +53,7 @@ const Sound = () => {
   }, [audioSound])
 
   const toggleMeditationSessionStatus = async() => {
-    if (secondsRemaining === 0) setSecondsRemaining(10);
+    if (secondsRemaining === 0) setDuration(10);
 
     setMeditating(prev => !prev);
 
@@ -104,7 +107,7 @@ const Sound = () => {
     console.log("Image key:", imageKey);
     const selectedImage = MEDITATION_IMAGES[imageKey];
     console.log("Selected image:", selectedImage);
-    return selectedImage || MEDITATION_IMAGES.mountainOne; // fallback to mountainOne if not found
+    return selectedImage || MEDITATION_IMAGES.mountainOne;
   }, [id]);
 
   return (
@@ -122,7 +125,7 @@ const Sound = () => {
         <View className="flex-1 justify-center">
           <View className="mx-auto bg-neutral-200 rounded-full w-44 h-44 justify-center items-center">
             <Text className="text-4xl text-black-800 font-rmono">
-              00:{secondsRemaining.toString().padStart(2, '0')}
+            {Math.floor(secondsRemaining / 60).toString().padStart(2, '0')}:{(secondsRemaining % 60).toString().padStart(2, '0')}
             </Text>
           </View>
         </View>

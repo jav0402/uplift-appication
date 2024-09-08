@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MEDITATION_DATA } from "../../constants/meditation-data";
-import MEDITATION_IMAGES from "../../constants/meditation-image";
+import { MEDITATION_DATA } from "../constants/meditation-data";
+import MEDITATION_IMAGES from "../constants/meditation-image";
 import { StatusBar } from "expo-status-bar";
 import { router } from "expo-router";
+import { AntDesign} from "@expo/vector-icons";
 
 const Meditation = () => {
   const messages = [
@@ -47,8 +48,13 @@ const Meditation = () => {
   return (
     <SafeAreaView className="flex-1 h-full bg-primary">
       <View>
+      <Pressable
+           onPress={() => router.back()}
+           className="absolute top-3 left-5 z-10">
+            <AntDesign name="leftcircle" size={34} color="black" />
+        </Pressable>
         
-        <Text className="text-3xl text-black font-bold m-3 gap-100 text-center">Let's Meditate</Text>
+        <Text className="text-4xl text-black font-bold m-3 gap-100 text-center">Let's Meditate</Text>
       </View>
       <TouchableOpacity onPress={handleClick}>
         <Text className="text-xl font-semibold text-black ml-5">{messages[messageIndex]}</Text>
@@ -102,14 +108,13 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
       flex: 1,
-      borderRadius: 10,
       justifyContent: "center",
   },
   gradient: {
       alignItems: "center",
-      height: "100%",
       justifyContent: "center",
       width: "100%",
+      height: "100%",
   },
   list: {
       paddingBottom: 150,
