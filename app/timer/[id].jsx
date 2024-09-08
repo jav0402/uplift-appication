@@ -31,6 +31,7 @@ const Sound = () => {
     if (secondsRemaining === 0){
       setMeditating(false);
       stopSound();
+      router.push('../mood-logging');
       return;
     }
     if (isMeditating) {
