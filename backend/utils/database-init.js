@@ -5,38 +5,43 @@ const fs = require('fs');
 const csv = require('csv-parser');
 const path = require('path');
 
-var db = new sqlite3.Database("./backend/database.db", function(err) {
-    if (err) {
-        console.error(err);
-        process.exit(1); // bail out we can't connect to the DB
-    } else {
-        console.log("[db-init] Database connected");
-        db.run("PRAGMA foreign_keys=ON"); // tell SQLite to pay attention to foreign key constraints
-        db.serialize(async () => {
-            try {
-                // Check if there are existing users
-                const { count: userCount } = await dbGet(db, "SELECT COUNT(*) AS count FROM users_auth");
-                if (userCount > 0) {
-                    console.log("[db-init] Users already exist in the users_auth table, skipping user creation.");
-                } else {
-                    await insertDefaultUsers();
-                }
+// Initialize the database only if not in a test environment
+if (process.env.NODE_ENV !== 'test') {
+    var db = new sqlite3.Database("./backend/database.db", function(err) {
+        if (err) {
+            console.error(err);
+            process.exit(1); // bail out we can't connect to the DB
+        } else {
+            console.log("[db-init] Database connected");
+            console.log(db);
+            db.run("PRAGMA foreign_keys=ON"); // tell SQLite to pay attention to foreign key constraints
+            db.serialize(async () => {
+                try {
+                    console.log(await dbGet(db, "SELECT COUNT(*) AS count FROM users_auth"));
+                    // Check if there are existing users
+                    const { count: userCount } = await dbGet(db, "SELECT COUNT(*) AS count FROM users_auth");
+                    if (userCount > 0) {
+                        console.log("[db-init] Users already exist in the users_auth table, skipping user creation.");
+                    } else {
+                        await insertDefaultUsers();
+                    }
 
-                // Check if data already exists in the resources table
-                const { count: resourceCount } = await dbGet(db, "SELECT COUNT(*) AS count FROM resources");
-                if (resourceCount > 0) {
-                    console.log("[db-init] Data already exists in the resources table, skipping CSV import.");
-                } else {
-                    const resourcesPath = path.join(__dirname, '..', 'data', 'resources.csv');
-                    await importCSV(resourcesPath, 'resources');
-                }
+                    // Check if data already exists in the resources table
+                    const { count: resourceCount } = await dbGet(db, "SELECT COUNT(*) AS count FROM resources");
+                    if (resourceCount > 0) {
+                        console.log("[db-init] Data already exists in the resources table, skipping CSV import.");
+                    } else {
+                        const resourcesPath = path.join(__dirname, '..', 'data', 'resources.csv');
+                        await importCSV(resourcesPath, 'resources');
+                    }
 
-            } catch (err) {
-                console.error("[db-init] Error during database initialization:", err);
-            }
-        });
-    }
-});
+                } catch (err) {
+                    console.error("[db-init] Error during database initialization:", err);
+                }
+            });
+        }
+    });
+}
 
 // Function to insert mock users
 async function insertDefaultUsers() {
