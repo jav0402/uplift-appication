@@ -22,12 +22,11 @@ const Profile = () => {
 
     const handleLogOut = () => {
         // Log out the user
-        console.log('Logging out');
         signOut()
             .then(() => {
                 setUser(null)
                 setIsLogged(false)
-                router.replace('index')
+                router.replace('/')
             })
     }
 
