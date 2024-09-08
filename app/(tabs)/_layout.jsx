@@ -107,37 +107,6 @@ const TabsLayout = () => {
         />
 
         <Tabs.Screen
-            name='meditation'
-            options={{
-                title: 'Meditation',
-                headerShown: false,
-                tabBarIcon: ({color, focused}) => (
-                    <TabIcon
-                        icon={icons.home}
-                        color={color}
-                        name='Meditation'
-                        focused={focused}
-                    />
-                )
-            }}
-        />
-        <Tabs.Screen
-            name='sound'
-            options={{
-                title: 'Sound',
-                headerShown: false,
-                tabBarIcon: ({color, focused}) => (
-                    <TabIcon
-                        icon={icons.home}
-                        color={color}
-                        name='Sound'
-                        focused={focused}
-                    />
-                )
-            }}
-        />
-
-        <Tabs.Screen
             name='Profile'
             options={{
                 title: 'Profile',
@@ -149,7 +118,7 @@ const TabsLayout = () => {
                         name='Profile'
                         focused={focused}
                     />
-        
+
                 )
             }}
         />

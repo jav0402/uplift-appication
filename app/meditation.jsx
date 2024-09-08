@@ -53,7 +53,7 @@ const Meditation = () => {
            className="absolute top-3 left-5 z-10">
             <AntDesign name="leftcircle" size={34} color="black" />
         </Pressable>
-        
+
         <Text className="text-4xl text-black font-bold m-3 gap-100 text-center">Let's Meditate</Text>
       </View>
       <TouchableOpacity onPress={handleClick}>
@@ -68,7 +68,6 @@ const Meditation = () => {
             renderItem={({ item }) => (
                <Pressable
                   onPress={() => {
-                    console.log("meditation started")
                     router.push(`/timer/${item.id}`) }}
                   className="h-48 my-3 mx-5 rounded-md overflow-hidden"
                >
@@ -84,11 +83,11 @@ const Meditation = () => {
                            "rgba(0,0,0,0.4)",
                             ]}
                            style={styles.gradient}
-                         > 
+                         >
                    <Text className="text-black text-3xl font-bold text-center">
                      {item.title}
                    </Text>
-                   </LinearGradient>  
+                   </LinearGradient>
                    </ImageBackground>
                  </Pressable>
               )}

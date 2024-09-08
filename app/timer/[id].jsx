@@ -6,7 +6,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import CustomButton from "../../components/customButton";
 import { Audio } from 'expo-av';
 import { TimerContext } from '../../context/time';
-import {MEDITATION_DATA, AUDIO_FILES} from "../../constants/meditation-data" 
+import {MEDITATION_DATA, AUDIO_FILES} from "../../constants/meditation-data"
 
 const Sound = () => {
   const { id, image } = useLocalSearchParams();
@@ -83,7 +83,6 @@ const Sound = () => {
   const startSound = async() => {
     try {
       const audioFileName = MEDITATION_DATA[Number(id)-1].audio;
-      console.log("Loading audio file:", audioFileName);
       const { sound } = await Audio.Sound.createAsync(AUDIO_FILES[audioFileName]);
       setSound(sound);
       return sound;
@@ -104,9 +103,7 @@ const Sound = () => {
       return MEDITATION_IMAGES.mountainOne; // fallback image
     }
     const imageKey = meditationItem.image;
-    console.log("Image key:", imageKey);
     const selectedImage = MEDITATION_IMAGES[imageKey];
-    console.log("Selected image:", selectedImage);
     return selectedImage || MEDITATION_IMAGES.mountainOne;
   }, [id]);
 
@@ -138,7 +135,7 @@ const Sound = () => {
         <View className="mb-3">
           <CustomButton
             title="Adjust Timer"
-            handlePress={AdjustDuration}     
+            handlePress={AdjustDuration}
           />
         </View>
       </ImageBackground>
