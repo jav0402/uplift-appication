@@ -31,7 +31,7 @@ const Profile = () => {
     }
 
     return (
-        <SafeAreaView className="bg-white flex-1">
+        <SafeAreaView className="bg-primary flex-1">
             <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
                 {/* Header Section - settings, profile pic, username, bio */}
                 <View className="flex-row items-center p-4">
@@ -43,7 +43,11 @@ const Profile = () => {
                             onPress={() => router.push('../settings')} />
                     </View>
                     <View className="flex-1 items-center">
-                        <Image source={icons.profile} resizeMode='contain' style={{ alignItems: 'center' }} />
+                        <Image 
+                        source={icons.profile} 
+                        resizeMode='contain'
+                        style={{ width: 100, height: 100, transform: [{ scale: 0.5 }], alignItems: 'center' }} 
+                        />
                     </View>
                     <View className="flex-1"></View>
                 </View>
@@ -108,7 +112,13 @@ const Profile = () => {
                         </View>
                     ))}
                 </View>
-                <CustomButton title="Log Out" handlePress={handleLogOut} />
+                <View className="flex-1 justify-center items-center">
+                    <CustomButton  
+                        title="Log Out" 
+                        handlePress={handleLogOut} 
+                        containerStyles="mt-5 w-1/2"
+                    />
+                </View>
             </ScrollView>
         </SafeAreaView>
     );

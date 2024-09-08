@@ -100,7 +100,7 @@ const Mood = () => {
         <SafeAreaView className="flex-1 bg-primary">
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="flex-1">
                 {/* Page header */}
-                <Text className="text-3xl text-black font-bold m-5">Mood Stats</Text>
+                <Text className="text-3xl text-center font-psemibold px-4 mt-10 mb-2">Mood Stats</Text>
                 {/* Time range selection row */}
                 <View className="flex-row justify-center items-center mx-6 my-4 p-2 bg-white rounded-full">
                     {['days', 'weeks', 'months'].map((range) => (

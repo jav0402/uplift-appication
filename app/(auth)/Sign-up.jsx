@@ -136,12 +136,6 @@ const SignUp = () => {
                                 <CustomButton title='Back' handlePress={handlePrevStep} containerStyles='mt-6 w-1/3 mr-3' />
                                 <CustomButton title='Sign up' handlePress={handleSignUp} containerStyles='mt-6 w-1/3 ml-2' isLoading={isSubmitting} />
                             </View>
-
-                            <TouchableOpacity onPress={() => router.push('/home')} className='mt-4'>
-                                <Text className='text-lg text-center text-secondary'>
-                                    Go to Home
-                                </Text>
-                            </TouchableOpacity>
                         </>
                     )}
 

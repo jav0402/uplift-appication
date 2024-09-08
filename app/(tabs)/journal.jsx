@@ -1,4 +1,6 @@
 import { View, Text, TouchableOpacity, FlatList, TextInput, Modal, ScrollView, Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'; // Import an icon from react-native-vector-icons
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import EmptyState from '../../components/emptyState'
@@ -7,7 +9,7 @@ import dataHook from '../../lib/dataHook';
 import { getJournalData, sendJournalData } from '../../lib/data';
 
 const Journal = () => {
-
+    const navigation = useNavigation();
     const { user } = useGlobalContext();
 
     const { data: entries, isLoading, refetch } = dataHook(async () => {
@@ -77,7 +79,7 @@ const Journal = () => {
                     )}
                     // List header
                     ListHeaderComponent={() => (
-                        <Text className='text-3xl font-psemibold my-4 px-4 '>Journal</Text>
+                        <Text className='text-3xl text-center font-psemibold px-4 mt-10 mb-2'>Journal</Text>
                     )}
                     // For empty state (No journal entries)
                     ListEmptyComponent={() => (
@@ -106,6 +108,9 @@ const Journal = () => {
             <Modal visible={modalVisible} animationType="slide">
                 {/* Background color set to existing entry bg color or app primary color for new entry */}
                 <SafeAreaView className={`flex-1 p-4 ${selectedEntry ? selectedEntry.theme : 'bg-primary'}`}>
+                <TouchableOpacity onPress={() => navigation.goBack()} className='mb-5'>
+                <Icon name="arrow-back" size={24} color="#000" />
+            </TouchableOpacity>
                     {/* Header */}
                     <View className="mt-14">
                         <Text className="text-3xl font-bold">{selectedEntry ? '' : 'New Journal Entry'}</Text>
