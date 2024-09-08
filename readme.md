@@ -1,3 +1,5 @@
+![Uplift-logo](https://github.com/jav0402/uplift-appication/blob/main/assets/images/uplift_logo.png)
+
 # 📚 How to get started?
 ## Prerequisites
 - Node.js (v21.7.0, v20.12.0) and above
