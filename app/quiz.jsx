@@ -1,40 +1,47 @@
-import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'; // Import an icon from react-native-vector-icons
+/*
+Anxiety Score Range:
+6-12: Low anxiety risk.
+13-18: Moderate anxiety.
+19-30: High anxiety.
+
+Depression Score Range:
+6-12: Low depression risk.
+13-18: Moderate depression.
+19-30: High depression.
+
+Other Mental Health Concerns Score Range:
+6-12: Low risk.
+13-18: Moderate concern.
+19-30: High concern.
+*/
+import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'; // Import icons from react-native-vector-icons
 import { useNavigation } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import CustomButton from '../components/customButton';
-import { RadioButton } from 'react-native-paper'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { sendQuizResults } from '../lib/data'
-import { useGlobalContext } from '../context/GlobalProvider'
+import { RadioButton } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { sendQuizResults } from '../lib/data';
+import { useGlobalContext } from '../context/GlobalProvider';
+import { router } from 'expo-router';
 
 const ITEMS_PER_PAGE = 3;
 
 const shuffleArray = (array) => {
     let currentIndex = array.length, randomIndex;
     while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex)
+        randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
         [array[currentIndex], array[randomIndex]] = [
             array[randomIndex], array[currentIndex]
-        ]
+        ];
     }
     return array;
-}
-
+};
 
 const quiz = () => {
     const navigation = useNavigation();
-    const { user } = useGlobalContext()
-    const [anxietyAns, setAnxietyAns] = useState(Array(6).fill(0))
-    const [depressionAns, setDepressionAns] = useState(Array(6).fill(0))
-    const [otherAns, setOtherAns] = useState(Array(6).fill(0))
-
-    const [anxQn, setAnxQn] = useState([])
-    const [depQn, setDepQn] = useState([])
-    const [otherQn, setOtherQn] = useState([])
-
-
+    const { user } = useGlobalContext();
     const [questions, setQuestions] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
 
@@ -130,44 +137,6 @@ const quiz = () => {
             answer: '0'
         }
     ];
-
-    useEffect(() => {
-        setQuestions(shuffleArray(allQuestions));
-    }, []);
-
-    const handleAnsChange = (index, value) => {
-        const updatedQuestions = [...questions];
-        updatedQuestions[index].answer = value;
-        setQuestions(updatedQuestions);
-    }
-
-    const calculateScore = (category) => {
-        return questions
-            .filter(q => q.category === category)
-            .reduce((acc, curr) => acc + parseInt(curr.answer), 0);
-    }
-
-    const handleSubmit = () => {
-        // Check if all questions have been answered
-        const allAnswered = questions.every((q) => q.answer !== '0');
-        
-        if (!allAnswered) {
-            alert('Please answer all questions before submitting.');
-            return;
-        }
-    
-        const anxietyScore = calculateScore('Anxiety');
-        const depressionScore = calculateScore('Depression');
-        const otherScore = calculateScore('Other');
-    
-        const resultMessage = results(anxietyScore, depressionScore, otherScore)
-        alert(resultMessage);
-    
-        const quizSent = sendQuizResults(user, anxietyScore, depressionScore, otherScore, new Date().toLocaleDateString());
-        if (!quizSent) alert('Failed to send quiz results');
-        else alert('Quiz results sent successfully');
-    };
-
     const results = (anxScore, depScore, otherScore) => {
         let anxRes, depRes, otherRes;
 
@@ -201,20 +170,50 @@ const quiz = () => {
         return `${anxRes}\n${depRes}\n${otherRes}`;
     }
 
+    useEffect(() => {
+        setQuestions(shuffleArray(allQuestions));
+    }, []);
+
+    const handleAnsChange = (index, value) => {
+        const updatedQuestions = [...questions];
+        updatedQuestions[index].answer = value;
+        setQuestions(updatedQuestions);
+    };
+
+    const calculateScore = (category) => {
+        return questions
+            .filter(q => q.category === category)
+            .reduce((acc, curr) => acc + parseInt(curr.answer), 0);
+    };
+
+    const handleSubmit = () => {
+        const allAnswered = questions.every((q) => q.answer !== '0');
+        if (!allAnswered) {
+            Alert.alert('Invalid response','Please answer all questions before submitting.');
+            return;
+        }
+
+        const anxietyScore = calculateScore('Anxiety');
+        const depressionScore = calculateScore('Depression');
+        const otherScore = calculateScore('Other');
+
+        const resultMessage = results(anxietyScore, depressionScore, otherScore);
+        Alert.alert('Results',resultMessage, [{onPress: () => router.push('../home')}]);
+        // onPress={() => router.push('../journal')}
+        const quizSent = sendQuizResults(user, anxietyScore, depressionScore, otherScore, new Date().toLocaleDateString());
+        if (!quizSent) Alert.alert('Send error','Failed to send quiz results');
+        else Alert.alert('Send success','Quiz results sent successfully');
+    };
+
     const currentQuestions = questions.slice(currentPage * ITEMS_PER_PAGE, (currentPage + 1) * ITEMS_PER_PAGE);
 
     const handleNextPage = () => {
         const currentQuestions = questions.slice(currentPage * ITEMS_PER_PAGE, (currentPage + 1) * ITEMS_PER_PAGE);
-        
-        // Check if all questions on the current page are answered
         const allAnswered = currentQuestions.every((q) => q.answer !== '0');
-        
         if (!allAnswered) {
-            alert('Please answer all questions before proceeding to the next page.');
+            Alert.alert('Invalid response','Please answer all questions before proceeding to the next page.');
             return;
         }
-    
-        // Move to the next page
         if ((currentPage + 1) * ITEMS_PER_PAGE < questions.length) {
             setCurrentPage(currentPage + 1);
         }
@@ -229,170 +228,81 @@ const quiz = () => {
     const progress = ((currentPage + 1) * ITEMS_PER_PAGE) / questions.length;
 
     return (
-        <SafeAreaView style={styles.container}>
-             
-        <ScrollView>
-            <TouchableOpacity onPress={() => navigation.goBack()} className='mb-5'>
-                <Icon name="arrow-back" size={24} color="#000" />
-            </TouchableOpacity>
-            <Text style={styles.title}>
-                Basic Self Evaluation Quiz
-            </Text>
-            <Text style={styles.subtitle}>
-                5 for Strongly Agree & 1 for Strongly Disagree
-            </Text>
+        <SafeAreaView className="bg-primary flex-1 p-5">
+            <ScrollView>
+                <TouchableOpacity onPress={() => navigation.goBack()} className='mb-5'>
+                    <Icon name="arrow-back" size={24} color="#000" />
+                </TouchableOpacity>
+                <Text className="text-2xl text-center mb-5 font-bold text-black">
+                    Basic Self Evaluation Quiz
+                </Text>
+                <Text className="text-sm text-center mb-5 font-light text-black">
+                    5 for Strongly Agree & 1 for Strongly Disagree
+                </Text>
 
-            {currentQuestions.map((question, index) => (
-                <View key={index} style={styles.questionContainer}>
-                    <Text style={styles.questionText}>
-                        {question.text}
-                    </Text>
-                    <RadioButton.Group
-                        onValueChange={(value) => handleAnsChange(currentPage * ITEMS_PER_PAGE + index, value)}
-                        value={question.answer}
-                    >
-                        <View style={styles.radioGroup}>
-                            {[5, 4, 3, 2, 1].map(value => (
-                                <View key={value} style={styles.radioButtonContainer}>
-                                    <Text style={styles.radioLabel}>{value}</Text>
-                                    <View style={styles.radioBackground}>
-                                        <RadioButton value={value.toString()} />
+                {currentQuestions.map((question, index) => (
+                    <View key={index} className="mb-5">
+                        <Text className="text-lg mb-2 font-normal text-black">
+                            {question.text}
+                        </Text>
+                        <RadioButton.Group
+                            onValueChange={(value) => handleAnsChange(currentPage * ITEMS_PER_PAGE + index, value)}
+                            value={question.answer}
+                        >
+                            <View className="flex-row justify-between">
+                                {[5, 4, 3, 2, 1].map(value => (
+                                    <View key={value} className="mx-2">
+                                        <Text className="text-center mb-1 font-light text-black">{value}</Text>
+                                        <View className="bg-secondary-200 rounded-full p-1">
+                                            <RadioButton value={value.toString()} />
+                                        </View>
                                     </View>
-                                </View>
-                            ))}
-                        </View>
-                    </RadioButton.Group>
-                </View>
-            ))}
-
-                  {/* Show pagination buttons */}
-            <View style={styles.paginationContainer} className='flex-row justify-center'>
-                {/* Show Previous button except on the first page */}
-                {currentPage > 0 && (
-                    <View style={{ flex: 1 }}>
-                        <CustomButton
-                            title="Previous"
-                            handlePress={handlePreviousPage}
-                            containerStyles="bg-secondary"
-                            textStyles="text-primary"
-                            isLoading={false}
-                        />
+                                ))}
+                            </View>
+                        </RadioButton.Group>
                     </View>
-                )}
+                ))}
 
-                {/* Show Next or Submit button based on the page */}
-                <View style={{ flex: 1}}>
-                    {currentPage < Math.ceil(questions.length / ITEMS_PER_PAGE) - 1 ? (
-                        <CustomButton
-                            title="Next"
-                            handlePress={handleNextPage}
-                            containerStyles="bg-secondary"
-                            textStyles="text-primary"
-                            isLoading={false}
-                        />
-                    ) : (
-                        <CustomButton
-                            title="Submit"
-                            handlePress={handleSubmit}
-                            containerStyles="bg-secondary"  // Apply custom pale green color class
-                            textStyles="text-white"
-                            isLoading={false}
-                        />
+                <View className="flex-row justify-center mt-5">
+                    {currentPage > 0 && (
+                        <View className="flex-1 mr-2">
+                            <CustomButton
+                                title="Previous"
+                                handlePress={handlePreviousPage}
+                                containerStyles="bg-[#FF8E01]"
+                                textStyles="text-white"
+                                isLoading={false}
+                            />
+                        </View>
                     )}
+
+                    <View className="flex-1">
+                        {currentPage < Math.ceil(questions.length / ITEMS_PER_PAGE) - 1 ? (
+                            <CustomButton
+                                title="Next"
+                                handlePress={handleNextPage}
+                                containerStyles="bg-[#FF8E01]"
+                                textStyles="text-white"
+                                isLoading={false}
+                            />
+                        ) : (
+                            <CustomButton
+                                title="Submit"
+                                handlePress={handleSubmit}
+                                containerStyles="bg-[#FF8E01]"
+                                textStyles="text-white"
+                                isLoading={false}
+                            />
+                        )}
+                    </View>
                 </View>
-            </View>
 
-            <View style={styles.progressBar}>
-                <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
-            </View>
-        </ScrollView>
-    </SafeAreaView>
-)
-}
+                <View className="w-full h-3 bg-gray-300 rounded-full my-5">
+                    <View className={`h-full bg-secondary rounded-full`} style={{ width: `${progress * 100}%` }} />
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+    );
+};
 
-const styles = StyleSheet.create({
-container: {
-    backgroundColor: '#F0EAD6', // primary color
-    padding: 20,
-    flex: 1
-},
-title: {
-    fontFamily: 'Poppins-Bold', // using Poppins font
-    fontSize: 24,
-    color: '#1E1E2D', // black-100
-    textAlign: 'center',
-    marginBottom: 20
-},
-subtitle: {
-    fontFamily: 'Poppins-ExtraLight', // using Poppins font
-    fontSize: 14,
-    color: '#1E1E2D', // black-100
-    textAlign: 'center',
-    marginBottom: 20
-},
-questionContainer: {
-    marginBottom: 20
-},
-questionText: {
-    fontFamily: 'Poppins-Regular',
-    fontSize: 18,
-    color: '#1E1E2D', // black-100
-    marginBottom: 10
-},
-radioGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-},
-radioButtonContainer: {
-    marginHorizontal: 5
-},
-radioLabel: {
-    textAlign: 'center',
-    marginBottom: 5,
-    fontFamily: 'Poppins-Light',
-    color: '#2F4F4F' // gray-100
-},
-radioBackground: {
-    backgroundColor: '#FF8E01', // secondary-200
-    borderRadius: 50,
-    padding: 5
-},
-pagination: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 20
-},
-progressBar: {
-    height: 10,
-    width: '100%',
-    backgroundColor: '#E0E0E0',
-    borderRadius: 5,
-    overflow: 'hidden',
-    marginVertical: 20
-},
-progressFill: {
-    height: '100%',
-    backgroundColor: '#FF8C00'
-}
-});
-
-/*
-Anxiety Score Range:
-6-12: Low anxiety risk.
-13-18: Moderate anxiety.
-19-30: High anxiety.
-
-
-Depression Score Range:
-6-12: Low depression risk.
-13-18: Moderate depression.
-19-30: High depression.
-
-
-Other Mental Health Concerns Score Range:
-6-12: Low risk.
-13-18: Moderate concern.
-19-30: High concern.
-
-*/
-export default quiz
+export default quiz;
