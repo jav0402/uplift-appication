@@ -12,8 +12,6 @@ const Home = () => {
     const { user } = useGlobalContext();
     const [greeting, setGreeting] = useState('');
     const [selectedMood, setSelectedMood] = useState(null);
-    // const [loading, setLoading] = useState(true);
-    // const [activityData, setActivityData] = useState(null);
 
     useEffect(() => {
         // Set dynamic greeting based on the time of day
@@ -22,31 +20,11 @@ const Home = () => {
         if (hour < 12) setGreeting(`Good Morning, ${name}`);
         else if (hour < 18) setGreeting(`Good Afternoon, ${name}`);
         else setGreeting(`Good Evening, ${name}`);
-
-        // Simulate fetching data
-        fetchData();
-
-        // Set up notifications
-        setupNotifications();
     }, []);
 
     const handleMoodSelection = (mood) => {
         setSelectedMood(mood);
-        Alert.alert('Alert',`You've selected: ${mood}`, [{onPress: () => router.push('../mood')}]);
-
-    };
-
-    const fetchData = async () => {
-        try {
-            // Simulate an API call
-        } catch (error) {
-            console.error('Error fetching activity data:', error);
-        } finally {
-        }
-    };
-
-    const setupNotifications = () => {
-        // Logic for setting up push notifications
+        router.push('../../mood-logging');
     };
 
     return (
@@ -106,8 +84,6 @@ const Home = () => {
                         <Text className='text-sm text-gray-600'>7,500/10,000 steps</Text>
                     </View>
                 </View>
-
-
 
                 {/* Daily Check-In Section */}
                 <View className='px-5 py-5'>
@@ -174,8 +150,10 @@ const Home = () => {
                 {/* Footer Section */}
                 <View className='flex-1 justify-end px-5 pb-10'>
                     <Text className='text-center text-gray-600'>Take a deep breath and remember, it's okay to take things one step at a time.</Text>
-                    <Text className='text-center text-gray-600'>Help is available:</Text>
+                    <Text className='text-center text-gray-600 mt-3'>Help is available:</Text>
                     <Text className='text-center text-gray-600'>Samaritans of Singapore: 1-767</Text>
+                    <Text className='text-center text-gray-600'>Tinkle Friend: 1800-2744-788</Text>
+                    <Text className='text-center text-gray-600'>Singapore Association for Mental Health Helpline: 1800-283-7019</Text>
                 </View>
             </ScrollView>
         </SafeAreaView>
