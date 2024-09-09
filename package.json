@@ -17,7 +17,9 @@
         "full": "concurrently --raw --handle-input --kill-others \"npm run start\" \"npm run server\"",
         "full-reset": "npm run reset-backend && npm run full",
         "full-reset-win": "npm run reset-backend-win && npm run full",
-        "test": "jest --watchAll"
+        "full-start": "npm run build-db && npm run full",
+        "full-start-win": "npm run build-db-win && npm run full",
+        "test": "jest"
     },
     "dependencies": {
         "@react-native-async-storage/async-storage": "^1.23.1",

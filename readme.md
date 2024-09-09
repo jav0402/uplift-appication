@@ -19,9 +19,9 @@ npm install
 ### 3. Launch the application
 
 ```
-npm run full-reset
+npm run full-start
 # or
-npm run full-reset-win #for windows
+npm run full-start-win #for windows
 ```
 
 ### 4. Methods of running the application
