@@ -39,6 +39,46 @@ npm run full-start-win #for windows
 npm test
 ```
 
+### 6. Additional useful commands
+If you wish to start the application while maintaining changes made to the backend, i.e. retain new account that were created using the app, run the following command:
+```
+npm run full
+```
+
+If you wish to run the application from a clean slate, i.e. reset the backend to its initial state, run the following command:
+```
+npm run full-reset
+```
+or
+```
+npm run full-reset-win #for windows
+```
+
+Other commands include:
+- `npm run build-db` - builds the database using the schema file
+- `npm run clean-db` - deletes the database
+- `npm run reset-backend` - resets the backend to its initial state, i.e. clean and build the database
+For windows, add `-win` to the end of the command, e.g. `npm run reset-backend-win`
+
+
+To run frontend or backend individually, use the following commands:
+- `npm run server` - starts the backend server
+- `npm run start` - starts frontend application using expo
+
+*Refer to the package.json file for the delcaration of all commands*
+
+# User accounts
+These are the default user accounts. Additional accounts can be created using the sign-up page. However, upon resetting the backend using `npm run reset-backend` or `npm run rull-reset`, all accounts except the default accounts will be deleted.
+
+| Email | Password |
+| --- | --- |
+| xavier@gmail.com | passwd |
+| shad@gmail.com | pass |
+| jh@gmail.com | pass |
+| ethan@gmail.com | pass |
+| javier@gmail.com | pass |
+
+*Note: These are mock email account that are used for testing purposes only. We do not have ownership of any of the email accounts listed above*
 
 
 # Our Workflow
@@ -56,4 +96,5 @@ npm test
 11. Make changes if necessary and merge the pull request.
 12. Move the issue to 'Done' on the project board.
 13. Rinse and Repeat.
+
 
