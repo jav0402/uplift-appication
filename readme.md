@@ -1,4 +1,7 @@
-![Uplift-logo](https://github.com/jav0402/uplift-appication/blob/main/assets/images/uplift_logo.png)
+# Overview
+"Uplift" is a mental health application designed to enhance the psychological well-being of its users by providing an accessible, user-friendly, and cost-effective platform for mental health support.
+
+![Uplift UI Overview](https://github.com/user-attachments/assets/3ed3edc9-362c-49f3-a8f4-4e495c162fdf)
 
 # Demo
 Watch the video demo here: <https://youtu.be/A7k7BFQTdoc>
