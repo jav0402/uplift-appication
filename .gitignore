@@ -39,3 +39,7 @@ yarn-error.*
 
 # Database
 *.db
+
+#expo-env
+Uplift-Applicaiton/expo-env.d.ts
+
